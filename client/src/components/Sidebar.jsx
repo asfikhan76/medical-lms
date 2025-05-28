@@ -1,17 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { ChevronLeft, ChevronRight, School, Settings, Users, Layers, FileUser, FilePlus, LogOut } from 'lucide-react'
 
 
-const Sidebar = () => {
-    const [collapsed, setCollapsed] = useState(() => {
-        const stored = localStorage.getItem('sidebar-collapsed')
-        return stored === null ? false : stored === 'true'
-    })
-    // Update localStorage whenever collapsed changes
-    useEffect(() => {
-        localStorage.setItem('sidebar-collapsed', collapsed)
-    }, [collapsed])
-
+const Sidebar = ({ collapsed, setCollapsed }) => {
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 relative`}>
             <div>
