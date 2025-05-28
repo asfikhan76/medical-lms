@@ -5,6 +5,7 @@ import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import AddQuestion from './pages/AddQuestion'
+import Dashboard from './pages/Dashboard'
 import { useSidebar } from './contexts/SidebarContext'
 
 function AppContent() {
@@ -17,6 +18,7 @@ function AppContent() {
       <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
         <Header />
         <Routes>
+          <Route path='/' element={<Dashboard />} />
           <Route path='/add-question' element={<AddQuestion />} />
         </Routes>
       </div>

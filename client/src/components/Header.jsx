@@ -5,7 +5,7 @@ const Header = () => {
     const { collapsed, setCollapsed } = useSidebar()
     return (
         <header className="bg-white m-3 mx-4 rounded-lg shadow-sm">
-            <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
                 <button className='cursor-pointer' onClick={() => setCollapsed(!collapsed)}>
                     {
                         collapsed ? <BetweenHorizontalStart size={22} color='#6a7282' /> : <BetweenHorizontalEnd size={22} color='#6a7282' />
