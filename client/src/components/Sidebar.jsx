@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronLeft, ChevronRight, School, Settings, Users, Layers, FileUser, FilePlus, LogOut } from 'lucide-react'
+import {LayoutDashboard, School, Settings, Users, Layers, FileUser, FilePlus, LogOut } from 'lucide-react'
 
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
@@ -23,17 +23,17 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                         <div className="py-4">
                             <a href="#"
                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm bg-blue-50 px-2 py-1.5 text-blue-700`}>
-                                <Settings size={18} color='#6a7282' />
+                                <LayoutDashboard size={18} color='#6a7282' />
                                 <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                    General
+                                    Dashboard
                                 </span>
                                 {
-                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Settings</span>
+                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Dashboard</span>
                                 }
                             </a>
                         </div>
 
-                        <ul className="space-y-1 border-t border-gray-100 pt-4">
+                        <ul className="space-y-1 border-t border-gray-100 pt-4 p-0">
                             <li>
                                 <a href="#"
                                     className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>

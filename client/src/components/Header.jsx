@@ -1,5 +1,5 @@
 import React from 'react'
-import { Plus, BetweenHorizontalStart, BetweenHorizontalEnd } from 'lucide-react'
+import { Plus, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
 const Header = ({ collapsed, setCollapsed }) => {
     return (
         <header className="bg-white m-3 mx-4 rounded-lg shadow-sm">
@@ -10,14 +10,22 @@ const Header = ({ collapsed, setCollapsed }) => {
                     }
                 </button>
                 <div className="flex flex-1 items-center justify-end md:justify-between">
-                    <nav aria-label="Global" className="hidden md:block">
+                    <nav aria-label="Global" className="hidden md:flex gap-5">
+                        <div>
+                            <input
+                                type="search"
+                                name=""
+                                id=""
+                                placeholder='Search...'
+                                className="rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200 transition"
+                            />
+                        </div>
                         <ul className="flex items-center gap-6 text-sm">
                             <li>
-                                <a className="text-gray-500 transition hover:text-gray-500/75" href="#"> About </a>
-                            </li>
-
-                            <li>
-                                <a className="text-gray-500 transition hover:text-gray-500/75" href="#"> Careers </a>
+                                <a href="#" className="text-gray-500 flex items-center gap-2 transition hover:text-gray-500/75" >
+                                    <SlidersHorizontal size={18} color="#6a7282" />
+                                    Settings
+                                </a>
                             </li>
                         </ul>
                     </nav>
