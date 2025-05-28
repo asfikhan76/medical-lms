@@ -18,8 +18,8 @@ function App() {
       <div>
         <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       </div>
-      <div className="bg-orange-300 h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
-        <Header />
+      <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
+        <Header collapsed={collapsed} setCollapsed={setCollapsed} />
       </div>
     </div>
   )

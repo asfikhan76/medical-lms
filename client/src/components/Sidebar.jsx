@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, School, Settings, Users, Layers, FileUser, F
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
     return (
-        <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 relative`}>
+        <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 shadow-sm relative`}>
             <div>
                 <div className="flex items-center justify-center py-3">
 
@@ -17,13 +17,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                     <div className={`text-lg font-semibold whitespace-nowrap text-gray-800 ms-2 ${collapsed ? 'hidden' : 'block'}`}>
                         Exam Portal
                     </div>
-
-                    {/* toggle btn */}
-                    <span onClick={() => setCollapsed(!collapsed)} className='h-4 w-4 flex text-white items-center justify-center rounded-full bg-blue-500 absolute top-8 right-0 translate-x-1/2 -translate-y-1/2 border border-white shadow-sm'>
-                        {
-                            collapsed ? <ChevronRight /> : <ChevronLeft />
-                        }
-                    </span>
                 </div>
                 <div className="border-t border-gray-100">
                     <div className="px-2">
