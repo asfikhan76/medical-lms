@@ -1,9 +1,11 @@
 import React from 'react'
+import { useSidebar } from '../contexts/SidebarContext'
 import { LayoutDashboard, School, Users, Layers, FileUser, FilePlus, LogOut } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = () => {
+    const { collapsed } = useSidebar()
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 shadow-sm relative`}>
             <div>

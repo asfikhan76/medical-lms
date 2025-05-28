@@ -1,35 +1,35 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
+import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import AddQuestion from './pages/AddQuestion'
+import { useSidebar } from './contexts/SidebarContext'
 
-function App() {
-  const [collapsed, setCollapsed] = useState(() => {
-    const stored = localStorage.getItem('sidebar-collapsed')
-    return stored === null ? false : stored === 'true'
-  })
-
-  useEffect(() => {
-    localStorage.setItem('sidebar-collapsed', collapsed)
-  }, [collapsed])
-
+function AppContent() {
+  const { collapsed } = useSidebar()
   return (
-    <Router>
-      <div className='flex'>
-        <div>
-          <Sidebar collapsed={collapsed} />
-        </div>
-        <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
-          <Header collapsed={collapsed} setCollapsed={setCollapsed} />
-          <Routes>
-            <Route path='/add-question' element={<AddQuestion />} />
-          </Routes>
-        </div>
+    <div className='flex'>
+      <div>
+        <Sidebar />
       </div>
-    </Router>
+      <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
+        <Header />
+        <Routes>
+          <Route path='/add-question' element={<AddQuestion />} />
+        </Routes>
+      </div>
+    </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <SidebarProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </SidebarProvider>
+  )
+}

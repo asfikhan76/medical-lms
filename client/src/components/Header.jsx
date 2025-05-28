@@ -1,6 +1,8 @@
 import React from 'react'
+import { useSidebar } from '../contexts/SidebarContext'
 import { Plus, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
-const Header = ({ collapsed, setCollapsed }) => {
+const Header = () => {
+    const { collapsed, setCollapsed } = useSidebar()
     return (
         <header className="bg-white m-3 mx-4 rounded-lg shadow-sm">
             <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
