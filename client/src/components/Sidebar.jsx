@@ -15,12 +15,17 @@ const Sidebar = () => {
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 relative`}>
             <div>
-                <div className="inline-flex size-16 items-center justify-center">
+                <div className="flex items-center justify-center py-3">
 
                     {/* logo icon */}
-                    <span className="grid size-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
+                    <div className="grid size-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
                         <School size={25} color='#28282B' />
-                    </span>
+                    </div>
+
+                    {/* logo text */}
+                    <div className={`text-lg font-semibold whitespace-nowrap text-gray-800 ms-2 ${collapsed ? 'hidden' : 'block'}`}>
+                        Exam Portal
+                    </div>
 
                     {/* toggle btn */}
                     <span onClick={() => setCollapsed(!collapsed)} className='h-4 w-4 flex text-white items-center justify-center rounded-full bg-blue-500 absolute top-8 right-0 translate-x-1/2 -translate-y-1/2 border border-white shadow-sm'>
