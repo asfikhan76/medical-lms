@@ -6,6 +6,8 @@ import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import AddSubject from './pages/AddSubject'
 import AddSystem from './pages/AddSystem'
+import AddCategory from './pages/AddCategory'
+import AddTopic from './pages/AddTopic'
 import Dashboard from './pages/Dashboard'
 import { useSidebar } from './contexts/SidebarContext'
 
@@ -22,6 +24,8 @@ function AppContent() {
           <Route path='/' element={<Dashboard />} />
           <Route path='/add-subject' element={<AddSubject />} />
           <Route path='/add-system' element={<AddSystem />} />
+          <Route path='/add-category' element={<AddCategory />} />
+          <Route path='/add-topic' element={<AddTopic />} />
         </Routes>
       </div>
     </div>

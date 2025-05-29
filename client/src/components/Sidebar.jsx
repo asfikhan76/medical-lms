@@ -49,6 +49,7 @@ const Sidebar = () => {
                                     }
                                 </Link>
                             </li>
+
                             {/* subject dropdown */}
                             <li>
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
@@ -157,7 +158,7 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to=""
+                                            <Link to="/add-category"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
 
                                                 {
@@ -200,7 +201,7 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to=""
+                                            <Link to="/add-topic"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
 
                                                 {
