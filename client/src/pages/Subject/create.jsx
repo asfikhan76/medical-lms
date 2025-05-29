@@ -4,6 +4,7 @@ import { Plus } from "lucide-react"
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
+import { SUBJECTS_API } from '../../config/api';
 import axios from 'axios'
 // /api/subjects
 
@@ -13,7 +14,7 @@ const AddSubject = () => {
         { label: 'Dashboard', to: '/' },
         { label: 'Add New Subject' }
     ]
-    // React hook form
+    // Handling form submission
     const {
         register,
         handleSubmit,
@@ -23,7 +24,7 @@ const AddSubject = () => {
 
     const SubmitHandler = async (data) => {
         try {
-            const response = await axios('http://localhost:5000/api/subjects', {
+            const response = await axios(SUBJECTS_API, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +36,6 @@ const AddSubject = () => {
         }
         catch (error) {
             toast.error("Error adding subject!");
-            console.error("Error adding subject:", error);
         }
     }
 
@@ -61,10 +61,13 @@ const AddSubject = () => {
                                 <div className="mt-2">
                                     <input
                                         name="name"
-                                        {...register("name")}
+                                        {...register("name", { required: true, minLength: { value: 5, message: "Subject name requires a minimum of 5 characters." } })}
                                         type="text"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
+                                    {errors.name && (
+                                        <span className='text-red-500 text-sm'>{errors.name.message}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
