@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { Plus, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
+import { Plus, LogOut, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
 const Header = () => {
     const { collapsed, setCollapsed } = useSidebar()
     return (
@@ -34,15 +34,16 @@ const Header = () => {
 
                     <div className="flex items-center gap-4">
                         <div className="sm:flex sm:gap-4">
-                            <a className="flex items-center gap-2 rounded-md bg-blue-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700"
+                            <a className="flex items-center gap-2 rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500"
                                 href="#"  >
                                 Add New Test
                                 <Plus size={18} color="#fff" />
                             </a>
 
-                            <a className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-blue-500 transition hover:text-blue-600 sm:block"
+                            <a className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-semibold text-[#b23b3b] transition hover:text-[#904e4e] sm:flex items-center gap-2"
                                 href="#" >
                                 Logout
+                                <LogOut size={18} color='#b23b3b' />
                             </a>
                         </div>
 

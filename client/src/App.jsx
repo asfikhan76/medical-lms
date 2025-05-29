@@ -4,7 +4,7 @@ import './App.css'
 import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
-import AddQuestion from './pages/AddQuestion'
+import AddSubject from './pages/AddSubject'
 import Dashboard from './pages/Dashboard'
 import { useSidebar } from './contexts/SidebarContext'
 
@@ -19,7 +19,7 @@ function AppContent() {
         <Header />
         <Routes>
           <Route path='/' element={<Dashboard />} />
-          <Route path='/add-question' element={<AddQuestion />} />
+          <Route path='/add-subject' element={<AddSubject />} />
         </Routes>
       </div>
     </div>

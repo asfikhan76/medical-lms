@@ -27,7 +27,7 @@ const Sidebar = () => {
                             <Link to="/"
                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm bg-blue-50 px-2 py-1.5 text-blue-700`}>
                                 <LayoutDashboard size={18} color='#6a7282' />
-                                <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                                     Dashboard
                                 </span>
                                 {
@@ -41,7 +41,7 @@ const Sidebar = () => {
                                 <Link to="#"
                                     className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                     <Users size={18} color='#6a7282' />
-                                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                                         Students
                                     </span>
                                     {
@@ -53,7 +53,7 @@ const Sidebar = () => {
                                 <Link to="#"
                                     className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                     <Layers size={18} color='#6a7282' />
-                                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm whitespace-nowrap w-fit bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm whitespace-nowrap w-fit bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                                         All Tests
                                     </span>
                                     {
@@ -65,7 +65,7 @@ const Sidebar = () => {
                                 <Link to="#"
                                     className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                     <FileUser size={18} color='#6a7282' />
-                                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                                         Results
                                     </span>
                                     {
@@ -74,10 +74,10 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/add-question"
+                                <Link to="/add-subject"
                                     className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                     <FilePlus size={18} color='#6a7282' />
-                                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                                         Add Subject
                                     </span>
                                     {
@@ -94,7 +94,7 @@ const Sidebar = () => {
                 <a href="#"
                     className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                     <LogOut size={18} color='#6a7282' />
-                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         Logout
                     </span>
                     {
