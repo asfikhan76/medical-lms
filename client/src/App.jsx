@@ -75,7 +75,18 @@ export default function App() {
     <SidebarProvider>
       <Router>
         <AppContent />
-        <ToastContainer position="top-right" autoClose={3000} />
+        <ToastContainer position="bottom-right"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored" // Use the colored theme for vibrant toasts
+          toastClassName="custom-toast"
+          bodyClassName="custom-toast-body" />
       </Router>
     </SidebarProvider>
   )
