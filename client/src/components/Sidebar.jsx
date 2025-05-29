@@ -124,7 +124,7 @@ const Sidebar = () => {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to=""
+                                            <Link to="/all-systems"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                                 {
                                                     collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Systems</span>
@@ -167,7 +167,7 @@ const Sidebar = () => {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to=""
+                                            <Link to="/all-categories"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                                 {
                                                     collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Categories</span>
@@ -210,7 +210,7 @@ const Sidebar = () => {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to=""
+                                            <Link to="/all-topics"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                                 {
                                                     collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Topics</span>
