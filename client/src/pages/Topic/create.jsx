@@ -1,12 +1,11 @@
 import React from 'react'
-import Breadcrumb from '../components/Breadcrumb'
+import Breadcrumb from '../../components/Breadcrumb'
 import { Plus } from "lucide-react"
 import { Link } from 'react-router-dom'
-
-const AddSystem = () => {
+const AddTopic = () => {
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
-        { label: 'Add New System' }
+        { label: 'Add New Topic' }
     ]
     return (
         <div className='mx-4'>
@@ -17,18 +16,18 @@ const AddSystem = () => {
 
                     {/* content */}
                     <div className="border-b  border-gray-900/10 pb-12">
-                        <h2 className="text-base/7 font-semibold text-gray-900">System Information</h2>
-                        <p className="mt-1 text-sm/6 text-gray-600">Provide details for the new system.</p>
+                        <h2 className="text-base/7 font-semibold text-gray-900">Topic Information</h2>
+                        <p className="mt-1 text-sm/6 text-gray-600">Provide details for the new subject.</p>
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
                             <div className="sm:col-span-3">
-                                <label htmlFor="system_name" className="block text-sm/6 font-medium text-gray-900">
-                                    System Name
+                                <label htmlFor="topic_name" className="block text-sm/6 font-medium text-gray-900">
+                                    Topic Name
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                        id="system_name"
-                                        name="system_name"
+                                        id="topic_name"
+                                        name="topic_name"
                                         type="text"
                                         autoComplete="given-name"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -47,7 +46,7 @@ const AddSystem = () => {
                             type="submit"
                             className="rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Add System
+                            Add Topic
                             <Plus size={18} color="#fff" />
                         </button>
                     </div>
@@ -58,4 +57,4 @@ const AddSystem = () => {
     )
 }
 
-export default AddSystem
+export default AddTopic
