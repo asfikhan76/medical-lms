@@ -49,6 +49,48 @@ const Sidebar = () => {
                                     }
                                 </Link>
                             </li>
+                            {/* subject dropdown */}
+                            <li>
+                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                    <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                        <div className='flex items-center gap-3'>
+                                            <FilePlus size={18} color='#6a7282' />
+                                            {
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Subjects </span>
+                                            }
+                                        </div>
+
+                                        {
+                                            collapsed ? null :
+                                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                    <ChevronDown size={18} color='#6a7282' />
+                                                </span>
+                                        }
+                                        <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                                            Subjects
+                                        </span>
+                                    </summary>
+                                    <ul className="mt-2 space-y-1 px-4">
+                                        <li>
+                                            <Link to="/add-subject"
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Add Subject</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to=""
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Subjects</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </details>
+                            </li>
+
                             {/* system dropdown */}
                             <li>
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
@@ -91,14 +133,15 @@ const Sidebar = () => {
                                     </ul>
                                 </details>
                             </li>
-                            {/* subject dropdown */}
+
+                            {/* category dropdown */}
                             <li>
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
                                             <FilePlus size={18} color='#6a7282' />
                                             {
-                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Subjects </span>
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Categories </span>
                                             }
                                         </div>
 
@@ -109,15 +152,16 @@ const Sidebar = () => {
                                                 </span>
                                         }
                                         <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
-                                            Subjects
+                                            Categories
                                         </span>
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-subject"
+                                            <Link to=""
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Add Subject</span>
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Category</span>
                                                 }
                                             </Link>
                                         </li>
@@ -125,7 +169,50 @@ const Sidebar = () => {
                                             <Link to=""
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Subject</span>
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Categories</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </details>
+                            </li>
+
+                            {/* topic dropdown */}
+                            <li>
+                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                    <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                        <div className='flex items-center gap-3'>
+                                            <FilePlus size={18} color='#6a7282' />
+                                            {
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Topics </span>
+                                            }
+                                        </div>
+
+                                        {
+                                            collapsed ? null :
+                                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                    <ChevronDown size={18} color='#6a7282' />
+                                                </span>
+                                        }
+                                        <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                                            Topics
+                                        </span>
+                                    </summary>
+                                    <ul className="mt-2 space-y-1 px-4">
+                                        <li>
+                                            <Link to=""
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Topic</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to=""
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Topics</span>
                                                 }
                                             </Link>
                                         </li>
