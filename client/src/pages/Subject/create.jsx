@@ -35,7 +35,11 @@ const AddSubject = () => {
             toast.success("Subject successfully added!");
         }
         catch (error) {
-            toast.error("Error adding subject!");
+            const serverMessage =
+                error.response && error.response.data && error.response.data.message
+                    ? error.response.data.message
+                    : "Error adding subject!";
+            toast.error(serverMessage);
         }
     }
 
