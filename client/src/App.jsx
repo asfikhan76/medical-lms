@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
+import { SidebarProvider } from './contexts/SidebarContext'
+import Sidebar from './components/Sidebar'
+import Header from './components/Header'
+// subject imports
+import AddSubject from './pages/Subject/create'
+import EditSubject from './pages/Subject/edit'
+import AllSubjects from './pages/Subject/index'
 
-function App() {
-  const [count, setCount] = useState(0)
+// system imports
+import AddSystem from './pages/System/create'
+import EditSystem from './pages/System/edit'
+import AllSystems from './pages/System/index'
 
+// category imports
+import AddCategory from './pages/Category/create'
+import EditCategory from './pages/Category/edit'
+import AllCategories from './pages/Category/index'
+
+// topic imports
+import AddTopic from './pages/Topic/create'
+import EditTopic from './pages/Topic/edit'
+import AllTopics from './pages/Topic/index'
+
+// dashboard import
+import Dashboard from './pages/Dashboard'
+
+// contexts
+import { useSidebar } from './contexts/SidebarContext'
+
+function AppContent() {
+  const { collapsed } = useSidebar()
   return (
-    <>
-      <div className='bg-red-600'>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='flex'>
+      <div>
+        <Sidebar />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
+        <Header />
+        <Routes>
+          {/* Dashboard Route */}
+          <Route path='/' element={<Dashboard />} />
+
+          {/*Subjects Routes  */}
+          <Route path='/add-subject' element={<AddSubject />} />
+          <Route path='/edit-subject' element={<EditSubject />} />
+          <Route path='/all-subjects' element={<AllSubjects />} />
+
+          {/* Systems Routes */}
+          <Route path='/add-system' element={<AddSystem />} />
+          <Route path='/edit-system' element={<EditSystem />} />
+          <Route path='/all-systems' element={<AllSystems />} />
+
+          {/* Categories Routes */}
+          <Route path='/add-category' element={<AddCategory />} />
+          <Route path='/edit-category' element={<EditCategory />} />
+          <Route path='/all-categories' element={<AllCategories />} />
+
+          {/* Topics Routes */}
+          <Route path='/add-topic' element={<AddTopic />} />
+          <Route path='/edit-topic' element={<EditTopic />} />
+          <Route path='/all-topics' element={<AllTopics />} />
+        </Routes>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <SidebarProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </SidebarProvider>
+  )
+}
