@@ -16,3 +16,4 @@ router.put("/:id", verifyToken, userController.updateUser);
 router.delete("/:id", verifyToken, restrictTo("admin"), userController.deleteUser);
 
 module.exports = router;
+
