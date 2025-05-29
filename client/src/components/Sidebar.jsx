@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { LayoutDashboard, School, Users, Layers, FileUser, FilePlus, LogOut } from 'lucide-react'
+import { LayoutDashboard, School, Users, Layers, FileUser, FilePlus, LogOut, ChevronDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 
@@ -49,41 +49,88 @@ const Sidebar = () => {
                                     }
                                 </Link>
                             </li>
+                            {/* system dropdown */}
                             <li>
-                                <Link to="#"
-                                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                    <Layers size={18} color='#6a7282' />
-                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm whitespace-nowrap w-fit bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                        All Tests
-                                    </span>
-                                    {
-                                        collapsed ? null : <span className="text-sm font-normal w-fit text-[#6a7282]">All Tests</span>
-                                    }
-                                </Link>
+                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                    <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                        <div className='flex items-center gap-3'>
+                                            <FilePlus size={18} color='#6a7282' />
+                                            {
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Systems </span>
+                                            }
+                                        </div>
+
+                                        {
+                                            collapsed ? null :
+                                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                    <ChevronDown size={18} color='#6a7282' />
+                                                </span>
+                                        }
+                                        <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                                            Systems
+                                        </span>
+                                    </summary>
+                                    <ul className="mt-2 space-y-1 px-4">
+                                        <li>
+                                            <Link to="/add-system"
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add System</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to=""
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Systems</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </details>
                             </li>
+                            {/* subject dropdown */}
                             <li>
-                                <Link to="#"
-                                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                    <FileUser size={18} color='#6a7282' />
-                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                        Results
-                                    </span>
-                                    {
-                                        collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">  Results</span>
-                                    }
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/add-subject"
-                                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                    <FilePlus size={18} color='#6a7282' />
-                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                        Add Subject
-                                    </span>
-                                    {
-                                        collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Subject</span>
-                                    }
-                                </Link>
+                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                    <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                        <div className='flex items-center gap-3'>
+                                            <FilePlus size={18} color='#6a7282' />
+                                            {
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Subjects </span>
+                                            }
+                                        </div>
+
+                                        {
+                                            collapsed ? null :
+                                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                    <ChevronDown size={18} color='#6a7282' />
+                                                </span>
+                                        }
+                                        <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                                            Subjects
+                                        </span>
+                                    </summary>
+                                    <ul className="mt-2 space-y-1 px-4">
+                                        <li>
+                                            <Link to="/add-subject"
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Add Subject</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link to=""
+                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                                {
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Subject</span>
+                                                }
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </details>
                             </li>
                         </ul>
                     </div>

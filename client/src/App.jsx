@@ -5,6 +5,7 @@ import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
 import AddSubject from './pages/AddSubject'
+import AddSystem from './pages/AddSystem'
 import Dashboard from './pages/Dashboard'
 import { useSidebar } from './contexts/SidebarContext'
 
@@ -20,6 +21,7 @@ function AppContent() {
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/add-subject' element={<AddSubject />} />
+          <Route path='/add-system' element={<AddSystem />} />
         </Routes>
       </div>
     </div>
