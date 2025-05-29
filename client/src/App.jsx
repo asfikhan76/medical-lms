@@ -4,6 +4,8 @@ import './App.css'
 import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // subject imports
 import AddSubject from './pages/Subject/create'
 import EditSubject from './pages/Subject/edit'
@@ -73,6 +75,7 @@ export default function App() {
     <SidebarProvider>
       <Router>
         <AppContent />
+        <ToastContainer position="top-right" autoClose={3000} />
       </Router>
     </SidebarProvider>
   )

@@ -3,6 +3,7 @@ import Breadcrumb from '../../components/Breadcrumb'
 import { Link } from 'react-router-dom'
 
 const AllSubjects = () => {
+    // Breadcrumb
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'All Subjects' }
@@ -20,6 +21,7 @@ const AllSubjects = () => {
                 </thead>
                 <tbody>
                     <tr className="border-b border-gray-200">
+
                         <td className="px-6 py-4 text-sm text-gray-900 w-2/5">Immunology</td>
                         <td className="px-6 py-4 text-sm text-gray-500 w-2/5">12 Jan 2025</td>
                         <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
