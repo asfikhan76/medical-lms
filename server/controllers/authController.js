@@ -33,6 +33,7 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log(username, password);
 
     const user = await User.findOne({ username });
     if (!user) return res.status(404).json({ error: "User not found" });

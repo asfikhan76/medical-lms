@@ -1,9 +1,21 @@
 const Question = require('../models/Question');
+const Counter = require('../models/Counter'); // Import the Counter model
 
-// Create a new question
 exports.createQuestion = async (req, res) => {
   try {
-    const question = new Question(req.body);
+    // Auto-increment logic
+    const counter = await Counter.findOneAndUpdate(
+      { name: 'questionId' },
+      { $inc: { value: 1 } },
+      { new: true, upsert: true }
+    );
+
+    // Create the new question with custom questionId
+    const question = new Question({
+      ...req.body,
+      questionId: counter.value
+    });
+
     await question.save();
     res.status(201).json(question);
   } catch (err) {
