@@ -1,13 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { SUBJECTS_API } from '../../config/api'
+import Loader from "../../components/Loader"
+
 
 const AllSubjects = () => {
+    const [subjects, setSubjects] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
     // Breadcrumb
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'All Subjects' }
     ]
+
+    useEffect(() => {
+        const fetchSubjects = async () => {
+            try {
+                const response = await axios.get(SUBJECTS_API)
+                setSubjects(response.data)
+                setLoading(false)
+            } catch (err) {
+                setError('Failed to fetch subjects')
+                setLoading(false)
+            }
+        }
+
+        fetchSubjects()
+    }, [])
+
+    if (loading) {
+        return (
+            <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
+                <Breadcrumb items={breadcrumbItems} />
+                <Loader />
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
+                <Breadcrumb items={breadcrumbItems} />
+                <div className="mt-7 text-center text-red-500">{error}</div>
+            </div>
+        )
+    }
+
     return (
         <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
             <Breadcrumb items={breadcrumbItems} />
@@ -20,16 +62,21 @@ const AllSubjects = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="border-b border-gray-200">
+                    {
+                        subjects.map((subject) => (
+                            <tr key={subject._id} className="border-b border-gray-200">
 
-                        <td className="px-6 py-4 text-sm text-gray-900 w-2/5">Immunology</td>
-                        <td className="px-6 py-4 text-sm text-gray-500 w-2/5">12 Jan 2025</td>
-                        <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
-                            <Link to="/edit-subject">
-                                Edit
-                            </Link>
-                        </td>
-                    </tr>
+                                <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subject.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-500 w-2/5">  {new Date(subject.createdAt).toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
+                                    <Link to={`/edit-subject/${subject._id}`}>
+                                        Edit
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))
+                    }
+
                 </tbody>
             </table>
         </div>
