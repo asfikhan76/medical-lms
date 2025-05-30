@@ -5,9 +5,22 @@ exports.createSubject = async (req, res) => {
     const subject = await Subject.create(req.body);
     res.status(201).json(subject);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error('Error creating subject:', err);
+
+    // Duplicate key error
+    if (err.code === 11000 && err.keyPattern?.name) {
+      return res.status(400).json({
+        error: 'A subject already exists',
+      });
+    }
+
+    // Validation or other errors
+    return res.status(400).json({
+      error: err.message || 'An unexpected error occurred while creating the subject.',
+    });
   }
 };
+
 
 exports.getAllSubjects = async (req, res) => {
   try {
