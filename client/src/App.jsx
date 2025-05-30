@@ -47,7 +47,7 @@ function AppContent() {
 
           {/*Subjects Routes  */}
           <Route path='/add-subject' element={<AddSubject />} />
-          <Route path='/edit-subject' element={<EditSubject />} />
+          <Route path='/edit-subject/:id' element={<EditSubject />} />
           <Route path='/all-subjects' element={<AllSubjects />} />
 
           {/* Systems Routes */}

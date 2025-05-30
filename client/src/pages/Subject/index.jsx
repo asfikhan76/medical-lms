@@ -36,7 +36,9 @@ const AllSubjects = () => {
         return (
             <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
                 <Breadcrumb items={breadcrumbItems} />
-                <Loader />
+                <div className='flex items-center justify-center min-h-40'>
+                    <Loader />
+                </div>
             </div>
         )
     }

@@ -1,12 +1,59 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Plus, SquarePen } from "lucide-react"
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import axios from 'axios'
+import { SUBJECTS_API } from '../../config/api'
+import Loader from "../../components/Loader"
+
 const EditSubject = () => {
+    const { id } = useParams();
+    const [subject, setSubject] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'Edit Subject' }
     ]
+
+    useEffect(() => {
+        const fetchSubject = async () => {
+            try {
+                const response = await axios.get(`${SUBJECTS_API}/${id}`);
+                // console.log(response)
+                setSubject(response.data);
+                // console(response.data)
+                setLoading(false);
+            } catch (err) {
+                setError('Failed to fetch subject details');
+                setLoading(false);
+            }
+        };
+
+        fetchSubject();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
+                <Breadcrumb items={breadcrumbItems} />
+                <div className='flex items-center justify-center min-h-40'>
+                    <Loader />
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
+                <Breadcrumb items={breadcrumbItems} />
+                <div className="mt-7 text-center text-red-500">{error}</div>
+            </div>
+        );
+    }
+
     return (
         <div className='mx-4'>
             <form>
@@ -29,6 +76,7 @@ const EditSubject = () => {
                                         id="subject_name"
                                         name="subject_name"
                                         type="text"
+                                        defaultValue={subject?.name}
                                         autoComplete="given-name"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
@@ -39,7 +87,7 @@ const EditSubject = () => {
 
                     {/* actions */}
                     <div className="flex  items-center justify-end gap-x-6">
-                        <Link to="/" type="button" className="text-sm/6 font-semibold text-gray-900 cursor-pointer">
+                        <Link to="/all-subjects" type="button" className="text-sm/6 font-semibold text-gray-900 cursor-pointer">
                             Cancel
                         </Link>
                         <button
@@ -51,7 +99,6 @@ const EditSubject = () => {
                         </button>
                     </div>
                 </div>
-
             </form>
         </div>
     )
