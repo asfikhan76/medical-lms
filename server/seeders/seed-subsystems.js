@@ -7,8 +7,16 @@ const seedSubSystems = async () => {
   await SubSystem.deleteMany();
 
   const systems = await System.find();
-  const muscular = systems.find(s => s.name === "Musculoskeletal");
-  const nervous = systems.find(s => s.name === "Nervous");
+
+  const muscular = systems.find(s => s.name.toLowerCase() === "musculoskeletal");
+  const nervous = systems.find(s => s.name.toLowerCase() === "nervous");
+
+  if (!muscular || !nervous) {
+    console.error("❌ Required systems not found:");
+    if (!muscular) console.error("- Musculoskeletal system is missing.");
+    if (!nervous) console.error("- Nervous system is missing.");
+    throw new Error("Required systems (Musculoskeletal, Nervous) not found. Please seed systems first.");
+  }
 
   const subSystems = [
     { name: "Skeletal Muscle", system: muscular._id },

@@ -7,8 +7,16 @@ const seedSystems = async () => {
   await System.deleteMany();
 
   const subjects = await Subject.find();
-  const anatomy = subjects.find(s => s.name === "Anatomy");
-  const physiology = subjects.find(s => s.name === "Physiology");
+
+  const anatomy = subjects.find(s => s.name.toLowerCase() === "anatomy");
+  const physiology = subjects.find(s => s.name.toLowerCase() === "physiology");
+
+  if (!anatomy || !physiology) {
+    console.error("❌ Required subjects not found:");
+    if (!anatomy) console.error("- Anatomy subject is missing.");
+    if (!physiology) console.error("- Physiology subject is missing.");
+    throw new Error("Required subjects (Anatomy, Physiology) not found. Please seed subjects first.");
+  }
 
   const systems = [
     { name: "Musculoskeletal", subject: anatomy._id },

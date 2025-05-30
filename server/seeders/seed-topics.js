@@ -7,8 +7,16 @@ const seedTopics = async () => {
   await Topic.deleteMany();
 
   const subsystems = await SubSystem.find();
-  const muscle = subsystems.find(s => s.name === "Skeletal Muscle");
-  const bones = subsystems.find(s => s.name === "Bones");
+
+  const muscle = subsystems.find(s => s.name.toLowerCase() === "skeletal muscle");
+  const bones = subsystems.find(s => s.name.toLowerCase() === "bones");
+
+  if (!muscle || !bones) {
+    console.error("❌ Required subsystems not found:");
+    if (!muscle) console.error("- Subsystem 'Skeletal Muscle' is missing.");
+    if (!bones) console.error("- Subsystem 'Bones' is missing.");
+    throw new Error("Required subsystems (Skeletal Muscle, Bones) not found. Please seed subsystems first.");
+  }
 
   const topics = [
     { name: "Muscle Contraction", subSystem: muscle._id },

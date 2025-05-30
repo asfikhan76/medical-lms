@@ -10,13 +10,13 @@ exports.createSubject = async (req, res) => {
     // Duplicate key error
     if (err.code === 11000 && err.keyPattern?.name) {
       return res.status(400).json({
-        error: 'A subject already exists',
+        error: 'Subject already exists',
       });
     }
 
     // Validation or other errors
     return res.status(400).json({
-      error: err.message || 'An unexpected error occurred while creating the subject.',
+      error: err.message || 'unexpected error occurred while creating the subject.',
     });
   }
 };
