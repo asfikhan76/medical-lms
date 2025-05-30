@@ -5,7 +5,16 @@ exports.createTopic = async (req, res) => {
     const topic = await Topic.create(req.body);
     res.status(201).json(topic);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    if (err.code === 11000 && err.keyPattern?.name) {
+      return res.status(400).json({
+        error: 'Topic already exists',
+      });
+    }
+
+    // Validation or other errors
+    return res.status(400).json({
+      error: err.message || 'unexpected error while creating the topic.',
+    });
   }
 };
 

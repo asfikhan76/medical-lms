@@ -5,7 +5,16 @@ exports.createSubSystem = async (req, res) => {
     const subSystem = await SubSystem.create(req.body);
     res.status(201).json(subSystem);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    if (err.code === 11000 && err.keyPattern?.name) {
+      return res.status(400).json({
+        error: 'Sub-system already exists',
+      });
+    }
+
+    // Validation or other errors
+    return res.status(400).json({
+      error: err.message || 'unexpected error while creating the sub-system.',
+    });
   }
 };
 

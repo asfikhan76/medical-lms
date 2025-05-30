@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const topicSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true , trim: true,
+    lowercase: true, unique: true},
   subSystem: { type: mongoose.Schema.Types.ObjectId, ref: "SubSystem", required: true }
 }, { timestamps: true });
 
