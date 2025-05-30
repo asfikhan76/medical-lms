@@ -16,6 +16,7 @@ exports.createTopic = async (req, res) => {
       error: err.message || 'unexpected error while creating the topic.',
     });
   }
+  
 };
 
 exports.getAllTopics = async (req, res) => {
