@@ -5,7 +5,14 @@ exports.createSystem = async (req, res) => {
     const system = await System.create(req.body);
     res.status(201).json(system);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    if (err.code === 11000 && err.keyPattern?.name) {
+      return res.status(400).json({
+        error: 'System already exists',
+      });
+    }
+    res.status(400).json({
+      error: err.message || 'Unexpected error while creating the system.',
+    });
   }
 };
 
@@ -14,15 +21,36 @@ exports.getAllSystems = async (req, res) => {
     const systems = await System.find().populate("subject");
     res.json(systems);
   } catch (err) {
-    if (err.code === 11000 && err.keyPattern?.name) {
-      return res.status(400).json({
-        error: 'System already exists',
-      });
-    }
+    res.status(500).json({ error: err.message });
+  }
+};
 
-    // Validation or other errors
-    return res.status(400).json({
-      error: err.message || 'unexpected error while creating the system.',
+exports.updateSystem = async (req, res) => {
+  try {
+    const updated = await System.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
     });
+    if (!updated) {
+      return res.status(404).json({ error: "System not found" });
+    }
+    res.json(updated);
+  } catch (err) {
+    if (err.code === 11000 && err.keyPattern?.name) {
+      return res.status(400).json({ error: 'System name already exists' });
+    }
+    res.status(400).json({ error: err.message || 'Error updating system' });
+  }
+};
+
+exports.deleteSystem = async (req, res) => {
+  try {
+    const deleted = await System.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "System not found" });
+    }
+    res.json({ message: "System deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

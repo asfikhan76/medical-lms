@@ -7,25 +7,52 @@ exports.createSubject = async (req, res) => {
   } catch (err) {
     console.error('Error creating subject:', err);
 
-    // Duplicate key error
     if (err.code === 11000 && err.keyPattern?.name) {
-      return res.status(400).json({
-        error: 'Subject already exists',
-      });
+      return res.status(400).json({ error: 'Subject already exists' });
     }
 
-    // Validation or other errors
     return res.status(400).json({
-      error: err.message || 'unexpected error occurred while creating the subject.',
+      error: err.message || 'Unexpected error occurred while creating the subject.',
     });
   }
 };
-
 
 exports.getAllSubjects = async (req, res) => {
   try {
     const subjects = await Subject.find();
     res.json(subjects);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.updateSubject = async (req, res) => {
+  try {
+    const updated = await Subject.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!updated) {
+      return res.status(404).json({ error: "Subject not found" });
+    }
+
+    res.json(updated);
+  } catch (err) {
+    if (err.code === 11000 && err.keyPattern?.name) {
+      return res.status(400).json({ error: 'Subject name already exists' });
+    }
+    res.status(400).json({ error: err.message || 'Error updating subject' });
+  }
+};
+
+exports.deleteSubject = async (req, res) => {
+  try {
+    const deleted = await Subject.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Subject not found" });
+    }
+    res.json({ message: "Subject deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
