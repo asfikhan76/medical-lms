@@ -1,16 +1,72 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Plus } from "lucide-react"
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import { SYSTEM_API, SUBJECTS_API } from '../../config/api';
+import axios from 'axios'
 
 const AddSystem = () => {
+    const [subjects, setSubjects] = useState([])
+    const [selectedSubject, setSelectedSubject] = useState('')
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(true)
+
+    // Breadcrumbs 
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'Add New System' }
     ]
+    // Handling form submission
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset
+    } = useForm()
+
+
+    const SubmitHandler = async (data) => {
+        try {
+            const response = await axios.post(SYSTEM_API, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            reset();
+            toast.success("System successfully added!");
+        }
+        catch (error) {
+            const serverMessage =
+                error.response?.data?.error ?
+                    error.response.data.error :
+                    "Error adding system!";
+            toast.error(serverMessage);
+        }
+    }
+
+    // Fetching subjects from the API
+
+    useEffect(() => {
+        const fetchSubjects = async () => {
+            try {
+                const response = await axios.get(SUBJECTS_API)
+                setSubjects(response.data)
+                setLoading(false)
+            } catch (err) {
+                setError('Failed to fetch subjects')
+                setLoading(false)
+            }
+        }
+
+        fetchSubjects()
+    }, [])
+
+
     return (
         <div className='mx-4'>
-            <form>
+            <form onSubmit={handleSubmit(SubmitHandler)}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg mt-5 relative">
                     {/* breadcrumb */}
                     <Breadcrumb items={breadcrumbItems} />
@@ -22,17 +78,41 @@ const AddSystem = () => {
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
                             <div className="sm:col-span-3">
-                                <label htmlFor="system_name" className="block text-sm/6 font-medium text-gray-900">
+                                <label htmlFor="name" className="block mb-1 text-sm/6 font-medium text-gray-900">
+                                    Subject
+                                </label>
+
+                                <select
+                                    {...register("subject", { required: "Subject is required" })}
+                                    name="subject"
+                                    id="subject"
+                                    className="block px-3 py-2.5  w-full rounded-md sm:text-sm outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                >
+                                    <option value="">Select a Subject</option>
+                                    {
+                                        subjects.map((subject) => (
+                                            <option key={subject._id} value={subject._id}>
+                                                {subject.name}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+                            <div className="sm:col-span-3">
+                                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
                                     System Name
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                        id="system_name"
-                                        name="system_name"
+                                        id='name'
+                                        name="name"
+                                        {...register("name", { required: true, minLength: { value: 5, message: "System name requires a minimum of 5 characters." } })}
                                         type="text"
-                                        autoComplete="given-name"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
+                                     {errors.name && (
+                                        <span className='text-red-500 text-sm'>{errors.name.message}</span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -53,8 +133,8 @@ const AddSystem = () => {
                     </div>
                 </div>
 
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
 
