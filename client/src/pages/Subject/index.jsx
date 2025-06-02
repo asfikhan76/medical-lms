@@ -71,7 +71,7 @@ const AllSubjects = () => {
                                 <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subject.name}</td>
                                 <td className="px-6 py-4 text-sm text-gray-500 w-2/5">  {new Date(subject.createdAt).toLocaleDateString()}</td>
                                 <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
-                                    <Link to={`/edit-subject/${subject._id}`}>
+                                    <Link to={`/edit-subject/${subject._id}`} state={{ subjectData: subject }}>
                                         Edit
                                     </Link>
                                 </td>
