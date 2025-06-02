@@ -4,6 +4,8 @@ import './App.css'
 import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // subject imports
 import AddSubject from './pages/Subject/create'
 import EditSubject from './pages/Subject/edit'
@@ -45,7 +47,7 @@ function AppContent() {
 
           {/*Subjects Routes  */}
           <Route path='/add-subject' element={<AddSubject />} />
-          <Route path='/edit-subject' element={<EditSubject />} />
+          <Route path='/edit-subject/:id' element={<EditSubject />} />
           <Route path='/all-subjects' element={<AllSubjects />} />
 
           {/* Systems Routes */}
@@ -73,6 +75,18 @@ export default function App() {
     <SidebarProvider>
       <Router>
         <AppContent />
+        <ToastContainer position="bottom-right"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored" // Use the colored theme for vibrant toasts
+          toastClassName="custom-toast"
+          bodyClassName="custom-toast-body" />
       </Router>
     </SidebarProvider>
   )
