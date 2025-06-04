@@ -1,8 +1,8 @@
-const Topic = require("../models/Topic");
+const TopicModel = require("../models/TopicModel");
 
 exports.createTopic = async (req, res) => {
   try {
-    const topic = await Topic.create(req.body);
+    const topic = await TopicModel.create(req.body);
     res.status(201).json(topic);
   } catch (err) {
     if (err.code === 11000 && err.keyPattern?.name) {
@@ -14,7 +14,7 @@ exports.createTopic = async (req, res) => {
 
 exports.getAllTopics = async (req, res) => {
   try {
-    const topics = await Topic.find().populate("subSystem");
+    const topics = await TopicModel.find().populate("subSystem");
     res.json(topics);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -23,7 +23,7 @@ exports.getAllTopics = async (req, res) => {
 
 exports.updateTopic = async (req, res) => {
   try {
-    const updated = await Topic.findByIdAndUpdate(req.params.id, req.body, {
+    const updated = await TopicModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
@@ -41,7 +41,7 @@ exports.updateTopic = async (req, res) => {
 
 exports.deleteTopic = async (req, res) => {
   try {
-    const deleted = await Topic.findByIdAndDelete(req.params.id);
+    const deleted = await TopicModel.findByIdAndDelete(req.params.id);
     if (!deleted) {
       return res.status(404).json({ error: "Topic not found" });
     }

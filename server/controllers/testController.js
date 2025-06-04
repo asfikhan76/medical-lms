@@ -1,10 +1,10 @@
-const Test = require("../models/Test");
-const Question = require("../models/Question");
+const TestModel = require("../models/TestModel");
+const QuestionModel = require("../models/QuestionModel");
 
 // Create test manually with selected questions
 exports.createTest = async (req, res) => {
   try {
-    const test = new Test(req.body);
+    const test = new TestModel(req.body);
     await test.save();
     res.status(201).json(test);
   } catch (err) {
@@ -15,7 +15,7 @@ exports.createTest = async (req, res) => {
 // Get all tests
 exports.getAllTests = async (req, res) => {
   try {
-    const tests = await Test.find().populate("questions.question");
+    const tests = await TestModel.find().populate("questions.question");
     res.json(tests);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -25,7 +25,7 @@ exports.getAllTests = async (req, res) => {
 // Get a single test by ID
 exports.getTestById = async (req, res) => {
   try {
-    const test = await Test.findById(req.params.id).populate("questions.question");
+    const test = await TestModel.findById(req.params.id).populate("questions.question");
     if (!test) return res.status(404).json({ error: "Test not found" });
     res.json(test);
   } catch (err) {
@@ -36,7 +36,7 @@ exports.getTestById = async (req, res) => {
 // Update a test
 exports.updateTest = async (req, res) => {
   try {
-    const test = await Test.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const test = await TestModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(test);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -46,7 +46,7 @@ exports.updateTest = async (req, res) => {
 // Delete a test
 exports.deleteTest = async (req, res) => {
   try {
-    await Test.findByIdAndDelete(req.params.id);
+    await TestModel.findByIdAndDelete(req.params.id);
     res.json({ message: "Test deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });

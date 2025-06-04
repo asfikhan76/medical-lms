@@ -1,8 +1,8 @@
-const System = require("../models/System");
+const SystemModel = require("../models/SystemModel");
 
 exports.createSystem = async (req, res) => {
   try {
-    const system = await System.create(req.body);
+    const system = await SystemModel.create(req.body);
     res.status(201).json(system);
   } catch (err) {
     if (err.code === 11000 && err.keyPattern?.name) {
@@ -18,7 +18,7 @@ exports.createSystem = async (req, res) => {
 
 exports.getAllSystems = async (req, res) => {
   try {
-    const systems = await System.find().populate("subject");
+    const systems = await SystemModel.find().populate("subject");
     res.json(systems);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -27,7 +27,7 @@ exports.getAllSystems = async (req, res) => {
 
 exports.updateSystem = async (req, res) => {
   try {
-    const updated = await System.findByIdAndUpdate(req.params.id, req.body, {
+    const updated = await SystemModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
@@ -45,7 +45,7 @@ exports.updateSystem = async (req, res) => {
 
 exports.deleteSystem = async (req, res) => {
   try {
-    const deleted = await System.findByIdAndDelete(req.params.id);
+    const deleted = await SystemModel.findByIdAndDelete(req.params.id);
     if (!deleted) {
       return res.status(404).json({ error: "System not found" });
     }

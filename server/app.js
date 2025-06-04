@@ -15,6 +15,9 @@ const systemRoutes = require("./routes/systemRoutes");
 const subSystemRoutes = require("./routes/subSystemRoutes");
 const topicRoutes = require("./routes/topicRoutes");
 
+// temprary routes
+const questionUploadRoutes = require("./routes/questionUploadRoute");
+const subjectUploadRoutes = require("./routes/subjectUploadRoute");
 
 
 // Routes
@@ -29,6 +32,9 @@ app.use("/api/systems", systemRoutes);
 app.use("/api/subsystems", subSystemRoutes);
 app.use("/api/topics", topicRoutes);
 
+// temprary routes
+app.use("/api/subjectUpload", subjectUploadRoutes);
+app.use("/api/questionUpload", questionUploadRoutes);
 
 
 

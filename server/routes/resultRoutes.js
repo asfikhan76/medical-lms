@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const resultController = require("../controllers/resultController");
 
+
 // Submit test (student)
 router.post("/submit", resultController.submitTest);
 

@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const UserModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { jwtSecret, jwtExpire } = require("../config/jwt");
@@ -8,12 +8,12 @@ exports.signup = async (req, res) => {
   try {
     const { username, password, role, email, phone } = req.body;
 
-    const existingUser = await User.findOne({ username });
+    const existingUser = await UserModel.findOne({ username });
     if (existingUser) return res.status(400).json({ error: "Username already taken" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
+    const user = new UserModel({
       username,
       password: hashedPassword,
       role,
@@ -33,9 +33,9 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password);
+    // console.log(username, password);
 
-    const user = await User.findOne({ username });
+    const user = await UserModel.findOne({ username });
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);

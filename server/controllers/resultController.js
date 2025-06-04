@@ -1,19 +1,19 @@
-const Result = require("../models/Result");
-const Question = require("../models/Question");
-const Test = require("../models/Test");
+const ResultModel = require("../models/ResultModel");
+const QuestionModel = require("../models/QuestionModel");
+const TestModel = require("../models/TestModel");
 
 exports.submitTest = async (req, res) => {
   try {
     const { testId, answers } = req.body;
 
-    const test = await Test.findById(testId).populate("questions");
+    const test = await TestModel.findById(testId).populate("questions");
     if (!test) return res.status(404).json({ error: "Test not found" });
 
     let score = 0;
     const resultAnswers = [];
 
     for (const ans of answers) {
-      const question = await Question.findById(ans.questionId);
+      const question = await QuestionModel.findById(ans.questionId);
       if (!question) continue;
 
       const isCorrect = question.correctAnswer === ans.selectedOption;
@@ -26,7 +26,7 @@ exports.submitTest = async (req, res) => {
       });
     }
 
-    const result = new Result({
+    const result = new ResultModel({
       user: req.user.id,
       test: testId,
       score,
@@ -42,7 +42,7 @@ exports.submitTest = async (req, res) => {
 
 exports.getMyResults = async (req, res) => {
   try {
-    const results = await Result.find({ user: req.user.id })
+    const results = await ResultModel.find({ user: req.user.id })
       .populate("test", "title")
       .populate("answers.question", "text");
     res.json(results);
@@ -53,7 +53,7 @@ exports.getMyResults = async (req, res) => {
 
 exports.getResultsByTest = async (req, res) => {
   try {
-    const results = await Result.find({ test: req.params.testId })
+    const results = await ResultModel.find({ test: req.params.testId })
       .populate("user", "username")
       .populate("answers.question", "text");
     res.json(results);

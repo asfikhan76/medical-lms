@@ -1,5 +1,5 @@
-const Question = require('../models/Question');
-const Counter = require('../models/Counter'); // Import the Counter model
+const QuestionModel = require('../models/QuestionModel');
+const CounterModel = require('../models/CounterModel'); // Import the Counter model
 
 exports.createQuestion = async (req, res) => {
   try {
@@ -11,7 +11,7 @@ exports.createQuestion = async (req, res) => {
     );
 
     // Create the new question with custom questionId
-    const question = new Question({
+    const question = new QuestionModel({
       ...req.body,
       questionId: counter.value
     });
@@ -42,7 +42,7 @@ exports.getAllQuestions = async (req, res) => {
       filter.text = { $regex: search, $options: 'i' }; // case-insensitive search
     }
 
-    const questions = await Question.find(filter);
+    const questions = await QuestionModel.find(filter);
     res.json(questions);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -52,7 +52,7 @@ exports.getAllQuestions = async (req, res) => {
 // Get a question by ID
 exports.getQuestionById = async (req, res) => {
   try {
-    const question = await Question.findById(req.params.id);
+    const question = await QuestionModel.findById(req.params.id);
     if (!question) return res.status(404).json({ error: 'Question not found' });
     res.json(question);
   } catch (err) {
@@ -63,7 +63,7 @@ exports.getQuestionById = async (req, res) => {
 // Update a question
 exports.updateQuestion = async (req, res) => {
   try {
-    const question = await Question.findByIdAndUpdate(
+    const question = await QuestionModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
@@ -78,7 +78,7 @@ exports.updateQuestion = async (req, res) => {
 // Delete a question
 exports.deleteQuestion = async (req, res) => {
   try {
-    const question = await Question.findByIdAndDelete(req.params.id); 
+    const question = await QuestionModel.findByIdAndDelete(req.params.id); 
     console.log("question", question)
     if (!question) return res.status(404).json({ error: 'Question not found' });
     res.json({ message: 'Question deleted' });
@@ -90,7 +90,7 @@ exports.deleteQuestion = async (req, res) => {
 // Bulk upload questions
 exports.bulkUpload = async (req, res) => {
   try {
-    const questions = await Question.insertMany(req.body);
+    const questions = await QuestionModel.insertMany(req.body);
     res.status(201).json(questions);
   } catch (err) {
     res.status(400).json({ error: err.message });

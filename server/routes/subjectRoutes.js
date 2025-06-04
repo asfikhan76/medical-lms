@@ -6,10 +6,11 @@ const {
   updateSubject,
   deleteSubject
 } = require("../controllers/subjectController");
+const auth = require("../middleware/authMiddleware");
 
 router.post("/", createSubject);
 router.get("/", getAllSubjects);
 router.put("/:id", updateSubject);
 router.delete("/:id", deleteSubject);
 
-module.exports = router;
+module.exports = router;  
