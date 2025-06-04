@@ -1,9 +1,9 @@
-const User = require("../models/User");
+const UserModel = require("../models/UserModel");
 
 // Get logged-in user's profile
 exports.getMyProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await UserModel.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -13,7 +13,7 @@ exports.getMyProfile = async (req, res) => {
 // Get all users (admin)
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const users = await UserModel.find().select("-password");
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -30,7 +30,7 @@ exports.updateUser = async (req, res) => {
       return res.status(403).json({ message: "Access denied" });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, updates, {
+    const updatedUser = await UserModel.findByIdAndUpdate(req.params.id, updates, {
       new: true
     }).select("-password");
 
@@ -43,7 +43,7 @@ exports.updateUser = async (req, res) => {
 // Delete user (admin only)
 exports.deleteUser = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    await UserModel.findByIdAndDelete(req.params.id);
     res.json({ message: "User deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });

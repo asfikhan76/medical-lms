@@ -1,8 +1,8 @@
-const Subject = require("../models/Subject");
+const SubjectModel = require("../models/SubjectModel");
 
 exports.createSubject = async (req, res) => {
   try {
-    const subject = await Subject.create(req.body);
+    const subject = await SubjectModel.create(req.body);
     res.status(201).json(subject);
   } catch (err) {
     console.error('Error creating subject:', err);
@@ -19,7 +19,7 @@ exports.createSubject = async (req, res) => {
 
 exports.getAllSubjects = async (req, res) => {
   try {
-    const subjects = await Subject.find();
+    const subjects = await SubjectModel.find();
     res.json(subjects);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -28,7 +28,7 @@ exports.getAllSubjects = async (req, res) => {
 
 exports.updateSubject = async (req, res) => {
   try {
-    const updated = await Subject.findByIdAndUpdate(req.params.id, req.body, {
+    const updated = await SubjectModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
@@ -48,7 +48,7 @@ exports.updateSubject = async (req, res) => {
 
 exports.deleteSubject = async (req, res) => {
   try {
-    const deleted = await Subject.findByIdAndDelete(req.params.id);
+    const deleted = await SubjectModel.findByIdAndDelete(req.params.id);
     if (!deleted) {
       return res.status(404).json({ error: "Subject not found" });
     }

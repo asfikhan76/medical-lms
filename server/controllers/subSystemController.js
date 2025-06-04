@@ -1,8 +1,8 @@
-const SubSystem = require("../models/SubSystem");
+const SubSystemModel = require("../models/SubSystemModel");
 
 exports.createSubSystem = async (req, res) => {
   try {
-    const subSystem = await SubSystem.create(req.body);
+    const subSystem = await SubSystemModel.create(req.body);
     res.status(201).json(subSystem);
   } catch (err) {
     if (err.code === 11000 && err.keyPattern?.name) {
@@ -14,7 +14,7 @@ exports.createSubSystem = async (req, res) => {
 
 exports.getAllSubSystems = async (req, res) => {
   try {
-    const subSystems = await SubSystem.find().populate("system");
+    const subSystems = await SubSystemModel.find().populate("system");
     res.json(subSystems);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -23,7 +23,7 @@ exports.getAllSubSystems = async (req, res) => {
 
 exports.updateSubSystem = async (req, res) => {
   try {
-    const updated = await SubSystem.findByIdAndUpdate(req.params.id, req.body, {
+    const updated = await SubSystemModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
     });
@@ -41,7 +41,7 @@ exports.updateSubSystem = async (req, res) => {
 
 exports.deleteSubSystem = async (req, res) => {
   try {
-    const deleted = await SubSystem.findByIdAndDelete(req.params.id);
+    const deleted = await SubSystemModel.findByIdAndDelete(req.params.id);
     if (!deleted) {
       return res.status(404).json({ error: "Sub-system not found" });
     }
