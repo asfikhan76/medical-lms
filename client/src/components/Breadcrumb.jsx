@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Breadcrumb = ({ items }) => (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label="Breadcrumb" className='mb-5'>
         <ol className="flex overflow-hidden rounded border border-gray-200 bg-white text-sm text-gray-700">
             {items.map((item, idx) => (
                 <li key={idx} className={idx > 0 ? "relative flex items-center" : undefined}>

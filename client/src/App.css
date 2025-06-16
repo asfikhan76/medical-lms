@@ -19,3 +19,8 @@ body {
 .custom-toast-body {
   padding: 8px 16px !important;
 }
+
+.main-container {
+  height: calc(100% - 96px);
+  margin: 16px;
+}
