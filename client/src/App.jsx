@@ -32,6 +32,9 @@ import Dashboard from './pages/Dashboard'
 // contexts
 import { useSidebar } from './contexts/SidebarContext'
 
+// temprary imports
+import UploadForm from './pages/Uploads/UploadForm'
+
 function AppContent() {
   const { collapsed } = useSidebar()
   return (
@@ -64,6 +67,11 @@ function AppContent() {
           <Route path='/add-topic' element={<AddTopic />} />
           <Route path='/edit-topic' element={<EditTopic />} />
           <Route path='/all-topics' element={<AllTopics />} />
+
+          {/* temprary routes */}
+          <Route path='/upload' element={<UploadForm />} />
+
+          
         </Routes>
       </div>
     </div>
