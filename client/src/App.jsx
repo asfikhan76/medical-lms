@@ -55,7 +55,7 @@ function AppContent() {
 
           {/* Systems Routes */}
           <Route path='/add-system' element={<AddSystem />} />
-          <Route path='/edit-system' element={<EditSystem />} />
+          <Route path='/edit-system/:id' element={<EditSystem />} />
           <Route path='/all-systems' element={<AllSystems />} />
 
           {/* Categories Routes */}
