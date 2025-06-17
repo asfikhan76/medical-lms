@@ -4,7 +4,7 @@ const CounterModel = require('../models/CounterModel'); // Import the Counter mo
 exports.createQuestion = async (req, res) => {
   try {
     // Auto-increment logic
-    const counter = await Counter.findOneAndUpdate(
+    const counter = await CounterModel.findOneAndUpdate(
       { name: 'questionId' },
       { $inc: { value: 1 } },
       { new: true, upsert: true }
