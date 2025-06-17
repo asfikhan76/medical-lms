@@ -1,15 +1,66 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Plus, SquarePen } from "lucide-react"
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { SYSTEM_API } from '../../config/api'
+import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
+
+
 const EditSystem = () => {
+
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const systemData = location.state?.systemData;
+    console.log("system data:",systemData);
+    const [updating, setUpdating] = useState(false);
+    const [error, setError] = useState(null);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm({
+        defaultValues: {
+            name: systemData?.name || ''
+        }
+    });
+
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'Edit System' }
     ]
+
+    const onSubmit = async (data) => {
+        setUpdating(true);
+        try {
+            await axios.put(`${SYSTEM_API}/${id}`, data);
+            toast.success('System updated successfully');
+            navigate('/all-systems');
+        } catch (err) {
+            const errorMessage = err.response?.data?.message || 'Failed to update system';
+            toast.error(errorMessage);
+            setError(errorMessage);
+        } finally {
+            setUpdating(false);
+        }
+    };
+
+
+    if (error) {
+        return (
+            <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
+                <Breadcrumb items={breadcrumbItems} />
+                <div className="mt-7 text-center text-red-500">{error}</div>
+            </div>
+        );
+    }
+
     return (
         <div className='mx-4'>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg mt-5 relative">
                     {/* breadcrumb */}
                     <Breadcrumb items={breadcrumbItems} />
@@ -21,13 +72,19 @@ const EditSystem = () => {
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
                             <div className="sm:col-span-3">
-                                <label htmlFor="subject_name" className="block text-sm/6 font-medium text-gray-900">
+                                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
                                     System Name
                                 </label>
                                 <div className="mt-2">
                                     <input
-                                        id="subject_name"
-                                        name="subject_name"
+                                        id="name"
+                                        {...register('name', {
+                                            required: 'System name is required',
+                                            minLength: {
+                                                value: 5,
+                                                message: 'System name must be at least 5 characters'
+                                            }
+                                        })}
                                         type="text"
                                         autoComplete="given-name"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
