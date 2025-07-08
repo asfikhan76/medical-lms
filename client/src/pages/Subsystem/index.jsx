@@ -5,6 +5,8 @@ import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
 import Loader from '../../components/Loader'
 import ConfirmModal from '../../components/confirmModal'
+import { toast } from 'react-toastify'
+import { SquarePen, Trash2 } from 'lucide-react'
 
 const AllSubsystems = () => {
     const [subsystems, setSubSystems] = useState([]);
@@ -62,9 +64,17 @@ const AllSubsystems = () => {
 
     const handleConfirmDelete = async () => {
         setModalOpen(false);
-        // Here you would call your delete API in the future
-        await axios.delete(`${API_BASE_URL}/subsystems/${selectedSubSystem._id}`);
-        // Optionally refresh the list or show a toast
+        try {
+            await axios.delete(`${API_BASE_URL}/subsystems/${selectedSubSystem._id}`);
+            setSubSystems(prev =>
+                prev.filter(sub => sub._id !== selectedSubSystem._id)
+            )
+            toast.success('Sub-Sytem deleted successfully!')
+        }
+        catch (err) {
+            toast.error('Failed to delete Sub-System')
+        }
+        setSelectedSubSystem(null);
     };
 
     const handleCancel = () => {
@@ -78,31 +88,32 @@ const AllSubsystems = () => {
             <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                 <thead>
                     <tr className="bg-gray-100">
-                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Sub-System Name</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">System Name</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Subject Name</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Created at</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-1/5">Action</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 ">Sub-System Name</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 ">System Name</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 ">Subject Name</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 ">Created at</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         subsystems.map((subSystem) => (
                             <tr key={subSystem._id} className="border-b border-gray-200">
-                                <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subSystem.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subSystem.system.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subSystem.system.subject.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500 w-2/5">{new Date(subSystem.createdAt).toLocaleDateString()}</td>
-                                <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
-                                    <Link to={`/edit-subsystem/${subSystem._id}`} state={{ subSystemData: subSystem }}>
-                                        Edit
-                                    </Link>
-                                    <button
-                                        onClick={() => handleDeleteClick(subSystem)}
-                                        className="text-red-500 hover:underline"
-                                    >
-                                        Delete
-                                    </button>
+                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.system.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.system.subject.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-500 ">{new Date(subSystem.createdAt).toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
+                                    <div className='flex items-center gap-5'>
+                                        <Link to={`/edit-subsystem/${subSystem._id}`} title='Edit' state={{ subSystemData: subSystem }}>
+                                            <SquarePen size={16}/>
+                                        </Link>
+                                        <button
+                                            onClick={() => handleDeleteClick(subSystem)}
+                                            className="text-red-500 cursor-pointer" title='Delete'>
+                                            <Trash2 size={16}/>
+                                        </button>
+                                    </div>
                                 </td>
 
                             </tr>
