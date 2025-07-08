@@ -1,6 +1,6 @@
 // server/seeders/seed-tests.js
 const connectDB = require('../config/db');
-const Test = require('../models/Test');
+const Test = require('../models/TestModel');
 
 const seedTests = async () => {
     await connectDB();

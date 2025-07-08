@@ -1,4 +1,4 @@
-const Subject = require('../models/Subject');
+const Subject = require('../models/SubjectModel');
 const connectDB = require('../config/db');
 
 const seedSubjects = async () => {

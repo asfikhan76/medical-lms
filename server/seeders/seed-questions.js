@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');
-const Question = require('../models/Question');
-const Subject = require('../models/Subject');
-const System = require('../models/System');
-const SubSystem = require('../models/SubSystem');
-const Topic = require('../models/Topic');
+const Question = require('../models/QuestionModel');
+const Subject = require('../models/SubjectModel');
+const System = require('../models/SystemModel');
+const SubSystem = require('../models/SubSystemModel');
+const Topic = require('../models/TopicModel');
 
 const seedQuestions = async () => {
   await connectDB();
