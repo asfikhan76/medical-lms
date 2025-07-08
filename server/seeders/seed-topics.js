@@ -1,5 +1,5 @@
-const Topic = require('../models/Topic');
-const SubSystem = require('../models/SubSystem');
+const Topic = require('../models/TopicModel');
+const SubSystem = require('../models/SubSystemModel');
 const connectDB = require('../config/db');
 
 const seedTopics = async () => {

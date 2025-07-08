@@ -1,5 +1,5 @@
-const SubSystem = require('../models/SubSystem');
-const System = require('../models/System');
+const SubSystem = require('../models/SubSystemModel');
+const System = require('../models/SystemModel');
 const connectDB = require('../config/db');
 
 const seedSubSystems = async () => {
