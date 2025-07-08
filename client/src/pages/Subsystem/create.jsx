@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Plus } from "lucide-react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,8 @@ import { toast } from 'react-toastify';
 const AddSubsystem = () => {
     const [systems, setSystems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('')
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
 
 
@@ -38,6 +39,7 @@ const AddSubsystem = () => {
             });
             reset();
             toast.success('Sub-System successfully added!')
+            navigate('/all-subsystems')
         } catch (error) {
             const serverMessage = error.response?.data?.error ? error.response.data.error : "Error adding Sub-System";
             toast.error(serverMessage);

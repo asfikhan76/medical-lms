@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Plus } from "lucide-react"
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { API_BASE_URL } from '../../config/api';
 import axios from 'axios'
@@ -12,6 +12,7 @@ const AddSystem = () => {
     const [selectedSubject, setSelectedSubject] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
 
     // Breadcrumbs 
     const breadcrumbItems = [
@@ -36,6 +37,7 @@ const AddSystem = () => {
             });
             reset();
             toast.success("System successfully added!");
+            navigate("/all-systems")
         }
         catch (error) {
             const serverMessage =
