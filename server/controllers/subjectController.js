@@ -48,12 +48,15 @@ exports.updateSubject = async (req, res) => {
 
 exports.deleteSubject = async (req, res) => {
   try {
-    const deleted = await SubjectModel.findByIdAndDelete(req.params.id);
+    const deleted = await SubjectModel.findOneAndDelete({ _id: req.params.id });
+
     if (!deleted) {
       return res.status(404).json({ error: "Subject not found" });
     }
-    res.json({ message: "Subject deleted successfully" });
+
+    res.json({ message: "Subject and related data deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+

@@ -14,7 +14,15 @@ exports.createSubSystem = async (req, res) => {
 
 exports.getAllSubSystems = async (req, res) => {
   try {
-    const subSystems = await SubSystemModel.find().populate("system");
+    const subSystems = await SubSystemModel.find()
+      .populate({
+        path: "system",
+        populate: {
+          path: "subject",
+          model: "Subject"
+        }
+      });
+
     res.json(subSystems);
   } catch (err) {
     res.status(500).json({ error: err.message });
