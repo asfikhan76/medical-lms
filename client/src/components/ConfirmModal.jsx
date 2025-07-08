@@ -4,8 +4,11 @@ const ConfirmModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#000]">
-            <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-opacity duration-300">
+            <div
+                className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md transform transition-all duration-300 opacity-0 scale-95 animate-modal-in"
+                style={{ animation: 'modal-in 0.3s forwards' }}
+            >
                 <h2 className="text-lg font-semibold mb-2">{title || "Are you sure?"}</h2>
                 <p className="mb-4">{message || "Do you want to proceed with this action?"}</p>
                 <div className="flex justify-end gap-2">
