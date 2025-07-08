@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/Breadcrumb'
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Plus, SquarePen } from "lucide-react"
 import axios from 'axios'
-import { SYSTEM_API } from '../../config/api'
+import { API_BASE_URL } from '../../config/api'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 
@@ -36,7 +36,7 @@ const EditSystem = () => {
     const onSubmit = async (data) => {
         setUpdating(true);
         try {
-            await axios.put(`${SYSTEM_API}/${id}`, data);
+            await axios.put(`${API_BASE_URL}/systems/${id}`, data);
             toast.success('System updated successfully');
             navigate('/all-systems');
         } catch (err) {

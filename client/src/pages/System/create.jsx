@@ -4,7 +4,7 @@ import { Plus } from "lucide-react"
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import { SYSTEM_API, SUBJECTS_API } from '../../config/api';
+import { API_BASE_URL } from '../../config/api';
 import axios from 'axios'
 
 const AddSystem = () => {
@@ -29,7 +29,7 @@ const AddSystem = () => {
 
     const SubmitHandler = async (data) => {
         try {
-            const response = await axios.post(SYSTEM_API, data, {
+            const response = await axios.post(`${API_BASE_URL}/systems`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -51,7 +51,7 @@ const AddSystem = () => {
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
-                const response = await axios.get(SUBJECTS_API)
+                const response = await axios.get(`${API_BASE_URL}/subjects`)
                 setSubjects(response.data)
                 setLoading(false)
             } catch (err) {
@@ -110,7 +110,7 @@ const AddSystem = () => {
                                         type="text"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
-                                     {errors.name && (
+                                    {errors.name && (
                                         <span className='text-red-500 text-sm'>{errors.name.message}</span>
                                     )}
                                 </div>

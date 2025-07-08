@@ -2,7 +2,7 @@ import React from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Plus, SquarePen } from "lucide-react"
 import { Link } from 'react-router-dom'
-const EditCategory = () => {
+const EditSubsystem = () => {
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'Edit Category' }
@@ -57,4 +57,4 @@ const EditCategory = () => {
     )
 }
 
-export default EditCategory
+export default EditSubsystem

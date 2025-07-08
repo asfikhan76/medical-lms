@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Link } from 'react-router-dom'
-import { SYSTEM_API } from '../../config/api'
+import { API_BASE_URL } from '../../config/api'
 import Loader from '../../components/Loader'
 import axios from 'axios'
 
@@ -17,7 +17,7 @@ const AllSystems = () => {
     useEffect(() => {
         const fetchSystems = async () => {
             try {
-                const response = await axios.get(SYSTEM_API)
+                const response = await axios.get(`${API_BASE_URL}/systems`)
                 console.log(response.data)
                 setSystems(response.data)
                 setLoading(false)

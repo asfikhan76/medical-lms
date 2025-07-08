@@ -2,7 +2,7 @@ import React from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Link } from 'react-router-dom'
 
-const AllCategories = () => {
+const AllSubsystems = () => {
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'All Categories' }
@@ -23,7 +23,7 @@ const AllCategories = () => {
                         <td className="px-6 py-4 text-sm text-gray-900 w-2/5">Immunology</td>
                         <td className="px-6 py-4 text-sm text-gray-500 w-2/5">12 Jan 2025</td>
                         <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
-                            <Link to="/edit-category">
+                            <Link to="/edit-subsystem">
                                 Edit
                             </Link>
                         </td>
@@ -34,4 +34,4 @@ const AllCategories = () => {
     )
 }
 
-export default AllCategories
+export default AllSubsystems

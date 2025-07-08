@@ -4,7 +4,7 @@ import { Plus } from "lucide-react"
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
-import { SUBJECTS_API } from '../../config/api';
+import { API_BASE_URL } from '../../config/api';
 import axios from 'axios'
 // /api/subjects
 
@@ -24,7 +24,7 @@ const AddSubject = () => {
 
     const SubmitHandler = async (data) => {
         try {
-            const response = await axios(SUBJECTS_API, {
+            const response = await axios(`${API_BASE_URL}/subjects`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
