@@ -106,12 +106,12 @@ const AllSubsystems = () => {
                                 <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                     <div className='flex items-center gap-5'>
                                         <Link to={`/edit-subsystem/${subSystem._id}`} title='Edit' state={{ subSystemData: subSystem }}>
-                                            <SquarePen size={16}/>
+                                            <SquarePen size={16} />
                                         </Link>
                                         <button
                                             onClick={() => handleDeleteClick(subSystem)}
                                             className="text-red-500 cursor-pointer" title='Delete'>
-                                            <Trash2 size={16}/>
+                                            <Trash2 size={16} />
                                         </button>
                                     </div>
                                 </td>
@@ -119,16 +119,16 @@ const AllSubsystems = () => {
                             </tr>
                         ))
                     }
-                    <ConfirmModal
-                        isOpen={modalOpen}
-                        title="Delete Sub-System"
-                        message={`Are you sure you want to delete "${selectedSubSystem?.name}"?`}
-                        onConfirm={handleConfirmDelete}
-                        onCancel={handleCancel}
-                    />
 
                 </tbody>
             </table>
+            <ConfirmModal
+                isOpen={modalOpen}
+                title="Delete Sub-System"
+                message={`Are you sure you want to delete "${selectedSubSystem?.name}"?`}
+                onConfirm={handleConfirmDelete}
+                onCancel={handleCancel}
+            />
         </div >
     )
 }
