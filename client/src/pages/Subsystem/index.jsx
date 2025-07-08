@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
 import Loader from '../../components/Loader'
+import ConfirmModal from '../../components/confirmModal'
 
 const AllSubsystems = () => {
     const [subsystems, setSubSystems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedSubSystem, setSelectedSubSystem] = useState(null);
 
 
     const breadcrumbItems = [
@@ -31,6 +34,7 @@ const AllSubsystems = () => {
         fetchSubSytems()
 
     }, [])
+
     if (loading) {
         return (
             <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
@@ -41,6 +45,7 @@ const AllSubsystems = () => {
             </div>
         )
     }
+
     if (error) {
         return (
             <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
@@ -49,6 +54,23 @@ const AllSubsystems = () => {
             </div>
         )
     }
+
+    const handleDeleteClick = (subSystem) => {
+        setSelectedSubSystem(subSystem);
+        setModalOpen(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        setModalOpen(false);
+        // Here you would call your delete API in the future
+        await axios.delete(`${API_BASE_URL}/subsystems/${selectedSubSystem._id}`);
+        // Optionally refresh the list or show a toast
+    };
+
+    const handleCancel = () => {
+        setModalOpen(false);
+        setSelectedSubSystem(null);
+    };
 
     return (
         <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg main-container">
@@ -73,10 +95,24 @@ const AllSubsystems = () => {
                                     <Link to={`/edit-subsystem/${subSystem._id}`} state={{ subSystemData: subSystem }}>
                                         Edit
                                     </Link>
+                                    <button
+                                        onClick={() => handleDeleteClick(subSystem)}
+                                        className="text-red-500 hover:underline"
+                                    >
+                                        Delete
+                                    </button>
                                 </td>
+
                             </tr>
                         ))
                     }
+                    <ConfirmModal
+                        isOpen={modalOpen}
+                        title="Delete Sub-System"
+                        message={`Are you sure you want to delete "${selectedSubSystem?.name}"?`}
+                        onConfirm={handleConfirmDelete}
+                        onCancel={handleCancel}
+                    />
 
                 </tbody>
             </table>
