@@ -51,9 +51,9 @@ const AllSubsystems = () => {
     }
 
     return (
-        <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg mt-5">
+        <div className="overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg main-container">
             <Breadcrumb items={breadcrumbItems} />
-            <table className="min-w-full bg-white border border-gray-200 rounded-lg mt-7">
+            <table className="min-w-full bg-white border border-gray-200 rounded-lg">
                 <thead>
                     <tr className="bg-gray-100">
                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Sub-System Name</th>

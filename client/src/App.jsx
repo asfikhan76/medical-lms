@@ -60,7 +60,7 @@ function AppContent() {
 
           {/* SubSytem Routes */}
           <Route path='/add-subsystem' element={<AddSubsystem />} />
-          <Route path='/edit-subsystem' element={<EditSubsystem />} />
+          <Route path='/edit-subsystem/:id' element={<EditSubsystem />} />
           <Route path='/all-subsystems' element={<AllSubsystems />} />
 
           {/* Topics Routes */}
