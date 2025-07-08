@@ -100,8 +100,8 @@ const AllSubsystems = () => {
                         subsystems.map((subSystem) => (
                             <tr key={subSystem._id} className="border-b border-gray-200">
                                 <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.system.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.system.subject.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.system?.name || "-"}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 ">{subSystem.system?.subject?.name || "-"}</td>
                                 <td className="px-6 py-4 text-sm text-gray-500 ">{new Date(subSystem.createdAt).toLocaleDateString()}</td>
                                 <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                     <div className='flex items-center gap-5'>
