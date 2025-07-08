@@ -80,6 +80,7 @@ const AllSubsystems = () => {
                     <tr className="bg-gray-100">
                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Sub-System Name</th>
                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">System Name</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Subject Name</th>
                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-2/5">Created at</th>
                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 w-1/5">Action</th>
                     </tr>
@@ -90,6 +91,7 @@ const AllSubsystems = () => {
                             <tr key={subSystem._id} className="border-b border-gray-200">
                                 <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subSystem.name}</td>
                                 <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subSystem.system.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 w-2/5">{subSystem.system.subject.name}</td>
                                 <td className="px-6 py-4 text-sm text-gray-500 w-2/5">{new Date(subSystem.createdAt).toLocaleDateString()}</td>
                                 <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
                                     <Link to={`/edit-subsystem/${subSystem._id}`} state={{ subSystemData: subSystem }}>
