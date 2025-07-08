@@ -1,20 +1,72 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Plus } from "lucide-react"
 import { Link } from 'react-router-dom'
 import { API_BASE_URL } from '../../config/api';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 
 const AddSubsystem = () => {
     const [systems, setSystems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('')
+
+
 
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'Add New Sub-System' }
     ]
+
+    // Handling form submission
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset
+    } = useForm()
+
+
+    const SubmitHandler = async (data) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/subsystems`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            reset();
+            toast.success('Sub-System successfully added!')
+        } catch (error) {
+            const serverMessage = error.response?.data?.error ? error.response.data.error : "Error adding Sub-System";
+            toast.error(serverMessage);
+        }
+    }
+
+
+    // Fetching systens from the API
+    useEffect(() => {
+
+        const fetchSystems = async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/systems`)
+                setSystems(response.data)
+                setLoading(false)
+
+            } catch (err) {
+                setError('Failed to fetch Systems')
+                setLoading(false)
+            }
+        }
+
+        fetchSystems()
+    }, [])
+
+
     return (
         <div className='mx-4'>
-            <form>
+            <form onSubmit={handleSubmit(SubmitHandler)}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg mt-5 relative">
                     {/* breadcrumb */}
                     <Breadcrumb items={breadcrumbItems} />
@@ -53,7 +105,7 @@ const AddSubsystem = () => {
                                 <div className="mt-2">
                                     <input
                                         id="name"
-                                        name="name"
+                                        {...register("name", { required: "Sub System name is required" })}
                                         type="text"
                                         autoComplete="given-name"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
