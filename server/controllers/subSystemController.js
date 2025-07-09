@@ -49,11 +49,13 @@ exports.updateSubSystem = async (req, res) => {
 
 exports.deleteSubSystem = async (req, res) => {
   try {
-    const deleted = await SubSystemModel.findByIdAndDelete(req.params.id);
-    if (!deleted) {
+    const subSystem = await SubSystemModel.findById(req.params.id);
+    if (!subSystem) {
       return res.status(404).json({ error: "Sub-system not found" });
     }
-    res.json({ message: "Sub-system deleted successfully" });
+    await subSystem.deleteOne();
+    res.json({ message: "Sub-system and its topics deleted successfully" });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
