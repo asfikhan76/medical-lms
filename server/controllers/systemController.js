@@ -45,11 +45,14 @@ exports.updateSystem = async (req, res) => {
 
 exports.deleteSystem = async (req, res) => {
   try {
-    const deleted = await SystemModel.findByIdAndDelete(req.params.id);
-    if (!deleted) {
-      return res.status(404).json({ error: "System not found" });
-    }
-    res.json({ message: "System deleted successfully" });
+   const system = await SystemModel.findById(req.params.id);
+if (!system) {
+  return res.status(404).json({ error: "System not found" });
+}
+await system.deleteOne(); // This triggers the middleware
+
+res.json({ message: "System and related data deleted successfully" });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

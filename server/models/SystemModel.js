@@ -11,12 +11,18 @@ const systemSchema = new mongoose.Schema({
 
 
 
-// 🧹 Middleware to delete related SubSystems and Topics when a System is deleted
 systemSchema.pre("deleteOne", { document: true, query: false }, async function (next) {
   const systemId = this._id;
 
+  // Delete all subSystems of this system
+  const subSystems = await SubSystemModel.find({ system: systemId });
+
+  // Delete all topics under those subSystems
+  const subSystemIds = subSystems.map(sub => sub._id);
+  await TopicModel.deleteMany({ subSystem: { $in: subSystemIds } });
+
+  // Now delete the subSystems
   await SubSystemModel.deleteMany({ system: systemId });
-  await TopicModel.deleteMany({ system: systemId });
 
   next();
 });
