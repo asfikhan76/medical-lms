@@ -135,14 +135,14 @@ const Sidebar = () => {
                                 </details>
                             </li>
 
-                            {/* category dropdown */}
+                            {/* Subsystem dropdown */}
                             <li>
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
                                             <FilePlus size={18} color='#6a7282' />
                                             {
-                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Categories </span>
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Sub-Systems </span>
                                             }
                                         </div>
 
@@ -153,24 +153,24 @@ const Sidebar = () => {
                                                 </span>
                                         }
                                         <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
-                                            Categories
+                                            Sub Systems
                                         </span>
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-category"
+                                            <Link to="/add-subsystem"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
 
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Category</span>
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Sub-System</span>
                                                 }
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to="/all-categories"
+                                            <Link to="/all-subsystems"
                                                 className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Categories</span>
+                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Sub-Systems</span>
                                                 }
                                             </Link>
                                         </li>

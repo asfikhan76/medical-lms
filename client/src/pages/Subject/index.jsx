@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { SUBJECTS_API } from '../../config/api'
+import { API_BASE_URL } from '../../config/api'
 import Loader from "../../components/Loader"
 
 
@@ -20,7 +20,7 @@ const AllSubjects = () => {
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
-                const response = await axios.get(SUBJECTS_API)
+                const response = await axios.get(`${API_BASE_URL}/subjects`)
                 setSubjects(response.data)
                 setLoading(false)
             } catch (err) {

@@ -16,10 +16,10 @@ import AddSystem from './pages/System/create'
 import EditSystem from './pages/System/edit'
 import AllSystems from './pages/System/index'
 
-// category imports
-import AddCategory from './pages/Category/create'
-import EditCategory from './pages/Category/edit'
-import AllCategories from './pages/Category/index'
+// Subsystem imports
+import AddSubsystem from './pages/Subsystem/create'
+import EditSubsystem from './pages/Subsystem/edit'
+import AllSubsystems from './pages/Subsystem/index'
 
 // topic imports
 import AddTopic from './pages/Topic/create'
@@ -58,10 +58,10 @@ function AppContent() {
           <Route path='/edit-system/:id' element={<EditSystem />} />
           <Route path='/all-systems' element={<AllSystems />} />
 
-          {/* Categories Routes */}
-          <Route path='/add-category' element={<AddCategory />} />
-          <Route path='/edit-category' element={<EditCategory />} />
-          <Route path='/all-categories' element={<AllCategories />} />
+          {/* SubSytem Routes */}
+          <Route path='/add-subsystem' element={<AddSubsystem />} />
+          <Route path='/edit-subsystem/:id' element={<EditSubsystem />} />
+          <Route path='/all-subsystems' element={<AllSubsystems />} />
 
           {/* Topics Routes */}
           <Route path='/add-topic' element={<AddTopic />} />
