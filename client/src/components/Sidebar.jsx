@@ -8,15 +8,25 @@ const Sidebar = () => {
     const { collapsed } = useSidebar();
     const location = useLocation();
 
+    // Define which routes belongs to which dropdown 
     const subjectRoutes = ['/add-subject', '/edit-subject', '/all-subjects']
     const systemRoutes = ['/add-system', '/edit-system', '/all-systems']
     const subSystemRoutes = ['/add-subsystem', '/edit-subsystem', '/all-subsystems']
     const topicRoutes = ['/add-topic', '/edit-topic', '/all-topics']
 
-    const isSubjectOpen = subjectRoutes.includes(location.pathname)
-    const isSystemOpen = systemRoutes.includes(location.pathname)
-    const isSubSystemOpen = subSystemRoutes.includes(location.pathname)
-    const isTopicOpen = topicRoutes.includes(location.pathname)
+    //Check if current Route is in any dropdown
+    const isSubjectOpen = subjectRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isSystemOpen = systemRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isSubSystemOpen = subSystemRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isTopicOpen = topicRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
 
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 shadow-sm relative`}>
