@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { LayoutDashboard, School, Users, Layers, FileUser, FilePlus, LogOut, ChevronDown } from 'lucide-react'
+import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 
@@ -55,7 +55,7 @@ const Sidebar = () => {
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <Book size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Subjects </span>
                                             }
@@ -97,7 +97,7 @@ const Sidebar = () => {
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <Layers size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Systems </span>
                                             }
@@ -140,7 +140,7 @@ const Sidebar = () => {
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <Component size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Sub-Systems </span>
                                             }
@@ -183,7 +183,7 @@ const Sidebar = () => {
                                 <details className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <List size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Topics </span>
                                             }
