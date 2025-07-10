@@ -1,11 +1,23 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
 import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List } from 'lucide-react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 
 const Sidebar = () => {
-    const { collapsed } = useSidebar()
+    const { collapsed } = useSidebar();
+    const location = useLocation();
+
+    const subjectRoutes = ['/add-subject', '/edit-subject', '/all-subjects']
+    const systemRoutes = ['/add-system', '/edit-system', '/all-systems']
+    const subSystemRoutes = ['/add-subsystem', '/edit-subsystem', '/all-subsystems']
+    const topicRoutes = ['/add-topic', '/edit-topic', '/all-topics']
+
+    const isSubjectOpen = subjectRoutes.includes(location.pathname)
+    const isSystemOpen = systemRoutes.includes(location.pathname)
+    const isSubSystemOpen = subSystemRoutes.includes(location.pathname)
+    const isTopicOpen = topicRoutes.includes(location.pathname)
+
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 shadow-sm relative`}>
             <div>
@@ -52,7 +64,7 @@ const Sidebar = () => {
 
                             {/* subject dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isSubjectOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
                                             <Book size={18} color='#6a7282' />
@@ -106,7 +118,7 @@ const Sidebar = () => {
 
                             {/* system dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isSystemOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
                                             <Layers size={18} color='#6a7282' />
@@ -157,7 +169,7 @@ const Sidebar = () => {
 
                             {/* Subsystem dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isSubSystemOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
                                             <Component size={18} color='#6a7282' />
@@ -208,7 +220,7 @@ const Sidebar = () => {
 
                             {/* topic dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isTopicOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
                                             <List size={18} color='#6a7282' />
