@@ -133,7 +133,7 @@ const AllSubsystems = () => {
             <ConfirmModal
                 isOpen={modalOpen}
                 title="Delete Sub-System"
-                message={`Are you sure you want to delete "${selectedSubSystem?.name}"?`}
+                message={`Are you sure you want to delete "${selectedSubSystem?.name}" ? Deleting this subsystem will automatically delete all Topics associated with it.`}
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancel}
             />

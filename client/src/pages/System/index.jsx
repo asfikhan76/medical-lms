@@ -67,10 +67,10 @@ const AllSystems = () => {
             setSystems(prev =>
                 prev.filter(sub => sub._id !== selectedSystem._id)
             )
-            toast.success('Sytem deleted successfully!')
+            toast.success('System deleted successfully!')
         }
         catch (err) {
-            toast.error('Failed to delete Sub-System')
+            toast.error('Failed to delete System')
         }
         setSelectedSystem(null);
     };
@@ -94,33 +94,42 @@ const AllSystems = () => {
                 </thead>
                 <tbody>
                     {
-                        systems.map((system) => (
-                            <tr key={system._id} className="border-b border-gray-200">
-
-                                <td className="px-6 py-4 text-sm text-gray-900">{system.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900">{system.subject.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-500">  {new Date(system.createdAt).toLocaleDateString()}</td>
-                                <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
-                                    <div className='flex items-center gap-5'>
-                                        <Link to={`/edit-system/${system._id}`} state={{ systemData: system }}>
-                                            <SquarePen size={16} />
-                                        </Link>
-                                        <button
-                                            onClick={() => handleDeleteClick(system)}
-                                            className="text-red-500 cursor-pointer" title='Delete'>
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
+                        systems.length === 0 ? (
+                            <tr>
+                                <td colSpan={5} className='px-6 py-4 text-center text-gray-500'>
+                                    No Systems found. Would you like to
+                                    <Link to={"/add-system"} className='text-blue-500 underline ms-2'>add a new System ?</Link>
                                 </td>
                             </tr>
-                        ))
+                        ) :
+                            (systems.map((system) => (
+
+                                <tr key={system._id} className="border-b border-gray-200">
+
+                                    <td className="px-6 py-4 text-sm text-gray-900">{system.name}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-900">{system.subject.name}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-500">  {new Date(system.createdAt).toLocaleDateString()}</td>
+                                    <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
+                                        <div className='flex items-center gap-5'>
+                                            <Link to={`/edit-system/${system._id}`} state={{ systemData: system }}>
+                                                <SquarePen size={16} />
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDeleteClick(system)}
+                                                className="text-red-500 cursor-pointer" title='Delete'>
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )))
                     }
                 </tbody>
             </table>
             <ConfirmModal
                 isOpen={modalOpen}
                 title="Delete System"
-                message={`Are you sure you want to delete "${selectedSystem?.name}"?`}
+                message={`Are you sure you want to delete "${selectedSystem?.name}" ? Deleting this System will automatically delete all Subsystems,Topics associated with it.`}
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancel}
             />
