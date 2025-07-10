@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List } from 'lucide-react'
+import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List, PlusCircle } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
 
@@ -105,7 +105,10 @@ const Sidebar = () => {
                                                     }`
                                                 }
                                             >
-                                                {({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>Add Subject</span>}
+                                                {({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                    <PlusCircle size={16} />
+                                                    Add Subject
+                                                </span>}
                                             </NavLink>
                                         </li>
                                         <li>
@@ -118,7 +121,9 @@ const Sidebar = () => {
                                                     }
                                                 `}>
                                                 {
-                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>All Subjects</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Subjects</span>
                                                 }
                                             </NavLink>
                                         </li>
@@ -157,7 +162,9 @@ const Sidebar = () => {
                                                     }`}>
 
                                                 {
-                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>   Add System</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add System</span>
                                                 }
                                             </NavLink>
                                         </li>
@@ -169,7 +176,9 @@ const Sidebar = () => {
                                                         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
                                                     }`}>
                                                 {
-                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>All Systems</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Systems</span>
                                                 }
                                             </NavLink>
                                         </li>
@@ -208,7 +217,9 @@ const Sidebar = () => {
                                                     }`}>
 
                                                 {
-                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>   Add Sub-System</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add S-System</span>
                                                 }
                                             </NavLink>
                                         </li>
@@ -220,7 +231,9 @@ const Sidebar = () => {
                                                         : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
                                                     }`}>
                                                 {
-                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>All Sub-Systems</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All S-Systems</span>
                                                 }
                                             </NavLink>
                                         </li>
@@ -251,21 +264,33 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-topic"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/add-topic"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
 
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Topic</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm flex items-center gap-1 font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add Topic</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/all-topics"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/all-topics"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Topics</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Topics</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </ul>
                                 </details>
