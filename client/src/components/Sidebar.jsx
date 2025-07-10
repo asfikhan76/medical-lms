@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
 import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 
 const Sidebar = () => {
@@ -73,20 +73,32 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-subject"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                                {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Add Subject</span>
+                                            <NavLink
+                                                to="/add-subject"
+                                                className={({ isActive }) =>
+                                                    `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} rounded-sm px-2 py-1.5
+                                                   ${isActive
+                                                        ? 'bg-indigo-600 text-white hover:bg-indigo-500 font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`
                                                 }
-                                            </Link>
+                                            >
+                                                {({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>Add Subject</span>}
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/all-subjects"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/all-subjects"
+                                                className={({ isActive }) =>
+                                                    `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                   ${isActive
+                                                        ? 'bg-indigo-600 text-white hover:bg-indigo-500 font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }
+                                                `}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Subjects</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>All Subjects</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </ul>
                                 </details>
