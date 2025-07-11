@@ -4,7 +4,7 @@ import { Plus, LogOut, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHori
 const Header = () => {
     const { collapsed, setCollapsed } = useSidebar()
     return (
-        <header className="bg-white mx-4 rounded-lg shadow-sm">
+        <header className="bg-white mx-4 mt-2 rounded-lg shadow-sm">
             <div className="flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
                 <button className='cursor-pointer' onClick={() => setCollapsed(!collapsed)}>
                     {
