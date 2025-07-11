@@ -46,32 +46,32 @@ const Sidebar = () => {
                 <div className="border-t border-gray-100">
                     <div className="px-2">
                         <div className="py-4">
-                            <Link to="/"
-                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm bg-blue-50 px-2 py-1.5 text-blue-700`}>
-                                <LayoutDashboard size={18} color='#6a7282' />
-                                <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                    Dashboard
-                                </span>
-                                {
-                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Dashboard</span>
-                                }
-                            </Link>
+                            <NavLink to="/"
+                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} rounded-sm px-2 py-1.5
+                                ${isActive
+                                        ? 'bg-indigo-600 text-white font-semibold'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                    }`}>
+                                {({ isActive }) => (
+                                    <>
+                                        <LayoutDashboard size={18} color={`${isActive ? "#fff" : "#6a7282"}`} />
+                                        <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                            Dashboard
+                                        </span>
+                                        {!collapsed && (
+                                            <span
+                                                className={`text-sm font-normal ${isActive ? "text-white" : "text-[#6a7282]"
+                                                    }`}
+                                            >
+                                                Dashboard
+                                            </span>
+                                        )}
+                                    </>
+                                )}
+                            </NavLink>
                         </div>
 
-                        <ul className="space-y-1 border-t border-gray-100 pt-4 p-0">
-                            <li>
-                                <Link to="#"
-                                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                    <Users size={18} color='#6a7282' />
-                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                        Students
-                                    </span>
-                                    {
-                                        collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Students</span>
-                                    }
-                                </Link>
-                            </li>
-
+                        <ul className="space-y-1 border-t border-gray-100 pt-2 p-0">
                             {/* subject dropdown */}
                             <li>
                                 <details open={isSubjectOpen} className="group [&_summary::-webkit-details-marker]:hidden">
