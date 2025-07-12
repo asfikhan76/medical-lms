@@ -40,7 +40,7 @@ const Sidebar = () => {
 
                     {/* logo text */}
                     <div className={`text-lg font-semibold whitespace-nowrap text-gray-800 ms-2 ${collapsed ? 'hidden' : 'block'}`}>
-                        Exam Portal
+                        Ques. Bank
                     </div>
                 </div>
                 <div className="border-t border-gray-100">

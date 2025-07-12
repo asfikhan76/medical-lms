@@ -104,7 +104,7 @@ const AllTopics = () => {
                             : (topics.map((topic) => (
                                 <tr key={topic._id} className="border-b border-gray-200">
                                     <td className="px-6 py-4 text-sm text-gray-900">{topic.name}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-900">{topic.subSystem?.name}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-900">{topic.subSystem?.name || "-"}</td>
                                     <td className="px-6 py-4 text-sm text-gray-900">{topic.system?.name || "-"}</td>
                                     <td className="px-6 py-4 text-sm text-gray-900">{topic.system?.subject.name || "-"}</td>
                                     <td className="px-6 py-4 text-sm text-gray-500">{new Date(topic.createdAt).toLocaleDateString()}</td>
