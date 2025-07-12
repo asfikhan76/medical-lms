@@ -88,6 +88,9 @@ const EditSubsystem = () => {
                                         autoComplete="given-name"
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
+                                    {errors.name && (
+                                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -100,9 +103,10 @@ const EditSubsystem = () => {
                         </Link>
                         <button
                             type="submit"
+                            disabled={updating}
                             className="rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Edit Category
+                            {updating ? 'Updating...' : 'Edit Sub-System'}
                             <SquarePen size={18} color="#fff" />
                         </button>
                     </div>
