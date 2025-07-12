@@ -29,26 +29,35 @@ const stats = [
   },
 ];
 
-const recentActivity = [
+
+const recentQuestions = [
   {
-    type: "Question",
-    title: "What is the function of the liver?",
-    time: "2 mins ago",
+    title: "What are the main functions of the cardiovascular system?",
+    subject: "Cardiology",
+    difficulty: "Medium",
+    type: "MCQ",
+    time: "5 mins ago",
   },
   {
-    type: "Subject",
-    title: "Added 'Cardiology'",
-    time: "10 mins ago",
+    title: "Explain the process of cellular respiration in detail",
+    subject: "Biochemistry",
+    difficulty: "Hard",
+    type: "Essay",
+    time: "15 mins ago",
   },
   {
-    type: "System",
-    title: "Updated 'Nervous System'",
-    time: "30 mins ago",
-  },
-  {
-    type: "User",
-    title: "New user registered",
+    title: "What is the role of insulin in glucose metabolism?",
+    subject: "Endocrinology",
+    difficulty: "Easy",
+    type: "MCQ",
     time: "1 hour ago",
+  },
+  {
+    title: "Describe the anatomy of the human brain",
+    subject: "Neurology",
+    difficulty: "Medium",
+    type: "MCQ",
+    time: "2 hours ago",
   },
 ];
 
@@ -93,20 +102,29 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Recent Activity */}
+      {/* Recent Questions */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-700 mb-3">Recent Activity</h2>
+        <h2 className="text-lg font-semibold text-gray-700 mb-3">Recent Questions</h2>
         <div className="bg-white rounded-xl shadow p-5">
           <ul>
-            {recentActivity.map((item, idx) => (
-              <li key={idx} className="flex items-center py-2 border-b last:border-b-0">
-                <span className="mr-3">
-                  <Clock size={18} className="text-gray-400" />
+            {recentQuestions.map((question, idx) => (
+              <li key={idx} className="flex items-start py-3 border-b border-gray-200 last:border-b-0">
+                <span className="mr-3 mt-1">
+                  <Book size={16} className="text-blue-400" />
                 </span>
-                <div>
-                  <span className="font-medium text-gray-800">{item.title}</span>
-                  <span className="ml-2 text-xs text-gray-400">({item.type})</span>
-                  <div className="text-xs text-gray-500">{item.time}</div>
+                <div className="flex-1">
+                  <div className="font-medium text-gray-800 text-sm line-clamp-2">{question.title}</div>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-xs text-gray-500">{question.subject}</span>
+                    <span className="text-xs text-gray-400">{question.time}</span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className={`text-xs px-2 py-1 rounded-full ${question.difficulty === 'Easy' ? 'bg-green-100 text-green-600' :
+                      question.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-600' :
+                        'bg-red-100 text-red-600'
+                      }`}>{question.difficulty}</span>
+                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full">{question.type}</span>
+                  </div>
                 </div>
               </li>
             ))}
