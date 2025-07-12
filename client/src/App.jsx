@@ -65,13 +65,13 @@ function AppContent() {
 
           {/* Topics Routes */}
           <Route path='/add-topic' element={<AddTopic />} />
-          <Route path='/edit-topic' element={<EditTopic />} />
+          <Route path='/edit-topic/:id' element={<EditTopic />} />
           <Route path='/all-topics' element={<AllTopics />} />
 
           {/* temprary routes */}
           <Route path='/upload' element={<UploadForm />} />
 
-          
+
         </Routes>
       </div>
     </div>
