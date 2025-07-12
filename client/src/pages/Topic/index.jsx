@@ -104,9 +104,16 @@ const AllTopics = () => {
                             : (topics.map((topic) => (
                                 <tr key={topic._id} className="border-b border-gray-200">
                                     <td className="px-6 py-4 text-sm text-gray-900">{topic.name}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-900">{topic.subSystem?.name || "-"}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-900">{topic.system?.name || "-"}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-900">{topic.system?.subject.name || "-"}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-900">
+                                        <span className='bg-yellow-100 text-yellow-600 p-1 rounded px-2'>{topic.subSystem?.name || "-"}</span>
+
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-900">
+                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{topic.system?.name || "-"}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-900">
+                                        <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{topic.system?.subject.name || "-"}</span>
+                                    </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">{new Date(topic.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center gap-5'>

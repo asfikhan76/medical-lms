@@ -107,7 +107,9 @@ const AllSystems = () => {
                                 <tr key={system._id} className="border-b border-gray-200">
 
                                     <td className="px-6 py-4 text-sm text-gray-900">{system.name}</td>
-                                    <td className="px-6 py-4 text-sm text-gray-900">{system.subject.name}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-900">
+                                        <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{system.subject.name}</span>
+                                    </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">  {new Date(system.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center gap-5'>
