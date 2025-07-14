@@ -1,11 +1,33 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { LayoutDashboard, School, Users, Layers, FileUser, FilePlus, LogOut, ChevronDown } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List, PlusCircle } from 'lucide-react'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 
 
 const Sidebar = () => {
-    const { collapsed } = useSidebar()
+    const { collapsed } = useSidebar();
+    const location = useLocation();
+
+    // Define which routes belongs to which dropdown 
+    const subjectRoutes = ['/add-subject', '/edit-subject', '/all-subjects']
+    const systemRoutes = ['/add-system', '/edit-system', '/all-systems']
+    const subSystemRoutes = ['/add-subsystem', '/edit-subsystem', '/all-subsystems']
+    const topicRoutes = ['/add-topic', '/edit-topic', '/all-topics']
+
+    //Check if current Route is in any dropdown
+    const isSubjectOpen = subjectRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isSystemOpen = systemRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isSubSystemOpen = subSystemRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isTopicOpen = topicRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 shadow-sm relative`}>
             <div>
@@ -18,44 +40,44 @@ const Sidebar = () => {
 
                     {/* logo text */}
                     <div className={`text-lg font-semibold whitespace-nowrap text-gray-800 ms-2 ${collapsed ? 'hidden' : 'block'}`}>
-                        Exam Portal
+                        Ques. Bank
                     </div>
                 </div>
                 <div className="border-t border-gray-100">
                     <div className="px-2">
                         <div className="py-4">
-                            <Link to="/"
-                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm bg-blue-50 px-2 py-1.5 text-blue-700`}>
-                                <LayoutDashboard size={18} color='#6a7282' />
-                                <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                    Dashboard
-                                </span>
-                                {
-                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Dashboard</span>
-                                }
-                            </Link>
+                            <NavLink to="/"
+                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} rounded-sm px-2 py-1.5
+                                ${isActive
+                                        ? 'bg-indigo-600 text-white font-semibold'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                    }`}>
+                                {({ isActive }) => (
+                                    <>
+                                        <LayoutDashboard size={18} color={`${isActive ? "#fff" : "#6a7282"}`} />
+                                        <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                                            Dashboard
+                                        </span>
+                                        {!collapsed && (
+                                            <span
+                                                className={`text-sm font-normal ${isActive ? "text-white" : "text-[#6a7282]"
+                                                    }`}
+                                            >
+                                                Dashboard
+                                            </span>
+                                        )}
+                                    </>
+                                )}
+                            </NavLink>
                         </div>
 
-                        <ul className="space-y-1 border-t border-gray-100 pt-4 p-0">
-                            <li>
-                                <Link to="#"
-                                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                    <Users size={18} color='#6a7282' />
-                                    <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                        Students
-                                    </span>
-                                    {
-                                        collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Students</span>
-                                    }
-                                </Link>
-                            </li>
-
+                        <ul className="space-y-1 border-t border-gray-100 pt-2 p-0">
                             {/* subject dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isSubjectOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <Book size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Subjects </span>
                                             }
@@ -73,20 +95,37 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-subject"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
-                                                {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Add Subject</span>
+                                            <NavLink
+                                                to="/add-subject"
+                                                className={({ isActive }) =>
+                                                    `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} rounded-sm px-2 py-1.5
+                                                   ${isActive
+                                                        ? 'bg-indigo-600 text-white  font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`
                                                 }
-                                            </Link>
+                                            >
+                                                {({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                    <PlusCircle size={16} />
+                                                    Add Subject
+                                                </span>}
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/all-subjects"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/all-subjects"
+                                                className={({ isActive }) =>
+                                                    `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                   ${isActive
+                                                        ? 'bg-indigo-600 text-white  font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }
+                                                `}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Subjects</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Subjects</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </ul>
                                 </details>
@@ -94,10 +133,10 @@ const Sidebar = () => {
 
                             {/* system dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isSystemOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <Layers size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Systems </span>
                                             }
@@ -115,21 +154,33 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-system"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/add-system"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
 
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add System</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add System</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/all-systems"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/all-systems"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white  font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Systems</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Systems</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </ul>
                                 </details>
@@ -137,10 +188,10 @@ const Sidebar = () => {
 
                             {/* Subsystem dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isSubSystemOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <Component size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Sub-Systems </span>
                                             }
@@ -158,21 +209,33 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-subsystem"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/add-subsystem"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
 
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Sub-System</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add S-System</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/all-subsystems"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/all-subsystems"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Sub-Systems</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All S-Systems</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </ul>
                                 </details>
@@ -180,10 +243,10 @@ const Sidebar = () => {
 
                             {/* topic dropdown */}
                             <li>
-                                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                                <details open={isTopicOpen} className="group [&_summary::-webkit-details-marker]:hidden">
                                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                                         <div className='flex items-center gap-3'>
-                                            <FilePlus size={18} color='#6a7282' />
+                                            <List size={18} color='#6a7282' />
                                             {
                                                 collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Topics </span>
                                             }
@@ -201,21 +264,33 @@ const Sidebar = () => {
                                     </summary>
                                     <ul className="mt-2 space-y-1 px-4">
                                         <li>
-                                            <Link to="/add-topic"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/add-topic"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
 
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">   Add Topic</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm flex items-center gap-1 font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add Topic</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/all-topics"
-                                                className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                            <NavLink to="/all-topics"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
                                                 {
-                                                    collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">All Topics</span>
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Topics</span>
                                                 }
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </ul>
                                 </details>
