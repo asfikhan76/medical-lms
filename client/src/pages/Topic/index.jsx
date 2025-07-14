@@ -109,10 +109,10 @@ const AllTopics = () => {
 
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900">
-                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{topic.system?.name || "-"}</span>
+                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{topic.subSystem?.system?.name || "-"}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900">
-                                        <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{topic.system?.subject.name || "-"}</span>
+                                        <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{topic?.subSystem?.system?.subject?.name || "-"}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">{new Date(topic.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
