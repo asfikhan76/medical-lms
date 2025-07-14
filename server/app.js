@@ -18,6 +18,7 @@ const topicRoutes = require("./routes/topicRoutes");
 // temprary routes
 const questionUploadRoutes = require("./routes/questionUploadRoute");
 const subjectUploadRoutes = require("./routes/subjectUploadRoute");
+const dashboardRoutes = require('./routes/dashboardRoutes');
 
 
 // Routes
@@ -31,6 +32,8 @@ app.use("/api/subjects", subjectRoutes);
 app.use("/api/systems", systemRoutes);
 app.use("/api/subsystems", subSystemRoutes);
 app.use("/api/topics", topicRoutes);
+
+app.use('/api/dashboard', dashboardRoutes);
 
 // temprary routes
 app.use("/api/subjectUpload", subjectUploadRoutes);
