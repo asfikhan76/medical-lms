@@ -7,7 +7,6 @@ const subSystemSchema = new mongoose.Schema({
   system: { type: mongoose.Schema.Types.ObjectId, ref: "System", required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model("SubSystem", subSystemSchema);
 
 
 subSystemSchema.pre("deleteOne", { document: true, query: false }, async function (next) {
@@ -15,3 +14,4 @@ subSystemSchema.pre("deleteOne", { document: true, query: false }, async functio
   await TopicModel.deleteMany({ subSystem: subSystemId });
   next();
 });
+module.exports = mongoose.model("SubSystem", subSystemSchema);
