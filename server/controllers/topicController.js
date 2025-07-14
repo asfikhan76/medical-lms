@@ -14,12 +14,23 @@ exports.createTopic = async (req, res) => {
 
 exports.getAllTopics = async (req, res) => {
   try {
-    const topics = await TopicModel.find().populate("subSystem");
+    const topics = await TopicModel.find()
+      .populate({
+        path: 'subSystem',
+        populate: {
+          path: 'system',
+          populate: {
+            path: 'subject'
+          }
+        }
+      });
+
     res.json(topics);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 exports.updateTopic = async (req, res) => {
   try {
