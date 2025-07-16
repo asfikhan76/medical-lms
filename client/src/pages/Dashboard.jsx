@@ -1,29 +1,24 @@
-import React from "react";
-import { Book, Layers, PlusCircle, Clock, Component, List } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Book, Layers, PlusCircle, Component, List } from "lucide-react";
 import { Link } from "react-router-dom"
+import axios from 'axios';
+import { API_BASE_URL } from "../config/api";
 
-const stats = [
+
+const statsDesign = [
   {
-    name: "Total Subjects",
-    value: 1240,
     icon: Book,
     color: "bg-indigo-100 text-indigo-600",
   },
   {
-    name: "Total Systems",
-    value: 18,
     icon: Layers,
     color: "bg-green-100 text-green-600",
   },
   {
-    name: "Total Sub-Systems",
-    value: 7,
     icon: Component,
     color: "bg-yellow-100 text-yellow-600",
   },
   {
-    name: "Total Topics",
-    value: 320,
     icon: List,
     color: "bg-pink-100 text-pink-600",
   },
@@ -62,25 +57,76 @@ const recentQuestions = [
 ];
 
 export default function Dashboard() {
+
+  const [stats, setStats] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
+  // Fetching Dashboard Data
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+
+        setLoading(true);
+        const response = await axios.get(`${API_BASE_URL}/dashboard/summary`);
+        const rawStats = Object.entries(response.data)
+
+        const mergedStats = rawStats.map(([key, value], index) => {
+          const design = statsDesign[index] || {};
+
+          return {
+            key,
+            value,
+            icon: design.icon,
+            color: design.color
+          }
+
+        })
+
+        setStats(mergedStats)
+      } catch (error) {
+        setError("Failed to fetch Dashboard Data.");
+        console.error("Error fetching Dashboard Data:", error);
+      }
+      finally {
+        setLoading(false);
+      }
+    }
+    fetchDashboardData()
+  }, [])
+
   return (
     <div className="p-6 h-[calc(100%-72px)] overflow-auto">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {stats.map((stat) => (
-          <div
-            key={stat.name}
-            className="flex items-center p-5 bg-white rounded-xl shadow hover:shadow-lg transition"
-          >
-            <div className={`p-3 rounded-full ${stat.color} mr-4`}>
-              <stat.icon size={28} />
+        {
+          loading ? Array(4).fill(0).map((_, i) => (
+            <div key={i} className="flex items-center p-5 rounded-xl bg-gray-100 animate-pulse">
+              <div className="p-3 rounded-full bg-gray-300 rounded-full mr-4 h-11 w-11"></div>
+              <div>
+                <div className="h-4 bg-gray-300 rounded w-5 mb-2"></div>
+                <div className="h-6 bg-gray-300 rounded w-25"></div>
+              </div>
             </div>
-            <div>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <div className="text-gray-500 text-sm">{stat.name}</div>
-            </div>
-          </div>
-        ))}
+          )) :
+            stats.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center p-5 bg-white rounded-xl shadow hover:shadow-lg transition"
+              >
+                <div className={`p-3 rounded-full ${item.color} mr-4`}>
+                  <item.icon size={28} />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold">{item.value}</div>
+                  <div className="text-gray-500 text-sm">{item.key}</div>
+                </div>
+              </div>
+            ))
+        }
       </div>
 
       {/* Quick Actions */}
