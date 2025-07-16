@@ -34,6 +34,7 @@ import { useSidebar } from './contexts/SidebarContext'
 
 // temprary imports
 import UploadForm from './pages/Uploads/UploadForm'
+import AddQuestion from './pages/add-question'
 
 function AppContent() {
   const { collapsed } = useSidebar()
@@ -67,6 +68,9 @@ function AppContent() {
           <Route path='/add-topic' element={<AddTopic />} />
           <Route path='/edit-topic/:id' element={<EditTopic />} />
           <Route path='/all-topics' element={<AllTopics />} />
+
+          {/* Question Routes */}
+          <Route path='/add-question' element={<AddQuestion />} />
 
           {/* temprary routes */}
           <Route path='/upload' element={<UploadForm />} />
