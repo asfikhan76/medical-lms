@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { LayoutDashboard, School, Users, LogOut, ChevronDown, Book, Layers, Component, List, PlusCircle, HelpCircle } from 'lucide-react'
+import { LayoutDashboard, School, LogOut, ChevronDown, Book, Layers, Component, List, PlusCircle, ClipboardList } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
 
@@ -308,7 +308,7 @@ const Sidebar = () => {
                                             <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                                                 Add Question
                                             </span>
-                                            <LogOut size={18} />
+                                            <ClipboardList size={18} />
                                             {!collapsed && (
                                                 <span className={`text-sm font-normal ${isActive ? 'text-white' : 'text-[#6a7282]'}`}>
                                                     Add Question

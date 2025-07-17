@@ -8,11 +8,13 @@ import { API_BASE_URL } from '../../config/api'
 import { toast } from 'react-toastify'
 
 const AddTopic = () => {
+    // states
     const [subSystems, setSubSystems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    // form
     const
         {
             register,
@@ -22,11 +24,13 @@ const AddTopic = () => {
         }
             = useForm()
 
+    // breadcrumb items
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
         { label: 'Add New Topic' }
     ]
 
+    // submit handler
     const SubmitHandler = async (data) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/topics`, data, {
@@ -44,7 +48,6 @@ const AddTopic = () => {
     }
 
     // fetching sub sytems
-
     useEffect(() => {
         const fetchSubSystems = async () => {
             try {
