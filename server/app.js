@@ -4,7 +4,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const questionRoutes = require('./routes/questionRoutes');
 const testRoutes = require('./routes/testRoutes');
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -14,6 +13,8 @@ const subjectRoutes = require("./routes/subjectRoutes");
 const systemRoutes = require("./routes/systemRoutes");
 const subSystemRoutes = require("./routes/subSystemRoutes");
 const topicRoutes = require("./routes/topicRoutes");
+const questionRoutes = require('./routes/questionRoutes');
+
 
 // temprary routes
 const questionUploadRoutes = require("./routes/questionUploadRoute");
@@ -21,8 +22,7 @@ const subjectUploadRoutes = require("./routes/subjectUploadRoute");
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
 
-// Routes
-app.use('/api/questions', questionRoutes);
+// Routes Midleware
 app.use("/api/tests", testRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -34,6 +34,7 @@ app.use("/api/subsystems", subSystemRoutes);
 app.use("/api/topics", topicRoutes);
 
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/questions', questionRoutes);
 
 // temprary routes
 app.use("/api/subjectUpload", subjectUploadRoutes);

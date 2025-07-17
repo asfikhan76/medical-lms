@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const questionController = require('../controllers/questionController');
+const {
+  createQuestion,
+  getQuestions,
+  getQuestionById,
+  updateQuestion,
+  deleteQuestion
+} = require('../controllers/questionController');
 
-router.post('/', questionController.createQuestion);
-router.get('/', questionController.getAllQuestions);
-router.get('/:id', questionController.getQuestionById);
-router.put('/:id', questionController.updateQuestion);
-router.delete('/:id', questionController.deleteQuestion);
-router.post('/bulk', questionController.bulkUpload);
+router.post('/', createQuestion);
+router.get('/', getQuestions);
+router.get('/:id', getQuestionById);
+router.put('/:id', updateQuestion);
+router.delete('/:id', deleteQuestion);
 
 module.exports = router;
