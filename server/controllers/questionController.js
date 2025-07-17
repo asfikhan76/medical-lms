@@ -1,98 +1,112 @@
-const QuestionModel = require('../models/QuestionModel');
-const CounterModel = require('../models/CounterModel'); // Import the Counter model
-
-exports.createQuestion = async (req, res) => {
+const Topic = require('../models/TopicModel');
+const SubSystem = require('../models/SubSystemModel');
+const System = require('../models/SystemModel');
+const Subject = require('../models/SubjectModel');
+const Question = require('../models/QuestionModel');
+// Create question
+ exports.createQuestion = async (req, res) => {
   try {
-    // Auto-increment logic
-    const counter = await CounterModel.findOneAndUpdate(
-      { name: 'questionId' },
-      { $inc: { value: 1 } },
-      { new: true, upsert: true }
-    );
+    const { topic: topicId, questionId, text, options, explanation, type } = req.body;
 
-    // Create the new question with custom questionId
-    const question = new QuestionModel({
-      ...req.body,
-      questionId: counter.value
+    const topic = await Topic.findById(topicId).populate({
+      path: 'subSystem',
+      populate: {
+        path: 'system',
+        populate: {
+          path: 'subject'
+        }
+      }
     });
 
-    await question.save();
-    res.status(201).json(question);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    if (!topic || !topic.subSystem || !topic.subSystem.system || !topic.subSystem.system.subject) {
+      return res.status(400).json({ message: 'Invalid topic or nested references' });
+    }
+
+    const newQuestion = await Question.create({
+      questionId,
+      text,
+      options,
+      explanation,
+      type,
+      topic: topic._id,
+      subSystem: topic.subSystem._id,
+      system: topic.subSystem.system._id,
+      subject: topic.subSystem.system.subject._id
+    });
+
+    res.status(201).json(newQuestion);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Get all questions (with filters)
-exports.getAllQuestions = async (req, res) => {
+// Get all questions
+exports.getQuestions = async (req, res) => {
   try {
-    const { category, difficulty, type, tags, search } = req.query;
-    
+    const questions = await Question.find()
+      .populate('subject system subSystem topic');
 
-    let filter = {};
-
-    if (category) filter.category = category;
-    if (difficulty) filter.difficulty = difficulty;
-    if (type) filter.type = type;
-    if (tags) {
-      const tagsArray = tags.split(','); // comma-separated
-      filter.tags = { $in: tagsArray };
-    }
-    if (search) {
-      filter.text = { $regex: search, $options: 'i' }; // case-insensitive search
-    }
-
-    const questions = await QuestionModel.find(filter);
-    res.json(questions);
+    res.status(200).json({ total: questions.length, data: questions });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: 'Failed to fetch questions' });
   }
 };
 
-// Get a question by ID
+// Get single question
 exports.getQuestionById = async (req, res) => {
   try {
-    const question = await QuestionModel.findById(req.params.id);
-    if (!question) return res.status(404).json({ error: 'Question not found' });
-    res.json(question);
+    const question = await Question.findById(req.params.id)
+      .populate('subject system subSystem topic');
+
+    if (!question) return res.status(404).json({ message: 'Question not found' });
+    res.status(200).json(question);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: 'Error fetching question' });
   }
 };
 
-// Update a question
+// Update question
 exports.updateQuestion = async (req, res) => {
   try {
-    const question = await QuestionModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!question) return res.status(404).json({ error: 'Question not found' });
-    res.json(question);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const { topic: topicId, questionId, text, options, explanation, type } = req.body;
+
+    const topic = await Topic.findById(topicId).populate({
+      path: 'subSystem',
+      populate: {
+        path: 'system',
+        populate: {
+          path: 'subject'
+        }
+      }
+    });
+
+    const updated = await Question.findByIdAndUpdate(req.params.id, {
+      questionId,
+      text,
+      options,
+      explanation,
+      type,
+      topic: topic._id,
+      subSystem: topic.subSystem._id,
+      system: topic.subSystem.system._id,
+      subject: topic.subSystem.system.subject._id
+    }, { new: true });
+
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Delete a question
+
+// Delete question
 exports.deleteQuestion = async (req, res) => {
   try {
-    const question = await QuestionModel.findByIdAndDelete(req.params.id); 
-    console.log("question", question)
-    if (!question) return res.status(404).json({ error: 'Question not found' });
-    res.json({ message: 'Question deleted' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+    const deleted = await Question.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: 'Question not found to delete' });
 
-// Bulk upload questions
-exports.bulkUpload = async (req, res) => {
-  try {
-    const questions = await QuestionModel.insertMany(req.body);
-    res.status(201).json(questions);
+    res.status(200).json({ message: 'Question deleted successfully' });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ message: 'Failed to delete question' });
   }
 };
