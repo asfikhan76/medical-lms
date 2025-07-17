@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
 import { Link } from 'react-router-dom'
-import { Plus } from 'lucide-react'
+import { Plus, PlusCircle } from 'lucide-react'
 import QuillEditor from '../components/QuillEditor'
 
 const AddQuestion = () => {
@@ -116,13 +116,19 @@ const AddQuestion = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className="sm:col-span-1">
+                                    <div className="sm:col-span-1 ">
                                         <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
                                             Is this the correct answer ?
                                         </label>
                                         <div className="mt-2 flex items-center gap-2 py-1.5">
                                             <input type="radio" className="size-5 rounded border-gray-300" id="Option1" />
                                         </div>
+                                    </div>
+                                    <div className="sm:col-span-2 flex justify-end items-center">
+                                        <button type='button' className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+                                            Add Option
+                                            <PlusCircle size={18} color="#fff" />
+                                        </button>
                                     </div>
                                 </div>
                             </div>
