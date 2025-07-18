@@ -10,13 +10,13 @@ const seedTopics = require('../seeders/seed-topics');
 
 const runAllSeeders = async () => {
   try {
+    await seedUsers();
     await seedSubjects();
     await seedSystems();
     await seedSubSystems();
     await seedTopics();
-    await seedTests();
     await seedQuestions();
-    await seedUsers();
+    await seedTests();
     await seedResults();
     console.log('🌱 All seeders ran successfully!');
   } catch (err) {
