@@ -49,7 +49,7 @@ const AddQuestion = () => {
     }, [])
 
 
-    // handleTopicClick
+    // handleTopicChange
 
     const handleTopicChange = async (event) => {
         let index = event.target.options.selectedIndex - 1;
