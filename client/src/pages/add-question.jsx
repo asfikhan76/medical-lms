@@ -101,8 +101,16 @@ const AddQuestion = () => {
                                     <QuillEditor />
                                 </div>
                             </div>
+                            <div className="sm:col-span-2">
+                                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
+                                    Explanation
+                                </label>
+                                <div className="mt-2 w-full">
+                                    <QuillEditor />
+                                </div>
+                            </div>
                             <div className='sm:col-span-2'>
-                                <div className="grid grid-cols-4 gap-x-6 gap-y-6">
+                                <div className="grid grid-cols-4 gap-x-6 gap-y-6 mb-5">
                                     <div className="sm:col-span-1">
                                         <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
                                             Option
