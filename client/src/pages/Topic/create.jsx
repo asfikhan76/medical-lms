@@ -56,7 +56,6 @@ const AddTopic = () => {
                 setLoading(false)
 
             } catch (err) {
-
                 setError('Failed to fetch Sub-Systems')
                 setLoading(false)
             }
