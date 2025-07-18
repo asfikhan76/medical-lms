@@ -154,11 +154,9 @@ const seedQuestions = async () => {
 
     await Question.insertMany(questions);
     console.log('✅ Seeded questions successfully');
-    process.exit();
 
   } catch (error) {
     console.error('❌ Error seeding questions:', error.message);
-    process.exit(1);
   }
 };
 
