@@ -7,6 +7,11 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { API_BASE_URL } from '../config/api'
 
+// generate random id
+const generateRandomId = () => {
+    return Math.ceil(Date.now() + Math.random() * 10000)
+}
+
 const AddQuestion = () => {
 
     const [topics, setTopics] = useState([])
@@ -16,6 +21,7 @@ const AddQuestion = () => {
     const [subject, setSubject] = useState('')
     const [options, setOptions] = useState([
         {
+            id: generateRandomId(),
             value: "",
             isCorrect: false
         }
@@ -45,7 +51,6 @@ const AddQuestion = () => {
             try {
                 const response = await axios.get(`${API_BASE_URL}/topics`)
                 setTopics(response.data)
-                console.log(response.data)
             } catch (err) {
                 setError('Failed to fetch topics')
                 console.log(err)
@@ -73,9 +78,18 @@ const AddQuestion = () => {
     // handleAddOption
 
     const handleAddOption = () => {
-        setOptions([...options, { value: "", isCorrect: false }])
+        const newOption = { id: generateRandomId(), value: "", isCorrect: false }
+        setOptions([...options, newOption])
     }
 
+    // handleRemoveOption
+
+    const handleRemoveOption = (index) => {
+        const updatedOptions = options.filter((option) => {
+            return option.id !== index;
+        });
+        setOptions(updatedOptions)
+    }
 
 
     return (
@@ -181,7 +195,7 @@ const AddQuestion = () => {
                             </div>
                             {
                                 options.map((option, index) => (
-                                    <div key={index} className='sm:col-span-2' id='option'>
+                                    <div key={option.id} className='sm:col-span-2' id='option'>
                                         <div className="grid grid-cols-4 gap-x-6 gap-y-6 mb-5">
                                             <div className="sm:col-span-1">
                                                 <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
@@ -201,14 +215,23 @@ const AddQuestion = () => {
                                                     Is this the correct answer ?
                                                 </label>
                                                 <div className="mt-2 flex items-center gap-2 py-1.5">
-                                                    <input type="radio" className="size-5 rounded border-gray-300" id="Option1" />
+                                                    <input type="radio" className="size-5 rounded border-gray-300" id="Option1" name='option' />
                                                 </div>
                                             </div>
                                             <div className="sm:col-span-2 flex justify-end items-center">
-                                                <button onClick={handleAddOption} type='button' className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-                                                    Add Option
-                                                    <PlusCircle size={18} color="#fff" />
-                                                </button>
+                                                {
+                                                    index == 0 ? (
+                                                        <button onClick={handleAddOption} type='button' className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
+                                                            Add Option
+                                                            <PlusCircle size={18} color="#fff" />
+                                                        </button>
+                                                    ) : (
+                                                        <button onClick={() => handleRemoveOption(option.id)} type='button' className='rounded-md flex cursor-pointer items-center gap-2 bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500'>
+                                                            Remove Option
+                                                            <PlusCircle size={18} color="#fff" />
+                                                        </button>
+                                                    )
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -232,8 +255,8 @@ const AddQuestion = () => {
                     </div>
                 </div>
 
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
 
