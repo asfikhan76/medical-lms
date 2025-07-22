@@ -25,6 +25,7 @@ const QuillEditor = ({ initialValue = '', onChange }) => {
             // Listen for changes
             editorRef.current.on('text-change', () => {
                 const content = editorRef.current.root.innerHTML;
+                console.log(content)
                 if (onChange) onChange(content);
             });
         }
@@ -37,10 +38,10 @@ const QuillEditor = ({ initialValue = '', onChange }) => {
         // Cleanup
         return () => {
             if (editorRef.current) {
-                editorRef.current.off('text-change');
+                editorRef.current = null;
             }
         };
-    }, [initialValue, onChange]);
+    }, []);
 
     return (
         <div className="w-full">

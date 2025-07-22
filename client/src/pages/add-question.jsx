@@ -19,6 +19,7 @@ const AddQuestion = () => {
     const [subSystem, setSubSystem] = useState('')
     const [system, setSystem] = useState('')
     const [subject, setSubject] = useState('')
+    const [question, setQuestion] = useState('')
     const [options, setOptions] = useState([
         {
             id: generateRandomId(),
@@ -89,6 +90,13 @@ const AddQuestion = () => {
             return option.id !== index;
         });
         setOptions(updatedOptions)
+    }
+
+    // handleQuestionChange
+
+    const handleQuestionChange = (content) => {
+        setQuestion(content)
+        console.log(content)
     }
 
 
@@ -182,17 +190,17 @@ const AddQuestion = () => {
                                     Question
                                 </label>
                                 <div className="mt-2 w-full">
-                                    <QuillEditor />
+                                    <QuillEditor initialValue={question} onChange={handleQuestionChange} />
                                 </div>
                             </div>
-                            <div className="sm:col-span-2">
+                            {/* <div className="sm:col-span-2">
                                 <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
                                     Explanation
                                 </label>
                                 <div className="mt-2 w-full">
                                     <QuillEditor />
                                 </div>
-                            </div>
+                            </div> */}
                             {
                                 options.map((option, index) => (
                                     <div key={option.id} className='sm:col-span-2' id='option'>
