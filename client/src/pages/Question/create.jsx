@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Breadcrumb from '../components/Breadcrumb'
+import Breadcrumb from '../../components/Breadcrumb'
 import { Link } from 'react-router-dom'
 import { Plus, PlusCircle } from 'lucide-react'
-import QuillEditor from '../components/QuillEditor'
+import QuillEditor from '../../components/QuillEditor'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { API_BASE_URL } from '../config/api'
+import { API_BASE_URL } from '../../config/api'
 
 // generate random id
 const generateRandomId = () => {
@@ -107,9 +107,9 @@ const AddQuestion = () => {
     }
 
     return (
-        <div className='overflow-x-auto mx-4 bg-white p-6 shadow-sm sm:rounded-lg main-container'>
+        <div className='overflow-x-auto mx-4 bg-white shadow-sm sm:rounded-lg main-container'>
             <form>
-                <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg mt-5 relative">
+                <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg relative">
                     {/* breadcrumb */}
                     <Breadcrumb items={breadcrumbItems} />
 
