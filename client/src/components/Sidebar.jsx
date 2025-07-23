@@ -13,6 +13,7 @@ const Sidebar = () => {
     const systemRoutes = ['/add-system', '/edit-system', '/all-systems']
     const subSystemRoutes = ['/add-subsystem', '/edit-subsystem', '/all-subsystems']
     const topicRoutes = ['/add-topic', '/edit-topic', '/all-topics']
+    const questionRoutes = ['/add-question', '/edit-question', '/all-questions']
 
     //Check if current Route is in any dropdown
     const isSubjectOpen = subjectRoutes.some(route =>
@@ -25,6 +26,9 @@ const Sidebar = () => {
         location.pathname === route || location.pathname.startsWith(route + '/')
     );
     const isTopicOpen = topicRoutes.some(route =>
+        location.pathname === route || location.pathname.startsWith(route + '/')
+    );
+    const isQuestionOpen = questionRoutes.some(route =>
         location.pathname === route || location.pathname.startsWith(route + '/')
     );
 
@@ -296,28 +300,59 @@ const Sidebar = () => {
                                 </details>
                             </li>
 
-                            {/* Question */}
+                            {/* Question dropdown */}
                             <li>
-                                <NavLink to="/add-question" className={({ isActive }) =>
-                                    `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} 
-                                            rounded-sm px-2 py-1.5 
-                                            ${isActive ? 'bg-indigo-600 text-white font-semibold' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'}`
-                                }>
-                                    {({ isActive }) => (
-                                        <>
-                                            <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                                                Add Question
-                                            </span>
-                                            <ClipboardList size={18} />
-                                            {!collapsed && (
-                                                <span className={`text-sm font-normal ${isActive ? 'text-white' : 'text-[#6a7282]'}`}>
-                                                    Add Question
-                                                </span>
-                                            )}
-                                        </>
-                                    )}
-                                </NavLink>
+                                <details open={isQuestionOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                                    <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                                        <div className='flex items-center gap-3'>
+                                            <ClipboardList size={18} color='#6a7282' />
+                                            {
+                                                collapsed ? null : <span className="text-sm font-normal text-[#6a7282]"> Questions </span>
+                                            }
+                                        </div>
 
+                                        {
+                                            collapsed ? null :
+                                                <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                                    <ChevronDown size={18} color='#6a7282' />
+                                                </span>
+                                        }
+                                        <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                                            Questions
+                                        </span>
+                                    </summary>
+                                    <ul className="mt-2 space-y-1 px-4">
+                                        <li>
+                                            <NavLink to="/add-question"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
+
+                                                {
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm flex items-center gap-1 font-normal ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <PlusCircle size={16} />
+                                                        Add Question</span>
+                                                }
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/all-questions"
+                                                className={({ isActive }) => `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                                ${isActive
+                                                        ? 'bg-indigo-600 text-white font-semibold'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                    }`}>
+                                                {
+                                                    ({ isActive }) => collapsed ? null : <span className={`text-sm font-normal flex items-center gap-1 ${isActive} ? 'text-white' : 'text-[#6a7282]'`}>
+                                                        <List size={16} />
+                                                        All Questions</span>
+                                                }
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                </details>
                             </li>
                         </ul>
                     </div>
