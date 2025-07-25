@@ -39,6 +39,8 @@ import { useSidebar } from './contexts/SidebarContext'
 
 // temprary imports
 import UploadForm from './pages/Uploads/UploadForm'
+import ShowQuestion from './pages/Question/show'
+import EditQuestion from './pages/Question/edit'
 
 function AppContent() {
   const { collapsed } = useSidebar()
@@ -76,6 +78,8 @@ function AppContent() {
           {/* Question Routes */}
           <Route path='/add-question' element={<AddQuestion />} />
           <Route path='/all-questions' element={<AllQuestions />} />
+          <Route path='/show-question/:id' element={<ShowQuestion />} />
+          <Route path='/edit-question/:id' element={<EditQuestion />} />
 
           {/* temprary routes */}
           <Route path='/upload' element={<UploadForm />} />

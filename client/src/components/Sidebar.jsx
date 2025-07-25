@@ -13,7 +13,7 @@ const Sidebar = () => {
     const systemRoutes = ['/add-system', '/edit-system', '/all-systems']
     const subSystemRoutes = ['/add-subsystem', '/edit-subsystem', '/all-subsystems']
     const topicRoutes = ['/add-topic', '/edit-topic', '/all-topics']
-    const questionRoutes = ['/add-question', '/edit-question', '/all-questions']
+    const questionRoutes = ['/add-question', '/edit-question', '/all-questions', '/show-question']
 
     //Check if current Route is in any dropdown
     const isSubjectOpen = subjectRoutes.some(route =>
