@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Plus, PlusCircle } from 'lucide-react'
 import QuillEditor from '../../components/QuillEditor'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
+import { toast } from 'react-toastify'
 
 // generate random id
 const generateRandomId = () => {
@@ -21,6 +22,7 @@ const AddQuestion = () => {
     const [subject, setSubject] = useState('')
     const [question, setQuestion] = useState('')
     const [explanation, setExplanation] = useState('')
+    const navigate = useNavigate()
     const [options, setOptions] = useState([
         {
             id: generateRandomId(),
@@ -106,9 +108,27 @@ const AddQuestion = () => {
         console.log(content)
     }
 
+    // submitHandler
+    const submitHandler = async (data) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/questions`, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            reset()
+            toast.success("Question successfully added!")
+            navigate('/all-questions')
+        }
+        catch (error) {
+            const serverMessage = error.response?.data?.error ? error.response.data.error : "Error adding Question";
+            toast.error(serverMessage);
+        }
+    }
+
     return (
         <div className='overflow-x-auto mx-4 bg-white shadow-sm sm:rounded-lg main-container'>
-            <form>
+            <form onSubmit={handleSubmit()}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg relative">
                     {/* breadcrumb */}
                     <Breadcrumb items={breadcrumbItems} />
@@ -126,6 +146,7 @@ const AddQuestion = () => {
                                 </label>
 
                                 <select
+                                    {...register("topic", { required: "Topic is required" })}
                                     onChange={handleTopicChange}
                                     id='topicSelect'
                                     className="block px-3 py-2.5  w-full rounded-md sm:text-sm outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
