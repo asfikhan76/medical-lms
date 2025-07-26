@@ -4,9 +4,13 @@ const System = require('../models/SystemModel');
 const Subject = require('../models/SubjectModel');
 const Question = require('../models/QuestionModel');
 // Create question
- exports.createQuestion = async (req, res) => {
+exports.createQuestion = async (req, res) => {
   try {
-    const { topic: topicId, questionId, text, options, explanation, type } = req.body;
+    const { topic: topicId, text, options, explanation, type } = req.body;
+
+    // Generate unique questionId
+    const lastQuestion = await Question.findOne().sort({ questionId: -1 }).select('questionId');
+    const nextQuestionId = lastQuestion ? lastQuestion.questionId + 1 : 1;
 
     const topic = await Topic.findById(topicId).populate({
       path: 'subSystem',
@@ -23,11 +27,11 @@ const Question = require('../models/QuestionModel');
     }
 
     const newQuestion = await Question.create({
-      questionId,
+      questionId: nextQuestionId,
       text,
       options,
       explanation,
-      type,
+      type: type || 'mcq',
       topic: topic._id,
       subSystem: topic.subSystem._id,
       system: topic.subSystem.system._id,
@@ -36,6 +40,7 @@ const Question = require('../models/QuestionModel');
 
     res.status(201).json(newQuestion);
   } catch (error) {
+    console.error('Error creating question:', error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -68,7 +73,7 @@ exports.getQuestionById = async (req, res) => {
 // Update question
 exports.updateQuestion = async (req, res) => {
   try {
-    const { topic: topicId, questionId, text, options, explanation, type } = req.body;
+    const { topic: topicId, text, options, explanation, type } = req.body;
 
     const topic = await Topic.findById(topicId).populate({
       path: 'subSystem',
@@ -81,11 +86,10 @@ exports.updateQuestion = async (req, res) => {
     });
 
     const updated = await Question.findByIdAndUpdate(req.params.id, {
-      questionId,
       text,
       options,
       explanation,
-      type,
+      type: type || 'mcq',
       topic: topic._id,
       subSystem: topic.subSystem._id,
       system: topic.subSystem.system._id,
@@ -94,6 +98,7 @@ exports.updateQuestion = async (req, res) => {
 
     res.status(200).json(updated);
   } catch (error) {
+    console.error('Error updating question:', error);
     res.status(500).json({ message: error.message });
   }
 };
