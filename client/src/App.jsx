@@ -26,6 +26,11 @@ import AddTopic from './pages/Topic/create'
 import EditTopic from './pages/Topic/edit'
 import AllTopics from './pages/Topic/index'
 
+// question imports
+import AddQuestion from './pages/Question/create'
+import AllQuestions from './pages/Question/index'
+
+
 // dashboard import
 import Dashboard from './pages/Dashboard'
 
@@ -34,6 +39,8 @@ import { useSidebar } from './contexts/SidebarContext'
 
 // temprary imports
 import UploadForm from './pages/Uploads/UploadForm'
+import ShowQuestion from './pages/Question/show'
+import EditQuestion from './pages/Question/edit'
 
 function AppContent() {
   const { collapsed } = useSidebar()
@@ -67,6 +74,12 @@ function AppContent() {
           <Route path='/add-topic' element={<AddTopic />} />
           <Route path='/edit-topic/:id' element={<EditTopic />} />
           <Route path='/all-topics' element={<AllTopics />} />
+
+          {/* Question Routes */}
+          <Route path='/add-question' element={<AddQuestion />} />
+          <Route path='/all-questions' element={<AllQuestions />} />
+          <Route path='/show-question/:id' element={<ShowQuestion />} />
+          <Route path='/edit-question/:id' element={<EditQuestion />} />
 
           {/* temprary routes */}
           <Route path='/upload' element={<UploadForm />} />
