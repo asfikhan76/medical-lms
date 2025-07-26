@@ -114,13 +114,13 @@ const AllQuestions = () => {
 
                                     <td className="px-6 py-4 text-sm text-gray-900">
                                         <div className='line-clamp-2'>
-                                            {question.text}
+                                            <div className="question-text" dangerouslySetInnerHTML={{ __html: question.text }} />
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">  {new Date(question.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center justify-center gap-5'>
-                                            <Link to={`/show-question/${question._id}`} state={{ questionData: question}}>
+                                            <Link to={`/show-question/${question._id}`} state={{ questionData: question }}>
                                                 <Eye size={16} />
                                             </Link>
                                             <Link to={`/edit-question/${question._id}`} state={{ questionData: question }}>
