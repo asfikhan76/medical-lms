@@ -51,7 +51,7 @@ const ShowQuestion = () => {
                     </div>
 
                     {/* Question Text */}
-                    <h2 className="text-2xl font-semibold mb-2">{questionData.text}</h2>
+                    <h2 className="text-2xl font-semibold mb-2" dangerouslySetInnerHTML={{ __html: questionData.text }} />
 
                     {/* Options */}
                     <div className="mb-6">
@@ -76,7 +76,7 @@ const ShowQuestion = () => {
                     {questionData.explanation && (
                         <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-6">
                             <strong className="block mb-1">Explanation:</strong>
-                            <div>{questionData.explanation}</div>
+                            <div dangerouslySetInnerHTML={{ __html: questionData.explanation }} />
                         </div>
                     )}
 
