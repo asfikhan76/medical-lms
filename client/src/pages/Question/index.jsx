@@ -142,7 +142,12 @@ const AllQuestions = () => {
             <ConfirmModal
                 isOpen={modalOpen}
                 title="Delete Question"
-                message={`Are you sure you want to delete "${selectedQuestion?.text}" ?`}
+                message={
+                    <span>
+                        Are you sure you want to delete{" "}
+                        <span dangerouslySetInnerHTML={{ __html: selectedQuestion?.text }} />?
+                    </span>
+                }
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancel}
             />
