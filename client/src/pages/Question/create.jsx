@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/Breadcrumb'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Plus, PlusCircle } from 'lucide-react'
 import QuillEditor from '../../components/QuillEditor'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
 import { toast } from 'react-toastify'
@@ -20,16 +20,7 @@ const AddQuestion = () => {
     const [subSystem, setSubSystem] = useState('')
     const [system, setSystem] = useState('')
     const [subject, setSubject] = useState('')
-    const [question, setQuestion] = useState('')
-    const [explanation, setExplanation] = useState('')
     const navigate = useNavigate()
-    const [options, setOptions] = useState([
-        {
-            id: generateRandomId(),
-            value: "",
-            isCorrect: false
-        }
-    ])
 
     //  form
     const {
@@ -40,10 +31,22 @@ const AddQuestion = () => {
         watch,
         setValue,
         formState: { errors }
-    } = useForm()
+    } = useForm({
+        defaultValues: {
+            topic: '',
+            text: '',
+            explanation: '',
+            options: [
+                { value: '', isCorrect: false }
+            ]
+        }
+    })
 
-
-
+    // Field array for options
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "options"
+    })
 
     // breadcrumb items
     const breadcrumbItems = [
@@ -52,7 +55,6 @@ const AddQuestion = () => {
     ]
 
     // fetching topics
-
     useEffect(() => {
         const fetchTopics = async () => {
             try {
@@ -68,7 +70,6 @@ const AddQuestion = () => {
 
 
     // handleTopicChange
-
     const handleTopicChange = (event) => {
         let index = event.target.options.selectedIndex - 1;
         if (index > -1) {
@@ -80,29 +81,54 @@ const AddQuestion = () => {
             setSystem('System')
             setSubject('Subject')
         }
-        // Let React Hook Form handle the value
         return event.target.value;
     }
 
     // handleAddOption
-
     const handleAddOption = () => {
-        const newOption = { id: generateRandomId(), value: "", isCorrect: false }
-        setOptions([...options, newOption])
+        append({ value: '', isCorrect: false })
     }
 
     // handleRemoveOption
-
     const handleRemoveOption = (index) => {
-        const updatedOptions = options.filter((option) => {
-            return option.id !== index;
-        });
-        setOptions(updatedOptions)
+        remove(index)
+    }
+
+    // handleCorrectAnswerChange
+    const handleCorrectAnswerChange = (selectedIndex) => {
+        // All options are set to false first
+        fields.forEach((_, index) => {
+            setValue(`options.${index}.isCorrect`, false)
+        })
+        // Only the selected option is set to true
+        setValue(`options.${selectedIndex}.isCorrect`, true)
     }
 
     // submitHandler
     const submitHandler = async (data) => {
         try {
+            //At least two options should be there
+            if (data.options.length < 2) {
+                toast.error("At least 2 options are required");
+                return;
+            }
+
+            // Validate that at least one option is marked as correct
+            const hasCorrectAnswer = data.options.some(option => option.isCorrect);
+            if (!hasCorrectAnswer) {
+                toast.error("Please select at least one correct answer");
+                return;
+            }
+
+            // Validate that all options have values
+            const hasEmptyOptions = data.options.some(option => !option.value.trim());
+            if (hasEmptyOptions) {
+                toast.error("Please fill in all option values");
+                return;
+            }
+
+            console.log("Submitting data:", data);
+
             const response = await axios.post(`${API_BASE_URL}/questions`, data, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -125,7 +151,7 @@ const AddQuestion = () => {
 
     return (
         <div className='overflow-x-auto mx-4 bg-white shadow-sm sm:rounded-lg main-container'>
-            <form onSubmit={handleSubmit()}>
+            <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg relative">
                     {/* breadcrumb */}
                     <Breadcrumb items={breadcrumbItems} />
@@ -257,50 +283,66 @@ const AddQuestion = () => {
                                     />
                                 </div>
                             </div>
-                            {
-                                options.map((option, index) => (
-                                    <div key={option.id} className='sm:col-span-2' id='option'>
-                                        <div className="grid grid-cols-4 gap-x-6 gap-y-6 mb-5">
-                                            <div className="sm:col-span-1">
-                                                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
-                                                    Option
-                                                </label>
-                                                <div className="mt-2">
-                                                    <input
-                                                        id="name"
-                                                        type="text"
-                                                        autoComplete="given-name"
-                                                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="sm:col-span-1 ">
-                                                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
-                                                    Is this the correct answer ?
-                                                </label>
-                                                <div className="mt-2 flex items-center gap-2 py-1.5">
-                                                    <input type="radio" className="size-5 rounded border-gray-300" id="Option1" name='option' />
-                                                </div>
-                                            </div>
-                                            <div className="sm:col-span-2 flex justify-end items-center">
-                                                {
-                                                    index == 0 ? (
-                                                        <button onClick={handleAddOption} type='button' className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
-                                                            Add Option
-                                                            <PlusCircle size={18} color="#fff" />
-                                                        </button>
-                                                    ) : (
-                                                        <button onClick={() => handleRemoveOption(option.id)} type='button' className='rounded-md flex cursor-pointer items-center gap-2 bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500'>
-                                                            Remove Option
-                                                            <PlusCircle size={18} color="#fff" />
-                                                        </button>
-                                                    )
-                                                }
+                            {fields.map((field, index) => (
+                                <div key={field.id} className='sm:col-span-2' id='option'>
+                                    <div className="grid grid-cols-4 gap-x-6 gap-y-6 mb-5">
+                                        <div className="sm:col-span-1">
+                                            <label htmlFor={`option-${index}`} className="block text-sm/6 font-medium text-gray-900">
+                                                Option {index + 1}
+                                            </label>
+                                            <div className="mt-2">
+                                                <input
+                                                    {...register(`options.${index}.value`, {
+                                                        required: `Option ${index + 1} is required`
+                                                    })}
+                                                    id={`option-${index}`}
+                                                    type="text"
+                                                    placeholder={`Enter option ${index + 1}`}
+                                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                                />
                                             </div>
                                         </div>
+                                        <div className="sm:col-span-1 ">
+                                            <label htmlFor={`correct-${index}`} className="block text-sm/6 font-medium text-gray-900">
+                                                Is this the correct answer?
+                                            </label>
+                                            <div className="mt-2 flex items-center gap-2 py-1.5">
+                                                <input
+                                                    type="radio"
+                                                    id={`correct-${index}`}
+                                                    name="correctAnswer"
+                                                    checked={watch(`options.${index}.isCorrect`)}
+                                                    onChange={() => handleCorrectAnswerChange(index)}
+                                                    className="size-5 rounded border-gray-300"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="sm:col-span-2 flex justify-end items-center">
+                                            {index === 0 ? (
+                                                // Only first option shows "Add Option" button
+                                                <button
+                                                    onClick={handleAddOption}
+                                                    type='button'
+                                                    className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                                                >
+                                                    Add Option
+                                                    <PlusCircle size={18} color="#fff" />
+                                                </button>
+                                            ) : (
+                                                // All other options show "Remove Option" button
+                                                <button
+                                                    onClick={() => handleRemoveOption(index)}
+                                                    type='button'
+                                                    className='rounded-md flex cursor-pointer items-center gap-2 bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500'
+                                                >
+                                                    Remove Option
+                                                    <PlusCircle size={18} color="#fff" />
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
-                                ))
-                            }
+                                </div>
+                            ))}
                         </div>
                     </div>
 
