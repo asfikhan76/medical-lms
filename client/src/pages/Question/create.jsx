@@ -3,7 +3,7 @@ import Breadcrumb from '../../components/Breadcrumb'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Plus, PlusCircle } from 'lucide-react'
 import QuillEditor from '../../components/QuillEditor'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
 import { toast } from 'react-toastify'
@@ -36,6 +36,9 @@ const AddQuestion = () => {
         register,
         reset,
         handleSubmit,
+        control,
+        watch,
+        setValue,
         formState: { errors }
     } = useForm()
 
@@ -77,6 +80,8 @@ const AddQuestion = () => {
             setSystem('System')
             setSubject('Subject')
         }
+        // Let React Hook Form handle the value
+        return event.target.value;
     }
 
     // handleAddOption
@@ -93,19 +98,6 @@ const AddQuestion = () => {
             return option.id !== index;
         });
         setOptions(updatedOptions)
-    }
-
-    // handleQuestionChange
-
-    const handleQuestionChange = (content) => {
-        setQuestion(content)
-        console.log(content)
-    }
-
-    // handleExplanationChange
-    const handleExplanationChange = (content) => {
-        setExplanation(content)
-        console.log(content)
     }
 
     // submitHandler
@@ -126,6 +118,11 @@ const AddQuestion = () => {
         }
     }
 
+    const values = watch()
+    useEffect(() => {
+        console.log(values)
+    }, [values])
+
     return (
         <div className='overflow-x-auto mx-4 bg-white shadow-sm sm:rounded-lg main-container'>
             <form onSubmit={handleSubmit()}>
@@ -145,19 +142,30 @@ const AddQuestion = () => {
                                     Topic
                                 </label>
 
-                                <select
-                                    {...register("topic", { required: "Topic is required" })}
-                                    onChange={handleTopicChange}
-                                    id='topicSelect'
-                                    className="block px-3 py-2.5  w-full rounded-md sm:text-sm outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                                >
-                                    <option value="">Select a Topic</option>
-                                    {
-                                        topics.map((topic) => (
-                                            <option key={topic._id} value={topic._id}>{topic.name}</option>
-                                        ))
-                                    }
-                                </select>
+                                <Controller
+                                    name="topic"
+                                    control={control}
+                                    defaultValue=""
+                                    rules={{ required: "Topic is required" }}
+                                    render={({ field }) => (
+                                        <select
+                                            {...field}
+                                            onChange={(e) => {
+                                                field.onChange(e);
+                                                handleTopicChange(e);
+                                            }}
+                                            id='topicSelect'
+                                            className="block px-3 py-2.5  w-full rounded-md sm:text-sm outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                                        >
+                                            <option value="">Select a Topic</option>
+                                            {
+                                                topics.map((topic) => (
+                                                    <option key={topic._id} value={topic._id}>{topic.name}</option>
+                                                ))
+                                            }
+                                        </select>
+                                    )}
+                                />
                             </div>
                             <div className="sm:col-span-2">
                                 <div className="grid grid-cols-3 gap-x-6 gap-y-6">
@@ -217,7 +225,18 @@ const AddQuestion = () => {
                                     Question
                                 </label>
                                 <div className="mt-2 w-full">
-                                    <QuillEditor initialValue={question} onChange={handleQuestionChange} />
+                                    <Controller
+                                        name="text"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{ required: "Question is required" }}
+                                        render={({ field }) => (
+                                            <QuillEditor
+                                                initialValue={field.value}
+                                                onChange={field.onChange}
+                                            />
+                                        )}
+                                    />
                                 </div>
                             </div>
                             <div className="sm:col-span-2">
@@ -225,7 +244,17 @@ const AddQuestion = () => {
                                     Explanation
                                 </label>
                                 <div className="mt-2 w-full">
-                                    <QuillEditor initialValue={explanation} onChange={handleExplanationChange} />
+                                    <Controller
+                                        name="explanation"
+                                        control={control}
+                                        defaultValue=""
+                                        render={({ field }) => (
+                                            <QuillEditor
+                                                initialValue={field.value}
+                                                onChange={field.onChange}
+                                            />
+                                        )}
+                                    />
                                 </div>
                             </div>
                             {
