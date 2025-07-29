@@ -33,11 +33,17 @@ const EditQuestion = () => {
         formState: {errors}
     } = useForm({
         defaultValues: {
-            topic: questionData?.topic?.name || '',
+            topic: questionData?.topic?._id || '',
             text: questionData?.text || '',
             explanation: questionData?.explanation || '',
-            options: [
-                {value: '', isCorrect: false}
+            options: questionData?.options?.length ? questionData.options.map(opt => ({
+                value: opt.value,
+                isCorrect: opt.isCorrect
+            })) : [
+                {
+                    value: "",
+                    isCorrect: false
+                }
             ]
         }
     })
@@ -136,8 +142,7 @@ const EditQuestion = () => {
         } catch (error) {
             const serverMessage = error.response?.data?.error ? error.response.data.error : "Error updating Question";
             toast.error(serverMessage);
-        }
-        finally {
+        } finally {
             setUpdating(false)
         }
     }
