@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { Plus, PlusCircle } from 'lucide-react'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
+import {Plus, PlusCircle} from 'lucide-react'
 import QuillEditor from '../../components/QuillEditor'
-import { useForm, Controller, useFieldArray } from 'react-hook-form'
+import {useForm, Controller, useFieldArray} from 'react-hook-form'
 import axios from 'axios'
-import { API_BASE_URL } from '../../config/api'
-import { toast } from 'react-toastify'
+import {API_BASE_URL} from '../../config/api'
+import {toast} from 'react-toastify'
 
 // generate random id
-const generateRandomId = () => {
-    return Math.ceil(Date.now() + Math.random() * 10000)
-}
-
 const AddQuestion = () => {
 
     const [topics, setTopics] = useState([])
@@ -30,28 +26,28 @@ const AddQuestion = () => {
         control,
         watch,
         setValue,
-        formState: { errors }
+        formState: {errors}
     } = useForm({
         defaultValues: {
             topic: '',
             text: '',
             explanation: '',
             options: [
-                { value: '', isCorrect: false }
+                {value: '', isCorrect: false}
             ]
         }
     })
 
     // Field array for options
-    const { fields, append, remove } = useFieldArray({
+    const {fields, append, remove} = useFieldArray({
         control,
         name: "options"
     })
 
     // breadcrumb items
     const breadcrumbItems = [
-        { label: 'Dashboard', to: '/' },
-        { label: 'Add New Question' }
+        {label: 'Dashboard', to: '/'},
+        {label: 'Add New Question'}
     ]
 
     // fetching topics
@@ -86,7 +82,7 @@ const AddQuestion = () => {
 
     // handleAddOption
     const handleAddOption = () => {
-        append({ value: '', isCorrect: false })
+        append({value: '', isCorrect: false})
     }
 
     // handleRemoveOption
@@ -137,8 +133,7 @@ const AddQuestion = () => {
             reset()
             toast.success("Question successfully added!")
             navigate('/all-questions')
-        }
-        catch (error) {
+        } catch (error) {
             const serverMessage = error.response?.data?.error ? error.response.data.error : "Error adding Question";
             toast.error(serverMessage);
         }
@@ -154,7 +149,7 @@ const AddQuestion = () => {
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg relative">
                     {/* breadcrumb */}
-                    <Breadcrumb items={breadcrumbItems} />
+                    <Breadcrumb items={breadcrumbItems}/>
 
                     {/* content */}
                     <div className="border-b  border-gray-900/10 pb-12">
@@ -165,15 +160,15 @@ const AddQuestion = () => {
                             {/* topic */}
                             <div className="sm:col-span-2">
                                 <label htmlFor="topicSelect" className="block mb-1 text-sm/6 font-medium text-gray-900">
-                                    Topic
+                                    Topic <span className="text-red-500">*</span>
                                 </label>
 
                                 <Controller
                                     name="topic"
                                     control={control}
                                     defaultValue=""
-                                    rules={{ required: "Topic is required" }}
-                                    render={({ field }) => (
+                                    rules={{required: "Topic is required"}}
+                                    render={({field}) => (
                                         <select
                                             {...field}
                                             onChange={(e) => {
@@ -192,6 +187,13 @@ const AddQuestion = () => {
                                         </select>
                                     )}
                                 />
+                                {
+                                    errors.topic && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.topic.message}
+                                        </p>
+                                    )
+                                }
                             </div>
                             <div className="sm:col-span-2">
                                 <div className="grid grid-cols-3 gap-x-6 gap-y-6">
@@ -248,46 +250,62 @@ const AddQuestion = () => {
                             </div>
                             <div className="sm:col-span-2">
                                 <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
-                                    Question
+                                    Question <span className="text-red-500">*</span>
                                 </label>
                                 <div className="mt-2 w-full">
                                     <Controller
                                         name="text"
                                         control={control}
                                         defaultValue=""
-                                        rules={{ required: "Question is required" }}
-                                        render={({ field }) => (
+                                        rules={{required: "Question is required"}}
+                                        render={({field}) => (
                                             <QuillEditor
                                                 initialValue={field.value}
                                                 onChange={field.onChange}
                                             />
                                         )}
                                     />
+                                    {
+                                        errors.text && (
+                                            <p className="text-red-500 text-sm mt-1">
+                                                {errors.text.message}
+                                            </p>
+                                        )
+                                    }
                                 </div>
                             </div>
                             <div className="sm:col-span-2">
                                 <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
-                                    Explanation
+                                    Explanation <span className="text-red-500">*</span>
                                 </label>
                                 <div className="mt-2 w-full">
                                     <Controller
                                         name="explanation"
                                         control={control}
+                                        rules={{required: "Explanation is required"}}
                                         defaultValue=""
-                                        render={({ field }) => (
+                                        render={({field}) => (
                                             <QuillEditor
                                                 initialValue={field.value}
                                                 onChange={field.onChange}
                                             />
                                         )}
                                     />
+                                    {
+                                        errors.explanation && (
+                                            <p className="text-red-500 text-sm mt-1">
+                                                {errors.explanation.message}
+                                            </p>
+                                        )
+                                    }
                                 </div>
                             </div>
                             {fields.map((field, index) => (
                                 <div key={field.id} className='sm:col-span-2' id='option'>
                                     <div className="grid grid-cols-4 gap-x-6 gap-y-6 mb-5">
                                         <div className="sm:col-span-1">
-                                            <label htmlFor={`option-${index}`} className="block text-sm/6 font-medium text-gray-900">
+                                            <label htmlFor={`option-${index}`}
+                                                   className="block text-sm/6 font-medium text-gray-900">
                                                 Option {index + 1}
                                             </label>
                                             <div className="mt-2">
@@ -300,10 +318,18 @@ const AddQuestion = () => {
                                                     placeholder={`Enter option ${index + 1}`}
                                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                                 />
+                                                {
+                                                    errors.options?.[index]?.value && (
+                                                        <p className="text-red-500 text-sm mt-1">
+                                                            {errors.options[index].value.message}
+                                                        </p>
+                                                    )
+                                                }
                                             </div>
                                         </div>
                                         <div className="sm:col-span-1 ">
-                                            <label htmlFor={`correct-${index}`} className="block text-sm/6 font-medium text-gray-900">
+                                            <label htmlFor={`correct-${index}`}
+                                                   className="block text-sm/6 font-medium text-gray-900">
                                                 Is this the correct answer?
                                             </label>
                                             <div className="mt-2 flex items-center gap-2 py-1.5">
@@ -326,7 +352,7 @@ const AddQuestion = () => {
                                                     className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                                                 >
                                                     Add Option
-                                                    <PlusCircle size={18} color="#fff" />
+                                                    <PlusCircle size={18} color="#fff"/>
                                                 </button>
                                             ) : (
                                                 // All other options show "Remove Option" button
@@ -336,7 +362,7 @@ const AddQuestion = () => {
                                                     className='rounded-md flex cursor-pointer items-center gap-2 bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500'
                                                 >
                                                     Remove Option
-                                                    <PlusCircle size={18} color="#fff" />
+                                                    <PlusCircle size={18} color="#fff"/>
                                                 </button>
                                             )}
                                         </div>
@@ -356,13 +382,13 @@ const AddQuestion = () => {
                             className="rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             Add Question
-                            <Plus size={18} color="#fff" />
+                            <Plus size={18} color="#fff"/>
                         </button>
                     </div>
                 </div>
 
-            </form >
-        </div >
+            </form>
+        </div>
     )
 }
 
