@@ -1,66 +1,86 @@
 const XLSX = require("xlsx");
 const SubjectModel = require("../models/SubjectModel");
+const SystemModel = require("../models/SystemModel");
+const SubSystemModel = require("../models/SubSystemModel");
+const TopicModel = require("../models/TopicModel");
 
 exports.uploadSubjects = async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded. Please upload a valid Excel file." });
+      return res.status(400).json({ message: 'No file uploaded.' });
     }
 
-    // Read the uploaded Excel file
-    const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
     const sheet = workbook.SheetNames[0];
-    const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
+    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
 
-    // Extract names, trim them, and remove rows with empty names
-    const trimmedSubjects = data
-      .map((row) => ({ name: row.name?.toString().trim() })) // Ensure name is a string before trim
-      .filter((item) => item.name); // Remove empty or undefined names
+    let inserted = 0;
+    let skipped = 0;
+    const errors = [];
 
-    if (trimmedSubjects.length === 0) {
-      return res.status(400).json({ message: "The file doesn't contain any valid subject names." });
-    }
+    for (const [index, row] of rows.entries()) {
+      try {
+        const { subject, system, subSystem, topic } = row;
 
-    // Step 1: Remove duplicate subject names within the uploaded file
-    const uniqueNames = new Set();
-    const rawSubjects = [];
-    for (const subject of trimmedSubjects) {
-      if (!uniqueNames.has(subject.name)) {
-        uniqueNames.add(subject.name);
-        rawSubjects.push(subject);
+        if (!subject || !system || !subSystem || !topic) {
+          skipped++;
+          errors.push(`Row ${index + 2}: Missing required field(s)`);
+          continue;
+        }
+
+        // SUBJECT
+        let subjectDoc = await SubjectModel.findOne({ name: subject.trim() });
+        if (!subjectDoc) {
+          subjectDoc = await SubjectModel.create({ name: subject.trim() });
+        }
+
+        // SYSTEM
+        let systemDoc = await SystemModel.findOne({ name: system.trim(), subject: subjectDoc._id });
+        if (!systemDoc) {
+          systemDoc = await SystemModel.create({
+            name: system.trim(),
+            subject: subjectDoc._id,
+          });
+        }
+
+        // SUBSYSTEM
+        let subSystemDoc = await SubSystemModel.findOne({ name: subSystem.trim(), system: systemDoc._id });
+        if (!subSystemDoc) {
+          subSystemDoc = await SubSystemModel.create({
+            name: subSystem.trim(),
+            system: systemDoc._id,
+          });
+        }
+
+        // TOPIC
+        let topicDoc = await TopicModel.findOne({ name: topic.trim(), subSystem: subSystemDoc._id });
+        if (!topicDoc) {
+          await TopicModel.create({
+            name: topic.trim(),
+            subSystem: subSystemDoc._id,
+          });
+        }
+
+        inserted++;
+
+      } catch (err) {
+        skipped++;
+        errors.push(`Row ${index + 2}: ${err.message}`);
       }
     }
 
-    if (rawSubjects.length === 0) {
-      return res.status(400).json({ message: "No unique subjects found in the file." });
-    }
-
-    // Step 2: Get subjects that already exist in DB
-    const existing = await SubjectModel.find({ name: { $in: rawSubjects.map(s => s.name) } });
-    const existingNames = new Set(existing.map(s => s.name));
-
-    // Step 3: Filter out existing subjects
-    const newSubjects = rawSubjects.filter(s => !existingNames.has(s.name));
-
-    // Step 4: Insert new unique subjects
-    if (newSubjects.length > 0) {
-      await SubjectModel.insertMany(newSubjects);
-    }
-
     res.status(200).json({
-      message: "Subjects processed successfully!",
-      totalInFile: data.length,
-      validSubjects: rawSubjects.length,
-      inserted: newSubjects.length,
-      skipped: rawSubjects.length - newSubjects.length, // skipped due to already existing in DB
-      duplicatesInFileRemoved: trimmedSubjects.length - rawSubjects.length,
+      message: 'Upload complete.',
+      inserted,
+      skipped,
+      errors
     });
+
   } catch (err) {
-    console.error("Upload error:", err);
+    console.error('Upload error:', err);
     res.status(500).json({
-      message: "Server error while processing the upload.",
-      error: err.message,
-      suggestion: "Ensure the file is in correct format with a 'name' column.",
+      message: 'Server error while processing the file.',
+      error: err.message
     });
   }
 };
