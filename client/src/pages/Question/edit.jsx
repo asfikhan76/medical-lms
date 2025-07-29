@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Breadcrumb from '../../components/Breadcrumb'
-import {Link, Navigate, useNavigate} from 'react-router-dom'
+import {Link, Navigate, useLocation, useNavigate, useParams} from 'react-router-dom'
 import {Plus, PlusCircle} from 'lucide-react'
 import QuillEditor from '../../components/QuillEditor'
 import {useForm, Controller, useFieldArray} from 'react-hook-form'
@@ -10,18 +10,22 @@ import {toast} from 'react-toastify'
 
 // generate random id
 const EditQuestion = () => {
-
-    const [topics, setTopics] = useState([])
+    const {id} = useParams()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const questionData = location.state?.questionData
+    console.log("Question Data:", questionData)
+    const [updating, setUpdating] = useState(false)
     const [error, setError] = useState([])
     const [subSystem, setSubSystem] = useState('')
     const [system, setSystem] = useState('')
     const [subject, setSubject] = useState('')
-    const navigate = useNavigate()
+    const [topics, setTopics] = useState([])
+
 
     //  form
     const {
         register,
-        reset,
         handleSubmit,
         control,
         watch,
@@ -29,9 +33,9 @@ const EditQuestion = () => {
         formState: {errors}
     } = useForm({
         defaultValues: {
-            topic: '',
-            text: '',
-            explanation: '',
+            topic: questionData?.topic?.name || '',
+            text: questionData?.text || '',
+            explanation: questionData?.explanation || '',
             options: [
                 {value: '', isCorrect: false}
             ]
@@ -102,6 +106,7 @@ const EditQuestion = () => {
 
     // submitHandler
     const submitHandler = async (data) => {
+        setUpdating(true)
         try {
             //At least two options should be there
             if (data.options.length < 2) {
@@ -125,17 +130,15 @@ const EditQuestion = () => {
 
             console.log("Submitting data:", data);
 
-            const response = await axios.post(`${API_BASE_URL}/questions`, data, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            })
-            reset()
-            toast.success("Question successfully added!")
+            const response = await axios.put(`${API_BASE_URL}/questions/${id}`, data)
+            toast.success("Question successfully Updated!")
             navigate('/all-questions')
         } catch (error) {
-            const serverMessage = error.response?.data?.error ? error.response.data.error : "Error adding Question";
+            const serverMessage = error.response?.data?.error ? error.response.data.error : "Error updating Question";
             toast.error(serverMessage);
+        }
+        finally {
+            setUpdating(false)
         }
     }
 
@@ -359,7 +362,7 @@ const EditQuestion = () => {
                             type="submit"
                             className="rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
-                            Add Question
+                            {updating ? "Updating..." : "Update Question"}
                             <Plus size={18} color="#fff"/>
                         </button>
                     </div>
