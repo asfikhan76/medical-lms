@@ -74,6 +74,18 @@ const EditQuestion = () => {
         fetchTopics()
     }, [])
 
+    // Filling up the Relevent fields of the topic
+
+    useEffect(() => {
+        if (questionData?.topic?._id && topics.length) {
+            const selectedTopic = topics.find(t => t._id === questionData.topic._id);
+            if (selectedTopic) {
+                setSubSystem(selectedTopic.subSystem.name || "Sub-System")
+                setSystem(selectedTopic.subSystem.system.name || "System")
+                setSubject(selectedTopic.subSystem.system.subject.name || "Subject")
+            }
+        }
+    }, [questionData,topics]);
 
     // handleTopicChange
     const handleTopicChange = (event) => {
