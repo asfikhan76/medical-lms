@@ -1,5 +1,4 @@
 import React from "react"
-import {PlusCircle} from "lucide-react";
 
 const Register = () => {
     return (
