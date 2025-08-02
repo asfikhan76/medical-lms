@@ -1,7 +1,6 @@
 import React, {useEffect} from "react"
 import {useScript} from "../hooks/useScript"
-// import studentImg from "../assets/img/student-setting-next-to-laptop.jpeg";
-import GLOBE from "vanta/src/vanta.globe"
+import RINGS from "vanta/src/vanta.rings"
 
 const AuthLayout = ({children}) => {
 
@@ -9,7 +8,7 @@ const AuthLayout = ({children}) => {
 
     useEffect(() => {
         if (status === "ready") {
-            GLOBE({
+            RINGS({
                 el: "#vanta",
                 THREE: window.THREE,
                 mouseControls: true,
@@ -17,15 +16,19 @@ const AuthLayout = ({children}) => {
                 gyroControls: false,
                 minHeight: 200.00,
                 minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                backgroundColor: 0x282020,
+                color: 0x45d400
             })
         }
     }, [status])
 
     return (
-        <div className="flex items-center justify-center w-screen h-screen">
-            <div className="flex  size-[70%] rounded-lg overflow-hidden shadow-lg ">
-                <div className="bg-red-100 w-[50%]" id="vanta"/>
-                <div className="w-[50%] p-5">
+        <div className="flex items-center  justify-center w-screen h-screen">
+            <div className="flex flex-col lg:flex-row  lg:size-[70%] size-[85%] rounded-lg overflow-hidden shadow-lg">
+                <div className="bg-red-100 lg:w-[50%] w-full hidden lg:block" id="vanta"/>
+                <div className="lg:w-[50%] p-5 w-full">
                     {children}
                 </div>
             </div>

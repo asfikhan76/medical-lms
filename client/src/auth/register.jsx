@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-router-dom";
 
 const Register = () => {
     return (
@@ -7,7 +8,7 @@ const Register = () => {
 
             <form action="" method="post">
 
-                <div className="px-8 py-15">
+                <div className="px-1 lg:px-8 py-15">
 
                     {/*name*/}
                     <div className="sm:col-span-1">
@@ -58,6 +59,12 @@ const Register = () => {
                     >
                         Register
                     </button>
+
+                    <p className="text-xs mt-2 text-center">Already have an Account ?
+                        <Link to="/" type="button" className="text-sm/6 font-semibold text-blue-600 underline ms-2 cursor-pointer">
+                            Login
+                        </Link>
+                    </p>
 
 
                 </div>
