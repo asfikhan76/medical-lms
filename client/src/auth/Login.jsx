@@ -1,14 +1,20 @@
 import React from "react"
-import {Link} from "react-router-dom";
-import {motion} from "framer-motion";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import usePasswordToggle from "../hooks/usePasswordToggle";
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
+
+    const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle();
+
+
     return (
         <motion.div
-            initial={{x: 300, opacity: 0}}
-            animate={{x: 0, opacity: 1}}
-            exit={{x: -300, opacity: 0}}
-            transition={{duration: 0.3}}
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -300, opacity: 0 }}
+            transition={{ duration: 0.3 }}
         >
             <div>
                 <h2 className="text-center text-2xl font-bold">Login</h2>
@@ -38,13 +44,18 @@ const Register = () => {
                             <label htmlFor="" className="block text-sm/6 font-medium text-gray-900">
                                 password
                             </label>
-                            <div className="mt-2">
+                            <div className="mt-2 flex relative">
                                 <input
                                     placeholder="Enter your Password"
-                                    type="password"
+                                    type={inputType}
                                     autoComplete=""
                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
+                                <span onClick={togglePassword} className="absolute end-3 top-1/2 -translate-y-1/2 cursor-pointer">
+                                    {
+                                        isPasswordVisible ? <EyeOff size={16} color="gray" /> : <Eye size={16} color="gray" />
+                                    }
+                                </span>
                             </div>
                         </div>
 
@@ -57,7 +68,7 @@ const Register = () => {
 
                         <p className="text-xs mt-2 text-center">New to our platform ?
                             <Link to="/register" type="button"
-                                  className="text-sm/6 font-semibold text-blue-600 underline ms-2 cursor-pointer">
+                                className="text-sm/6 font-semibold text-blue-600 underline ms-2 cursor-pointer">
                                 Create an Account
                             </Link>
                         </p>

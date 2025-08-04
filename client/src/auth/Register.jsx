@@ -1,8 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react"
+import usePasswordToggle from "../hooks/usePasswordToggle"
 
 const Register = () => {
+
+    const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle()
+    const { isPasswordVisible: isConfirmVisible, inputType: confirmInputType, togglePassword: toggleConfirm } = usePasswordToggle()
+
     return (
         <motion.div
             initial={{ x: 300, opacity: 0 }}
@@ -19,7 +25,7 @@ const Register = () => {
 
                         <div className="grid grid-cols-12 gap-4">
                             {/*name*/}
-                            <div className="sm:col-span-12">
+                            <div className="col-span-12 lg:col-span-12">
                                 <label htmlFor="" className="block text-sm/6 font-medium text-gray-900">
                                     Name
                                 </label>
@@ -34,7 +40,7 @@ const Register = () => {
                             </div>
 
                             {/*email*/}
-                            <div className="sm:col-span-6">
+                            <div className="col-span-12 lg:col-span-6">
                                 <label htmlFor="" className="block text-sm/6 font-medium text-gray-900">
                                     Email
                                 </label>
@@ -50,7 +56,7 @@ const Register = () => {
 
 
                             {/*Phone No*/}
-                            <div className="sm:col-span-6">
+                            <div className="col-span-12 lg:col-span-6">
                                 <label htmlFor="" className="block text-sm/6 font-medium text-gray-900">
                                     Phone No
                                 </label>
@@ -65,32 +71,43 @@ const Register = () => {
                             </div>
 
                             {/*password*/}
-                            <div className="sm:col-span-6">
+                            <div className="col-span-12 lg:col-span-6">
                                 <label htmlFor="" className="block text-sm/6 font-medium text-gray-900">
                                     Password
                                 </label>
-                                <div className="mt-2">
+                                <div className="mt-2 flex relative">
                                     <input
+                                        id="password"
                                         placeholder="Enter your Password"
-                                        type="password"
+                                        type={inputType}
                                         autoComplete=""
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
+                                    <span onClick={togglePassword} className="absolute end-3 top-1/2 -translate-y-1/2 cursor-pointer">
+                                        {
+                                            isPasswordVisible ? <EyeOff size={16} color="gray" /> : <Eye size={16} color="gray" />
+                                        }
+                                    </span>
                                 </div>
                             </div>
 
                             {/*Confirm Password*/}
-                            <div className="sm:col-span-6">
+                            <div className="col-span-12 lg:col-span-6">
                                 <label htmlFor="" className="block text-sm/6 font-medium text-gray-900">
                                     Confirm Password
                                 </label>
-                                <div className="mt-2">
+                                <div className="mt-2 flex relative">
                                     <input
                                         placeholder="Re-enter your Password"
-                                        type="password"
+                                        type={confirmInputType}
                                         autoComplete=""
                                         className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
+                                    <span onClick={toggleConfirm} className="absolute end-3 top-1/2 -translate-y-1/2 cursor-pointer">
+                                        {
+                                            isConfirmVisible ? <EyeOff size={16} color="gray" /> : <Eye size={16} color="gray" />
+                                        }
+                                    </span>
                                 </div>
                             </div>
                         </div>
