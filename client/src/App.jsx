@@ -29,7 +29,8 @@ import AllTopics from './pages/Topic/index'
 // question imports
 import AddQuestion from './pages/Question/create'
 import AllQuestions from './pages/Question/index'
-
+import ShowQuestion from './pages/Question/show'
+import EditQuestion from './pages/Question/edit'
 
 // dashboard import
 import Dashboard from './pages/Dashboard'
@@ -37,13 +38,12 @@ import Dashboard from './pages/Dashboard'
 // contexts
 import {useSidebar} from './contexts/SidebarContext'
 
-// temprary imports
-import UploadForm from './pages/Uploads/UploadForm'
-import ShowQuestion from './pages/Question/show'
-import EditQuestion from './pages/Question/edit'
 
 // Auth imports
-import Register from "./auth/register.jsx";
+import Register from "./auth/Register.jsx";
+import Login from "./auth/Login.jsx";
+
+// Layout imports
 import AuthLayout from "./layouts/AuthLayout.jsx";
 
 function AppContent() {
@@ -85,11 +85,6 @@ function AppContent() {
                     <Route path='/show-question/:id' element={<ShowQuestion/>}/>
                     <Route path='/edit-question/:id' element={<EditQuestion/>}/>
 
-
-                    {/* temprary routes */}
-                    <Route path='/upload' element={<UploadForm/>}/>
-
-
                 </Routes>
             </div>
         </div>
@@ -107,6 +102,9 @@ export default function App() {
                             <Register/>
                         </AuthLayout>
                     }/>
+                    <Route path='/login' element={<AuthLayout>
+                        <Login/>
+                    </AuthLayout>}/>
 
                     {/*Mian Content Routes*/}
                     <Route path='/*' element={<AppContent/>}/>
