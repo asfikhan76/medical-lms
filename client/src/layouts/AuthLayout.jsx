@@ -28,7 +28,7 @@ const AuthLayout = ({children}) => {
         <div className="flex items-center  justify-center w-screen h-screen">
             <div className="flex flex-col lg:flex-row  lg:size-[70%] size-[85%] rounded-lg overflow-hidden shadow-lg">
                 <div className="bg-red-100 lg:w-[50%] w-full hidden lg:block" id="vanta"/>
-                <div className="lg:w-[50%] p-5 w-full">
+                <div className="lg:w-[50%] p-5 w-full lg:border lg:border-gray-200 rounded-lg">
                     {children}
                 </div>
             </div>
