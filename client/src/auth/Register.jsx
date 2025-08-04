@@ -81,7 +81,7 @@ const Register = () => {
                                         placeholder="Enter your Password"
                                         type={inputType}
                                         autoComplete=""
-                                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        className="block w-full rounded-md bg-white px-3 pe-8 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
                                     <span onClick={togglePassword} className="absolute end-3 top-1/2 -translate-y-1/2 cursor-pointer">
                                         {
@@ -101,7 +101,7 @@ const Register = () => {
                                         placeholder="Re-enter your Password"
                                         type={confirmInputType}
                                         autoComplete=""
-                                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                        className="block w-full rounded-md bg-white px-3 pe-8 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                     />
                                     <span onClick={toggleConfirm} className="absolute end-3 top-1/2 -translate-y-1/2 cursor-pointer">
                                         {
