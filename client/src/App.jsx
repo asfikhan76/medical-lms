@@ -96,7 +96,7 @@ export default function App() {
         <SidebarProvider>
             <Router>
                 <Routes>
-
+                    {/* Auth Routes */}
                     <Route element={<AuthLayout />}>
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
@@ -105,8 +105,10 @@ export default function App() {
                     {/*Mian Content Routes*/}
                     <Route path='/*' element={<AppContent />} />
                 </Routes>
+
                 {/*<AppContent/>*/}
-                <ToastContainer position="bottom-right"
+                <ToastContainer
+                    position="bottom-right"
                     autoClose={2500}
                     hideProgressBar={false}
                     newestOnTop={true}
