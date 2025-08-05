@@ -1,8 +1,8 @@
-import React, {useEffect} from "react"
-import {useScript} from "../hooks/useScript"
+import React, { useEffect } from "react"
+import { useScript } from "../hooks/useScript"
 import RINGS from "vanta/src/vanta.rings"
 
-const AuthLayout = ({children}) => {
+const AuthLayout = ({ children }) => {
 
     const status = useScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js");
 
@@ -27,7 +27,9 @@ const AuthLayout = ({children}) => {
     return (
         <div className="flex items-center  justify-center w-screen h-screen">
             <div className="flex flex-col lg:flex-row  lg:size-[80%] size-[85%] rounded-lg overflow-hidden shadow-lg">
-                <div className="bg-red-100 lg:w-[50%] w-full hidden lg:block mask mask-right" id="vanta"/>
+                <div className="bg-red-100 lg:w-[50%] w-full hidden lg:block mask mask-right relative" id="vanta">
+                    <span className="absolute top-3 left-3 bg-stone-700 backdrop-blur-sm text-stone-300 px-3 py-1 rounded-full text-sm font-medium shadow-md">Ques.Bank</span>
+                </div>
                 <div className="lg:w-[50%] p-5 w-full lg:border lg:border-gray-200 rounded-r-lg">
                     {children}
                 </div>
