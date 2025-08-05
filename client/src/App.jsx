@@ -1,10 +1,10 @@
 import React from 'react'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
-import {SidebarProvider} from './contexts/SidebarContext'
+import { SidebarProvider } from './contexts/SidebarContext'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // subject imports
 import AddSubject from './pages/Subject/create'
@@ -36,7 +36,7 @@ import EditQuestion from './pages/Question/edit'
 import Dashboard from './pages/Dashboard'
 
 // contexts
-import {useSidebar} from './contexts/SidebarContext'
+import { useSidebar } from './contexts/SidebarContext'
 
 
 // Auth imports
@@ -47,43 +47,43 @@ import Login from "./auth/Login.jsx";
 import AuthLayout from "./layouts/AuthLayout.jsx";
 
 function AppContent() {
-    const {collapsed} = useSidebar()
+    const { collapsed } = useSidebar()
     return (
         <div className='flex'>
             <div>
-                <Sidebar/>
+                <Sidebar />
             </div>
-            <div className="bg-[#eee] h-screen" style={{width: `calc(100% - ${collapsed ? '64px' : '192px'})`}}>
-                <Header/>
+            <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
+                <Header />
                 <Routes>
                     {/* Dashboard Route */}
-                    <Route path='/' element={<Dashboard/>}/>
+                    <Route path='/' element={<Dashboard />} />
 
                     {/*Subjects Routes  */}
-                    <Route path='/add-subject' element={<AddSubject/>}/>
-                    <Route path='/edit-subject/:id' element={<EditSubject/>}/>
-                    <Route path='/all-subjects' element={<AllSubjects/>}/>
+                    <Route path='/add-subject' element={<AddSubject />} />
+                    <Route path='/edit-subject/:id' element={<EditSubject />} />
+                    <Route path='/all-subjects' element={<AllSubjects />} />
 
                     {/* Systems Routes */}
-                    <Route path='/add-system' element={<AddSystem/>}/>
-                    <Route path='/edit-system/:id' element={<EditSystem/>}/>
-                    <Route path='/all-systems' element={<AllSystems/>}/>
+                    <Route path='/add-system' element={<AddSystem />} />
+                    <Route path='/edit-system/:id' element={<EditSystem />} />
+                    <Route path='/all-systems' element={<AllSystems />} />
 
                     {/* SubSytem Routes */}
-                    <Route path='/add-subsystem' element={<AddSubsystem/>}/>
-                    <Route path='/edit-subsystem/:id' element={<EditSubsystem/>}/>
-                    <Route path='/all-subsystems' element={<AllSubsystems/>}/>
+                    <Route path='/add-subsystem' element={<AddSubsystem />} />
+                    <Route path='/edit-subsystem/:id' element={<EditSubsystem />} />
+                    <Route path='/all-subsystems' element={<AllSubsystems />} />
 
                     {/* Topics Routes */}
-                    <Route path='/add-topic' element={<AddTopic/>}/>
-                    <Route path='/edit-topic/:id' element={<EditTopic/>}/>
-                    <Route path='/all-topics' element={<AllTopics/>}/>
+                    <Route path='/add-topic' element={<AddTopic />} />
+                    <Route path='/edit-topic/:id' element={<EditTopic />} />
+                    <Route path='/all-topics' element={<AllTopics />} />
 
                     {/* Question Routes */}
-                    <Route path='/add-question' element={<AddQuestion/>}/>
-                    <Route path='/all-questions' element={<AllQuestions/>}/>
-                    <Route path='/show-question/:id' element={<ShowQuestion/>}/>
-                    <Route path='/edit-question/:id' element={<EditQuestion/>}/>
+                    <Route path='/add-question' element={<AddQuestion />} />
+                    <Route path='/all-questions' element={<AllQuestions />} />
+                    <Route path='/show-question/:id' element={<ShowQuestion />} />
+                    <Route path='/edit-question/:id' element={<EditQuestion />} />
 
                 </Routes>
             </div>
@@ -96,32 +96,28 @@ export default function App() {
         <SidebarProvider>
             <Router>
                 <Routes>
-                    {/*Auth Routes*/}
-                    <Route path='/register' element={
-                        <AuthLayout>
-                            <Register/>
-                        </AuthLayout>
-                    }/>
-                    <Route path='/login' element={<AuthLayout>
-                        <Login/>
-                    </AuthLayout>}/>
+
+                    <Route element={<AuthLayout />}>
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                    </Route>
 
                     {/*Mian Content Routes*/}
-                    <Route path='/*' element={<AppContent/>}/>
+                    <Route path='/*' element={<AppContent />} />
                 </Routes>
                 {/*<AppContent/>*/}
                 <ToastContainer position="bottom-right"
-                                autoClose={2500}
-                                hideProgressBar={false}
-                                newestOnTop={true}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss
-                                draggable
-                                pauseOnHover
-                                theme="colored" // Use the colored theme for vibrant toasts
-                                toastClassName="custom-toast"
-                                bodyClassName="custom-toast-body"/>
+                    autoClose={2500}
+                    hideProgressBar={false}
+                    newestOnTop={true}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored" // Use the colored theme for vibrant toasts
+                    toastClassName="custom-toast"
+                    bodyClassName="custom-toast-body" />
 
             </Router>
         </SidebarProvider>

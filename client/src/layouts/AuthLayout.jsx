@@ -1,8 +1,9 @@
 import React, { useEffect } from "react"
 import { useScript } from "../hooks/useScript"
 import RINGS from "vanta/src/vanta.rings"
+import { Outlet } from "react-router-dom"
 
-const AuthLayout = ({ children }) => {
+const AuthLayout = () => {
 
     const status = useScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js");
 
@@ -31,7 +32,7 @@ const AuthLayout = ({ children }) => {
                     <span className="absolute top-3 left-3 bg-stone-700 backdrop-blur-sm text-stone-300 px-3 py-1 rounded-full text-sm font-medium shadow-md">Ques.Bank</span>
                 </div>
                 <div className="lg:w-[50%] p-5 w-full lg:border lg:border-gray-200 rounded-r-lg">
-                    {children}
+                    <Outlet />
                 </div>
             </div>
         </div>)
