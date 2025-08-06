@@ -24,6 +24,8 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
+            reset();
+            toast.success("User successfully Logged In")
 
         } catch (error) {
             toast.error(error.response.data?.error)
