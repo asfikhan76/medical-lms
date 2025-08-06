@@ -35,7 +35,7 @@ const Register = () => {
             toast.success("You have successfully Registered!");
 
         } catch (error) {
-            console.error("Error :", error.response?.data || error.message)
+            toast.error(error.response?.data.error)
         }
     }
 
@@ -153,8 +153,8 @@ const Register = () => {
                                                 message: "Minimum 6 Characters"
                                             }
                                         })}
-                                        id="password"  
-                                        
+                                        id="password"
+
                                         placeholder="Enter your Password"
                                         type={inputType}
                                         className="block w-full rounded-md bg-white px-3 pe-8 py-1.5 text-base text-gray-500 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
