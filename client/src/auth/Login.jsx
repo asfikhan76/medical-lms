@@ -24,6 +24,9 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
+            const token = response.data.token;
+            localStorage.setItem("token", token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             reset();
             toast.success("User successfully Logged In")
 
