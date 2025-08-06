@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "student"],
     default: "student"
   },
-  email: { type: String }, // optional
+  email: { type: String , required :true ,unique: true }, // optional
   phone: { type: String }, // optional
   testHistory: [
     {
