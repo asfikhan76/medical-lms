@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 
-const Register = () => {
+const Login = () => {
 
     const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle();
 
@@ -112,4 +112,4 @@ const Register = () => {
         </motion.div>
     )
 }
-export default Register
+export default Login
