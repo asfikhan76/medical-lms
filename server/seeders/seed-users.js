@@ -7,8 +7,8 @@ const seedUsers = async () => {
   await connectDB();
 
   const users = [
-    { username: 'admin', role: 'admin', password:  await bcrypt.hash("admin123", 10), },
-    { username: 'Khalid', role: 'student', password: await bcrypt.hash("khalid123", 10) },
+    { username: 'admin', role:'admin',email: "admin@gmail.com", password:  await bcrypt.hash("admin123", 10), },
+    { username: 'Khalid', role: 'student',email: "student@gmail.com", password: await bcrypt.hash("khalid123", 10) },
   ];
 
   await User.deleteMany(); // clean old users
