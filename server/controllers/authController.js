@@ -8,13 +8,16 @@ exports.signup = async (req, res) => {
   try {
     const { username, password, role, email, phone } = req.body;
 
-    const existingUser = await UserModel.findOne({ username });
-    if (existingUser) return res.status(400).json({ error: "Username already taken" });
+    // Check if email is already in use
+    const existingUser = await UserModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email already registered" });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new UserModel({
-      username,
+      username, // optional: can still store it
       password: hashedPassword,
       role,
       email,
@@ -23,11 +26,15 @@ exports.signup = async (req, res) => {
 
     await user.save();
 
-    res.status(201).json({ message: "Signup successful", user: { username, role, email, phone } });
+    res.status(201).json({
+      message: "Signup successful",
+      user: { username, role, email, phone }
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Login with JWT
 exports.login = async (req, res) => {
