@@ -39,14 +39,17 @@ exports.signup = async (req, res) => {
 // Login with JWT
 exports.login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    // console.log(username, password);
+    const { email, password } = req.body; // now extracting email instead of username
 
-    const user = await UserModel.findOne({ username });
-    if (!user) return res.status(404).json({ error: "User not found" });
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: "Invalid password" });
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
 
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
