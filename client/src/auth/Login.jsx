@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import usePasswordToggle from "../hooks/usePasswordToggle";
 import { Eye, EyeOff } from "lucide-react";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify"
 const Login = () => {
 
     const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -28,7 +29,8 @@ const Login = () => {
             localStorage.setItem("token", token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             reset();
-            toast.success("User successfully Logged In")
+            toast.success("Login successful");
+            navigate("/")
 
         } catch (error) {
             toast.error(error.response.data?.error)

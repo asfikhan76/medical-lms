@@ -45,6 +45,8 @@ import Login from "./auth/Login.jsx";
 
 // Layout imports
 import AuthLayout from "./layouts/AuthLayout.jsx";
+import RedirectIfAuth from './auth/RedirectIfAuth.jsx'
+import ProtectedRoute from './auth/ProtectedRoute.jsx'
 
 function AppContent() {
     const { collapsed } = useSidebar()
@@ -97,13 +99,17 @@ export default function App() {
             <Router>
                 <Routes>
                     {/* Auth Routes */}
-                    <Route element={<AuthLayout />}>
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
+                    <Route element={<RedirectIfAuth />}>
+                        <Route element={<AuthLayout />}>
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/login" element={<Login />} />
+                        </Route>
                     </Route>
 
                     {/*Mian Content Routes*/}
-                    <Route path='/*' element={<AppContent />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path='/*' element={<AppContent />} />
+                    </Route>
                 </Routes>
 
                 {/*<AppContent/>*/}
