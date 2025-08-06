@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form"
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
+import { toast } from "react-toastify"
 
 const Login = () => {
 
@@ -22,12 +23,10 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log("Data being sent to backend:", data);
-            const response = await axios.post(`${API_BASE_URL}/auth/login`, data)
-            console.log("Response from backend:", response.data);
+            const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
 
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data?.error)
         }
     }
 
