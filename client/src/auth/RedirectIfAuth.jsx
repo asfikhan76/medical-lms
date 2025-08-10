@@ -1,9 +1,10 @@
 import React from "react"
 import { Navigate, Outlet } from "react-router-dom"
-import { isAuthenticated } from "./authUtils"
+import { useAuth } from "../contexts/AuthContext"
 
 const RedirectIfAuth = () => {
-    return isAuthenticated() ? <Navigate to="/" replace /> : <Outlet />
+    const { isAuth } = useAuth()
+    return isAuth ? <Navigate to="/" replace /> : <Outlet />
 }
 
 export default RedirectIfAuth

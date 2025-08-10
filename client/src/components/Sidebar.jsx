@@ -1,12 +1,16 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
 import { LayoutDashboard, School, LogOut, ChevronDown, Book, Layers, Component, List, PlusCircle, ClipboardList } from 'lucide-react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useAuth } from '../contexts/AuthContext'
 
 
 const Sidebar = () => {
     const { collapsed } = useSidebar();
     const location = useLocation();
+    const navigate = useNavigate();
+    const { logout } = useAuth()
 
     // Define which routes belongs to which dropdown 
     const subjectRoutes = ['/add-subject', '/edit-subject', '/all-subjects']
@@ -31,6 +35,12 @@ const Sidebar = () => {
     const isQuestionOpen = questionRoutes.some(route =>
         location.pathname === route || location.pathname.startsWith(route + '/')
     );
+
+    const handleLogout = () => {
+        logout()
+        navigate("/login")
+    }
+
 
     return (
         <div className={`flex h-screen ${collapsed ? 'w-16' : 'w-48'} flex-col  justify-between border-e border-gray-100 shadow-sm relative`}>
@@ -360,8 +370,8 @@ const Sidebar = () => {
             </div>
 
             <div className="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
-                <a href="#"
-                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                <button onClick={handleLogout}
+                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm cursor-pointer  px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                     <LogOut size={18} color='#6a7282' />
                     <span className="invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
                         Logout
@@ -369,7 +379,7 @@ const Sidebar = () => {
                     {
                         collapsed ? null : <span className="text-sm font-normal text-[#6a7282]">Logout</span>
                     }
-                </a>
+                </button>
             </div>
         </div>
     )

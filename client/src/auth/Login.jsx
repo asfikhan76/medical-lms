@@ -7,11 +7,13 @@ import { useForm } from "react-hook-form"
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { toast } from "react-toastify"
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
 
     const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle();
-    const navigate = useNavigate();
+    const { login } = useAuth()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -26,11 +28,10 @@ const Login = () => {
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
             const token = response.data.token;
-            localStorage.setItem("token", token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            login(token);
             reset();
+            navigate('/');
             toast.success("Login successful");
-            navigate("/")
 
         } catch (error) {
             toast.error(error.response.data?.error)

@@ -37,6 +37,7 @@ import Dashboard from './pages/Dashboard'
 
 // contexts
 import { useSidebar } from './contexts/SidebarContext'
+import { AuthProvider } from './contexts/AuthContext.jsx'
 
 
 // Auth imports
@@ -47,6 +48,7 @@ import Login from "./auth/Login.jsx";
 import AuthLayout from "./layouts/AuthLayout.jsx";
 import RedirectIfAuth from './auth/RedirectIfAuth.jsx'
 import ProtectedRoute from './auth/ProtectedRoute.jsx'
+
 
 function AppContent() {
     const { collapsed } = useSidebar()
@@ -96,38 +98,40 @@ function AppContent() {
 export default function App() {
     return (
         <SidebarProvider>
-            <Router>
-                <Routes>
-                    {/* Auth Routes */}
-                    <Route element={<RedirectIfAuth />}>
-                        <Route element={<AuthLayout />}>
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/login" element={<Login />} />
+            <AuthProvider>
+                <Router>
+                    <Routes>
+                        {/* Auth Routes */}
+                        <Route element={<RedirectIfAuth />}>
+                            <Route element={<AuthLayout />}>
+                                <Route path="/register" element={<Register />} />
+                                <Route path="/login" element={<Login />} />
+                            </Route>
                         </Route>
-                    </Route>
 
-                    {/*Mian Content Routes*/}
-                    <Route element={<ProtectedRoute />}>
-                        <Route path='/*' element={<AppContent />} />
-                    </Route>
-                </Routes>
+                        {/*Mian Content Routes*/}
+                        <Route element={<ProtectedRoute />}>
+                            <Route path='/*' element={<AppContent />} />
+                        </Route>
+                    </Routes>
 
-                {/*<AppContent/>*/}
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={2500}
-                    hideProgressBar={false}
-                    newestOnTop={true}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored" // Use the colored theme for vibrant toasts
-                    toastClassName="custom-toast"
-                    bodyClassName="custom-toast-body" />
+                    {/*<AppContent/>*/}
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={2500}
+                        hideProgressBar={false}
+                        newestOnTop={true}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored" // Use the colored theme for vibrant toasts
+                        toastClassName="custom-toast"
+                        bodyClassName="custom-toast-body" />
 
-            </Router>
+                </Router>
+            </AuthProvider>
         </SidebarProvider>
     )
 }
