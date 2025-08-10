@@ -7,6 +7,13 @@ export const AuthProvider = ({ children }) => {
     const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        }
+    }, []);
+
+    useEffect(() => {
         const handleStorage = () => {
             return setIsAuth(!!localStorage.getItem("token"))
         }
