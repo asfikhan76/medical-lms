@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react"
 import usePasswordToggle from "../hooks/usePasswordToggle"
@@ -12,6 +12,7 @@ const Register = () => {
 
     const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle()
     const { isPasswordVisible: isConfirmVisible, inputType: confirmInputType, togglePassword: toggleConfirm } = usePasswordToggle()
+    const navigate = useNavigate()
 
 
 
@@ -32,6 +33,7 @@ const Register = () => {
             const response = await axios.post(`${API_BASE_URL}/auth/signup`, payload);
             console.log("success : ", response.data);
             reset();
+            navigate('/login')
             toast.success("You have successfully Registered!");
 
         } catch (error) {
