@@ -82,19 +82,19 @@ const AllUsers = () => {
                                 <tr key={user._id} className="border-b border-gray-200">
                                     <td className="px-6 py-4 text-sm text-gray-900 max-w-80">
                                         <div className='line-clamp-2'>
-                                            {topic.name}
+                                            {user.username}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900 max-w-48 text-center">
-                                        <span className='bg-yellow-100 text-yellow-600 p-1 rounded px-2'>{ }</span>
+                                        <span className='bg-yellow-100 text-yellow-600 p-1 rounded px-2'>{user.email}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900 max-w-48 text-center">
-                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{ }</span>
+                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{user.phone}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900 max-w-48 text-center">
-                                        <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{ }</span>
+                                        <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{user.role}</span>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-500 text-center">{ }</td>
+                                    <td className="px-6 py-4 text-sm text-gray-500 text-center">{new Date(user.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center justify-center gap-5'>
                                             <Link to={`/edit-user/${user._id}`} title='Edit' state={{ userData: user }}>
