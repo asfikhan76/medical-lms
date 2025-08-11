@@ -4,18 +4,27 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
+    const [isAuth, setIsAuth] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setIsAuth(true); // Set to true after setting the header
         }
+        setIsLoading(false)
     }, []);
 
     useEffect(() => {
         const handleStorage = () => {
-            return setIsAuth(!!localStorage.getItem("token"))
+            const token = localStorage.getItem("token");
+            if (token) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                setIsAuth(true);
+            } else {
+                setIsAuth(false);
+            }
         }
         window.addEventListener('storage', handleStorage);
         return () => {
@@ -31,11 +40,12 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("token");
+        delete axios.defaults.headers.common['Authorization']; // Remove the header
         setIsAuth(false)
     }
 
     return (
-        <AuthContext.Provider value={{ isAuth, login, logout }}>
+        <AuthContext.Provider value={{ isAuth, login, logout, isLoading }}>
             {children}
         </AuthContext.Provider>
     )

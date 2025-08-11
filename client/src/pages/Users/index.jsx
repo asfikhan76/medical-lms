@@ -3,12 +3,17 @@ import Breadcrumb from "../../components/Breadcrumb"
 import axios from "axios"
 import { API_BASE_URL } from "../../config/api"
 import Loader from "../../components/Loader"
+import { Link } from "react-router-dom"
+import { useAuth } from "../../contexts/AuthContext"
 
 const AllUsers = () => {
 
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const { isAuth } = useAuth()
+
+
     // Breadcrumbs
     const breadcrumbItems = [
         { label: 'Dashboard', to: '/' },
@@ -17,20 +22,29 @@ const AllUsers = () => {
 
     // fetching all users
     useEffect(() => {
+        if (!isAuth) return;
+
         const fetchUsers = async () => {
+            setError(null)
+            setLoading(true)
             try {
-                const response = await axios.get(`${API_BASE_URL}/users`);
-                console.log(response.data)
-                setUsers(response.data)
-                setLoading(false)
-            }
-            catch (error) {
-                setError("Failed to fetch Users")
+                const response = await axios.get(`${API_BASE_URL}/users`)
+                // API returns { success, count, data }
+                const data = Array.isArray(response?.data?.data)
+                    ? response.data.data
+                    : Array.isArray(response?.data)
+                        ? response.data
+                        : []
+                setUsers(data)
+            } catch (err) {
+                const message = err?.response?.data?.message || err?.response?.data?.error || "Failed to fetch Users"
+                setError(message)
+            } finally {
                 setLoading(false)
             }
         }
         fetchUsers()
-    }, [])
+    }, [isAuth])
 
     // Handling Loading State
     if (loading) {
@@ -74,7 +88,7 @@ const AllUsers = () => {
                     {
                         users.length === 0 ?
                             <tr>
-                                <td colSpan={5} className='px-6 py-4 text-center text-gray-500'>
+                                <td colSpan={6} className='px-6 py-4 text-center text-gray-500'>
                                     No User found.
                                 </td>
                             </tr>
@@ -89,16 +103,16 @@ const AllUsers = () => {
                                         <span className='bg-yellow-100 text-yellow-600 p-1 rounded px-2'>{user.email}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900 max-w-48 text-center">
-                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{user.phone}</span>
+                                        <span className='bg-green-100 text-green-600 p-1 rounded px-2'>{user.phone || '-'}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-900 max-w-48 text-center">
                                         <span className='bg-indigo-100 text-indigo-600 p-1 rounded px-2'>{user.role}</span>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-500 text-center">{new Date(user.createdAt).toLocaleDateString()}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-500 text-center">{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '-'}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center justify-center gap-5'>
                                             <Link to={`/edit-user/${user._id}`} title='Edit' state={{ userData: user }}>
-                                                <SquarePen size={16} />
+                                                Edit
                                             </Link>
                                         </div>
                                     </td>
