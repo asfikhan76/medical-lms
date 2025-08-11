@@ -48,6 +48,8 @@ import Login from "./auth/Login.jsx";
 import AuthLayout from "./layouts/AuthLayout.jsx";
 import RedirectIfAuth from './auth/RedirectIfAuth.jsx'
 import ProtectedRoute from './auth/ProtectedRoute.jsx'
+import AllUsers from './pages/Users/index.jsx'
+import EditUser from './pages/Users/EditUser.jsx'
 
 
 function AppContent() {
@@ -89,6 +91,10 @@ function AppContent() {
                     <Route path='/show-question/:id' element={<ShowQuestion />} />
                     <Route path='/edit-question/:id' element={<EditQuestion />} />
 
+
+                    {/* User Routes */}
+                    <Route path='/all-users' element={<AllUsers />} />
+                    <Route path='/edit-user' element={<EditUser />} />
                 </Routes>
             </div>
         </div>
