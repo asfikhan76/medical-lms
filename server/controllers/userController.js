@@ -13,10 +13,20 @@ exports.getMyProfile = async (req, res) => {
 // Get all users (admin)
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await UserModel.find().select("-password");
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const users = await UserModel.find({}, '-password');
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users,
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error.message);
+
+    res.status(500).json({
+      success: false,
+      message: 'Server Error. Please try again later.',
+    });
   }
 };
 

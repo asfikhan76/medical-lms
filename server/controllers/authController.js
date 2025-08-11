@@ -39,7 +39,7 @@ exports.signup = async (req, res) => {
 // Login with JWT
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body; // now extracting email instead of username
+    const { email, password } = req.body; 
 
     const user = await UserModel.findOne({ email });
     if (!user) {
