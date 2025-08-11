@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem("token");
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setIsAuth(true); // Set to true after setting the header
+            setIsAuth(true);
         }
         setIsLoading(false)
     }, []);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("token");
-        delete axios.defaults.headers.common['Authorization']; // Remove the header
+        delete axios.defaults.headers.common['Authorization'];
         setIsAuth(false)
     }
 

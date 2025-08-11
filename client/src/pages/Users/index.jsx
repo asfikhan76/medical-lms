@@ -29,14 +29,10 @@ const AllUsers = () => {
             setLoading(true)
             try {
                 const response = await axios.get(`${API_BASE_URL}/users`)
-                // API returns { success, count, data }
-                const data = Array.isArray(response?.data?.data)
-                    ? response.data.data
-                    : Array.isArray(response?.data)
-                        ? response.data
-                        : []
+                const data = response?.data?.data
                 setUsers(data)
             } catch (err) {
+                console.log(err)
                 const message = err?.response?.data?.message || err?.response?.data?.error || "Failed to fetch Users"
                 setError(message)
             } finally {
