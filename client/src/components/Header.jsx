@@ -1,8 +1,10 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { Plus, LogOut, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
+import { LogOut, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
 import { useAuth } from "../contexts/AuthContext"
 import { useNavigate } from 'react-router-dom'
+import userImg from "../assets/img/user.webp"
+import { Link } from "react-router-dom"
 
 
 const Header = () => {
@@ -51,6 +53,11 @@ const Header = () => {
                                 Logout
                                 <LogOut size={18} color='#b23b3b' />
                             </button>
+                        </div>
+                        <div className="sm:flex sm:gap-4">
+                            <Link to="/adminProfile">
+                                <img src={userImg} alt="" height="35px" width="35px" className='rounded-full cursor-pointer' />
+                            </Link>
                         </div>
 
                         <button

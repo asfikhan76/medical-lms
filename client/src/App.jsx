@@ -50,6 +50,7 @@ import RedirectIfAuth from './auth/RedirectIfAuth.jsx'
 import ProtectedRoute from './auth/ProtectedRoute.jsx'
 import AllUsers from './pages/Users/index.jsx'
 import EditUser from './pages/Users/EditUser.jsx'
+import AdminProfile from './auth/adminProfile.jsx'
 
 
 function AppContent() {
@@ -95,6 +96,11 @@ function AppContent() {
                     {/* User Routes */}
                     <Route path='/all-users' element={<AllUsers />} />
                     <Route path='/edit-user' element={<EditUser />} />
+
+
+                    {/* admin Routes */}
+                    <Route path='/adminProfile' element={<AdminProfile />} />
+
                 </Routes>
             </div>
         </div>
