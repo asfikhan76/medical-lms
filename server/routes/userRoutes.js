@@ -7,7 +7,7 @@ const { verifyToken, restrictTo } = require("../middleware/authMiddleware");
 router.get("/me", verifyToken, userController.getMyProfile);
 
 // Get all users (admin only)
-router.get("/", verifyToken, restrictTo("admin"), userController.getAllUsers);
+router.get("/", verifyToken , restrictTo("admin"), userController.getAllUsers);
 
 // Update user by ID (admin only or self)
 router.put("/:id", verifyToken, userController.updateUser);
