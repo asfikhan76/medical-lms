@@ -12,6 +12,8 @@ const Header = () => {
     const { logout } = useAuth()
     const navigate = useNavigate()
 
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
 
     const handleLogout = () => {
         logout();
@@ -55,8 +57,14 @@ const Header = () => {
                             </button>
                         </div>
                         <div className="sm:flex sm:gap-4">
-                            <Link to="/adminProfile">
-                                <img src={userImg} alt="" height="35px" width="35px" className='rounded-full cursor-pointer' />
+                            <Link to="/userProfile">
+                                <div className='flex item-start justify-start gap-2'>
+                                    <img src={userImg} alt="" height="35px" width="35px" className='rounded-full cursor-pointer' />
+                                    <div>
+                                        <p className='text-xs'>{userData.role}</p>
+                                        <h4 className='text-xs'>{userData.email}</h4>
+                                    </div>
+                                </div>
                             </Link>
                         </div>
 

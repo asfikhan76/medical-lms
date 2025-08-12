@@ -28,7 +28,8 @@ const Login = () => {
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
             const token = response.data.token;
-            login(token);
+            const userData = response.data.user;
+            login(token, userData);
             reset();
             navigate('/');
             toast.success("Login successful");

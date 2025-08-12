@@ -32,14 +32,16 @@ export const AuthProvider = ({ children }) => {
         }
     }, [])
 
-    const login = (token) => {
+    const login = (token, userData) => {
         localStorage.setItem("token", token);
+        localStorage.setItem("userData", JSON.stringify(userData))
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         setIsAuth(true)
     }
 
     const logout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("userData")
         delete axios.defaults.headers.common['Authorization'];
         setIsAuth(false)
     }

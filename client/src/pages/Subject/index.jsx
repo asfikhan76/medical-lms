@@ -5,7 +5,7 @@ import axios from 'axios'
 import { API_BASE_URL } from '../../config/api'
 import Loader from "../../components/Loader"
 import { SquarePen, Trash2 } from 'lucide-react'
-import ConfirmModal from '../../components/confirmModal'
+import ConfirmModal from '../../components/ConfirmModal'
 import { toast } from 'react-toastify'
 
 
