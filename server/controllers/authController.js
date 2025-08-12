@@ -1,7 +1,7 @@
 const UserModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { jwtSecret, jwtExpire } = require("../config/jwt");
+const { jwtSecret } = require("../config/jwt");
 
 // Signup
 exports.signup = async (req, res) => {
@@ -53,8 +53,8 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, username: user.username, role: user.role },
-      jwtSecret,
-      { expiresIn: jwtExpire }
+      process.env.jwtSecret,
+      // { expiresIn: jwtExpire }
     );
 
     res.status(200).json({
