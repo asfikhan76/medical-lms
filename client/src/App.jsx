@@ -37,6 +37,7 @@ import Dashboard from './pages/Dashboard'
 
 // contexts
 import { useSidebar } from './contexts/SidebarContext'
+import { AuthProvider } from './contexts/AuthContext.jsx'
 
 
 // Auth imports
@@ -45,6 +46,12 @@ import Login from "./auth/Login.jsx";
 
 // Layout imports
 import AuthLayout from "./layouts/AuthLayout.jsx";
+import RedirectIfAuth from './auth/RedirectIfAuth.jsx'
+import ProtectedRoute from './auth/ProtectedRoute.jsx'
+import AllUsers from './pages/Users/index.jsx'
+import EditUser from './pages/Users/EditUser.jsx'
+import UserProfile from './auth/UserProfile.jsx'
+
 
 function AppContent() {
     const { collapsed } = useSidebar()
@@ -85,6 +92,15 @@ function AppContent() {
                     <Route path='/show-question/:id' element={<ShowQuestion />} />
                     <Route path='/edit-question/:id' element={<EditQuestion />} />
 
+
+                    {/* User Routes */}
+                    <Route path='/all-users' element={<AllUsers />} />
+                    <Route path='/edit-user' element={<EditUser />} />
+
+
+                    {/* admin Routes */}
+                    <Route path='/userProfile' element={<UserProfile />} />
+
                 </Routes>
             </div>
         </div>
@@ -94,34 +110,40 @@ function AppContent() {
 export default function App() {
     return (
         <SidebarProvider>
-            <Router>
-                <Routes>
-                    {/* Auth Routes */}
-                    <Route element={<AuthLayout />}>
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/login" element={<Login />} />
-                    </Route>
+            <AuthProvider>
+                <Router>
+                    <Routes>
+                        {/* Auth Routes */}
+                        <Route element={<RedirectIfAuth />}>
+                            <Route element={<AuthLayout />}>
+                                <Route path="/register" element={<Register />} />
+                                <Route path="/login" element={<Login />} />
+                            </Route>
+                        </Route>
 
-                    {/*Mian Content Routes*/}
-                    <Route path='/*' element={<AppContent />} />
-                </Routes>
+                        {/*Mian Content Routes*/}
+                        <Route element={<ProtectedRoute />}>
+                            <Route path='/*' element={<AppContent />} />
+                        </Route>
+                    </Routes>
 
-                {/*<AppContent/>*/}
-                <ToastContainer
-                    position="bottom-right"
-                    autoClose={2500}
-                    hideProgressBar={false}
-                    newestOnTop={true}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored" // Use the colored theme for vibrant toasts
-                    toastClassName="custom-toast"
-                    bodyClassName="custom-toast-body" />
+                    {/*<AppContent/>*/}
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={2500}
+                        hideProgressBar={false}
+                        newestOnTop={true}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored" // Use the colored theme for vibrant toasts
+                        toastClassName="custom-toast"
+                        bodyClassName="custom-toast-body" />
 
-            </Router>
+                </Router>
+            </AuthProvider>
         </SidebarProvider>
     )
 }

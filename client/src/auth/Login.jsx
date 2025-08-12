@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import usePasswordToggle from "../hooks/usePasswordToggle";
 import { Eye, EyeOff } from "lucide-react";
@@ -7,10 +7,13 @@ import { useForm } from "react-hook-form"
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
 import { toast } from "react-toastify"
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
 
     const { isPasswordVisible, inputType, togglePassword } = usePasswordToggle();
+    const { login } = useAuth()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -24,8 +27,12 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/login`, data);
+            const token = response.data.token;
+            const userData = response.data.user;
+            login(token, userData);
             reset();
-            toast.success("User successfully Logged In")
+            navigate('/');
+            toast.success("Login successful");
 
         } catch (error) {
             toast.error(error.response.data?.error)

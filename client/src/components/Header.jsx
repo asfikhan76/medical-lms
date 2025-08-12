@@ -1,11 +1,27 @@
 import React from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
-import { Plus, LogOut, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
+import { LogOut, BetweenHorizontalStart, BetweenHorizontalEnd, SlidersHorizontal } from 'lucide-react'
+import { useAuth } from "../contexts/AuthContext"
+import { useNavigate } from 'react-router-dom'
+import userImg from "../assets/img/user.webp"
+import { Link } from "react-router-dom"
+
+
 const Header = () => {
     const { collapsed, setCollapsed } = useSidebar()
+    const { logout } = useAuth()
+    const navigate = useNavigate()
+
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login")
+    }
     return (
         <header className="bg-white mx-4 mt-2 rounded-lg shadow-sm">
-            <div className="flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16  items-center gap-8 px-4 sm:px-6 lg:px-8">
                 <button className='cursor-pointer' onClick={() => setCollapsed(!collapsed)}>
                     {
                         collapsed ? <BetweenHorizontalStart size={22} color='#6a7282' /> : <BetweenHorizontalEnd size={22} color='#6a7282' />
@@ -34,17 +50,22 @@ const Header = () => {
 
                     <div className="flex items-center gap-4">
                         <div className="sm:flex sm:gap-4">
-                            <a className="flex items-center gap-2 rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500"
-                                href="#"  >
-                                Add New Test
-                                <Plus size={18} color="#fff" />
-                            </a>
-
-                            <a className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-semibold text-[#b23b3b] transition hover:text-[#904e4e] sm:flex items-center gap-2"
-                                href="#" >
+                            <button onClick={handleLogout} className="hidden cursor-pointer rounded-md bg-gray-100 px-5 py-2.5 text-sm font-semibold text-[#b23b3b] transition hover:text-[#904e4e] sm:flex items-center gap-2"
+                            >
                                 Logout
                                 <LogOut size={18} color='#b23b3b' />
-                            </a>
+                            </button>
+                        </div>
+                        <div className="sm:flex sm:gap-4">
+                            <Link to="/userProfile">
+                                <div className='flex item-start justify-start gap-2'>
+                                    <img src={userImg} alt="" height="35px" width="35px" className='rounded-full cursor-pointer' />
+                                    <div>
+                                        <p className='text-xs'>{userData.role}</p>
+                                        <h4 className='text-xs'>{userData.email}</h4>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
 
                         <button
