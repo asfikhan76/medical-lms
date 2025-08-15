@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { jwtSecret } = require("../config/jwt");
 
 exports.verifyToken = (req, res, next) => {
   
@@ -8,7 +7,7 @@ exports.verifyToken = (req, res, next) => {
   if (!token) return res.status(401).json({ error: "No token provided" });
 
   try {
-    const decoded = jwt.verify(token, jwtSecret);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // now req.user has { id, username, role }
     next();
   } catch (err) {
