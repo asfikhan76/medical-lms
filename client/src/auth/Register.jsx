@@ -31,7 +31,6 @@ const Register = () => {
         const { confirmPassword, ...payload } = data; //Exclude Confirm Password
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/signup`, payload);
-            console.log("success : ", response.data);
             reset();
             navigate('/login')
             toast.success("You have successfully Registered!");
