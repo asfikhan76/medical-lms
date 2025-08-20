@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
+import Breadcrumb from '@components/Breadcrumb'
 import { Link } from 'react-router-dom'
-import { API_BASE_URL } from '../../config/api'
-import Loader from '../../components/Loader'
+import { API_BASE_URL } from '@config/api'
+import Loader from '@components/Loader'
 import axios from 'axios'
 import { SquarePen, Trash2 } from 'lucide-react'
-import ConfirmModal from '../../components/ConfirmModal'
+import ConfirmModal from '@components/ConfirmModal'
 import { toast } from 'react-toastify'
 
 
@@ -113,7 +113,7 @@ const AllSystems = () => {
                                     <td className="px-6 py-4 text-sm text-gray-500">  {new Date(system.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center gap-5'>
-                                            <Link to={`/edit-system/${system._id}`} state={{ systemData: system }}>
+                                            <Link to={`/admin/edit-system/${system._id}`} state={{ systemData: system }}>
                                                 <SquarePen size={16} />
                                             </Link>
                                             <button

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
+import Breadcrumb from '@components/Breadcrumb'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { API_BASE_URL } from '../../config/api'
-import Loader from '../../components/Loader'
-import ConfirmModal from '../../components/ConfirmModal'
+import { API_BASE_URL } from '@config/api'
+import Loader from '@components/Loader'
+import ConfirmModal from '@components/ConfirmModal'
 import { toast } from 'react-toastify'
 import { SquarePen, Trash2 } from 'lucide-react'
 
@@ -118,7 +118,7 @@ const AllSubsystems = () => {
                                     <td className="px-6 py-4 text-sm text-gray-500 ">{new Date(subSystem.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center gap-5'>
-                                            <Link to={`/edit-subsystem/${subSystem._id}`} title='Edit' state={{ subSystemData: subSystem }}>
+                                            <Link to={`/admin/edit-subsystem/${subSystem._id}`} title='Edit' state={{ subSystemData: subSystem }}>
                                                 <SquarePen size={16} />
                                             </Link>
                                             <button

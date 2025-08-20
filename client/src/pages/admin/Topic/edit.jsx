@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
+import Breadcrumb from '@components/Breadcrumb'
 import { Plus, SquarePen } from "lucide-react"
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { API_BASE_URL } from '../../config/api'
+import { API_BASE_URL } from '@config/api'
 import { toast } from 'react-toastify'
 const EditTopic = () => {
 
@@ -37,7 +37,7 @@ const EditTopic = () => {
         try {
             await axios.put(`${API_BASE_URL}/topics/${id}`, data)
             toast.success("Topic updated successfully")
-            navigate('/all-topics')
+            navigate('/admin/all-topics')
         }
         catch (err) {
             const errorMessage = err.response?.data?.message || 'Failed to update Topic';

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
+import Breadcrumb from '@components/Breadcrumb'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
-import { API_BASE_URL } from '../../config/api';
-import Loader from '../../components/Loader';
+import { API_BASE_URL } from '@config/api';
+import Loader from '@components/Loader';
 import { SquarePen, Trash2 } from 'lucide-react';
-import ConfirmModal from '../../components/ConfirmModal';
+import ConfirmModal from '@components/ConfirmModal';
 
 const AllTopics = () => {
     const [topics, setTopics] = useState([]);
@@ -126,7 +126,7 @@ const AllTopics = () => {
                                     <td className="px-6 py-4 text-sm text-gray-500 text-center">{new Date(topic.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer">
                                         <div className='flex items-center justify-center gap-5'>
-                                            <Link to={`/edit-topic/${topic._id}`} title='Edit' state={{ topicData: topic }}>
+                                            <Link to={`/admin/edit-topic/${topic._id}`} title='Edit' state={{ topicData: topic }}>
                                                 <SquarePen size={16} />
                                             </Link>
                                             <button

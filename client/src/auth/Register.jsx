@@ -5,7 +5,7 @@ import { Eye, EyeOff } from "lucide-react"
 import usePasswordToggle from "../hooks/usePasswordToggle"
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { API_BASE_URL } from "../config/api";
+import { API_BASE_URL } from "@config/api";
 import { toast } from "react-toastify";
 
 const Register = () => {

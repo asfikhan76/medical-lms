@@ -5,7 +5,7 @@ import usePasswordToggle from "../hooks/usePasswordToggle";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form"
 import axios from "axios";
-import { API_BASE_URL } from "../config/api";
+import { API_BASE_URL } from "@config/api";
 import { toast } from "react-toastify"
 import { useAuth } from "../contexts/AuthContext";
 
@@ -31,7 +31,16 @@ const Login = () => {
             const userData = response.data.user;
             login(token, userData);
             reset();
-            navigate('/');
+            switch (userData.role) {
+                case "admin":
+                    navigate('/admin/dashboard');
+                    break;
+                case "student":
+                    navigate('/student/dashboard');
+                    break;
+                default:
+                    navigate('/');
+            }
             toast.success("Login successful");
 
         } catch (error) {
