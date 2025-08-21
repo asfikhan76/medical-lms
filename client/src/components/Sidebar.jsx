@@ -33,6 +33,7 @@ const Sidebar = ({ userRole }) => {
 
     useEffect(() => {
         const p = pathname.toLowerCase();
+        setIsUserOpen(p.includes('user'))
         setIsSubjectOpen(p.includes('subject'));
         setIsSystemOpen(p.includes('system') && !p.includes('subsystem'));
         setIsSubsystemOpen(p.includes('subsystem'));
@@ -50,7 +51,7 @@ const Sidebar = ({ userRole }) => {
         <>
             {/* Users Dropdown */}
             <li>
-                <details open={isUserOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                <details open={isUserOpen} onToggle={(e) => setIsUserOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                         <div className='flex items-center gap-3'>
                             <Users size={18} color='#6a7282' />
