@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSidebar } from '../contexts/SidebarContext'
 import {
     LayoutDashboard,
@@ -15,13 +15,14 @@ import {
     FileText,
     Settings
 } from 'lucide-react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 const Sidebar = ({ userRole }) => {
     const { collapsed } = useSidebar();
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { pathname } = useLocation()
 
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isSubjectOpen, setIsSubjectOpen] = useState(false);
@@ -29,6 +30,15 @@ const Sidebar = ({ userRole }) => {
     const [isSubsystemOpen, setIsSubsystemOpen] = useState(false);
     const [isTopicOpen, setIsTopicOpen] = useState(false);
     const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+
+    useEffect(() => {
+        const p = pathname.toLowerCase();
+        setIsSubjectOpen(p.includes('subject'));
+        setIsSystemOpen(p.includes('system') && !p.includes('subsystem'));
+        setIsSubsystemOpen(p.includes('subsystem'));
+        setIsTopicOpen(p.includes('topic'));
+        setIsQuestionOpen(p.includes('question'));
+    }, [pathname])
 
     const handleLogout = () => {
         logout();
@@ -72,7 +82,7 @@ const Sidebar = ({ userRole }) => {
 
             {/* Subjects Dropdown */}
             <li>
-                <details open={isSubjectOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                <details open={isSubjectOpen} onToggle={(e) => setIsSubjectOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                         <div className='flex items-center gap-3'>
                             <Book size={18} color='#6a7282' />
@@ -114,7 +124,7 @@ const Sidebar = ({ userRole }) => {
 
             {/* Systems Dropdown */}
             <li>
-                <details open={isSystemOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                <details open={isSystemOpen} onToggle={(e) => setIsSystemOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                         <div className='flex items-center gap-3'>
                             <Layers size={18} color='#6a7282' />
@@ -156,7 +166,7 @@ const Sidebar = ({ userRole }) => {
 
             {/* Subsystems Dropdown */}
             <li>
-                <details open={isSubsystemOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                <details open={isSubsystemOpen} onToggle={(e) => setIsSubsystemOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                         <div className='flex items-center gap-3'>
                             <Component size={18} color='#6a7282' />
@@ -198,7 +208,7 @@ const Sidebar = ({ userRole }) => {
 
             {/* Topics Dropdown */}
             <li>
-                <details open={isTopicOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                <details open={isTopicOpen} onToggle={(e) => setIsTopicOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                         <div className='flex items-center gap-3'>
                             <FileText size={18} color='#6a7282' />
@@ -240,7 +250,7 @@ const Sidebar = ({ userRole }) => {
 
             {/* Questions Dropdown */}
             <li>
-                <details open={isQuestionOpen} className="group [&_summary::-webkit-details-marker]:hidden">
+                <details open={isQuestionOpen} onToggle={(e) => setIsQuestionOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
                     <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
                         <div className='flex items-center gap-3'>
                             <ClipboardList size={18} color='#6a7282' />
