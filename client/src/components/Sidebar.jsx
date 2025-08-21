@@ -365,7 +365,7 @@ const Sidebar = ({ userRole }) => {
             <div className="border-t border-gray-100 p-2">
                 <button
                     onClick={handleLogout}
-                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} rounded-sm px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700 w-full`}
+                    className={`group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'} rounded-sm px-2 py-1.5 text-gray-500 cursor-pointer hover:bg-gray-50 hover:text-gray-700 w-full`}
                 >
                     <LogOut size={18} color='#6a7282' />
                     {!collapsed && <span className="text-sm font-normal text-[#6a7282]">Logout</span>}
