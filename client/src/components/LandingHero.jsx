@@ -26,7 +26,7 @@ const LandingHero = () => {
                         <h1 className="text-4xl font-bold text-white sm:text-5xl leading-15 montserrat-700 italic">
                             Master Your <br /> Medical
                             <strong className="text-teal-600"> Exams </strong>
-                            with Confidence
+                            with Confidence ...
                         </h1>
 
                         <p className="mt-4 text-base text-pretty text-white sm:text-lg/relaxed">
