@@ -10,8 +10,7 @@ const topicSchema = new mongoose.Schema({
 // 🧹 Optional: Middleware to log or clean up (not usually needed at Topic level)
 topicSchema.pre("deleteOne", { document: true, query: false }, async function (next) {
   console.log("Deleting topic:", this._id);
-  // add any cleanup logic here if needed
   next();
-});
+});8
 
 module.exports = mongoose.model("Topic", topicSchema);
