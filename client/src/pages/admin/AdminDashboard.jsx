@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {Book, Layers, PlusCircle, Component, List} from "lucide-react";
-import {Link} from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { Book, Layers, PlusCircle, Component, List } from "lucide-react";
+import { Link } from "react-router-dom"
 import axios from 'axios';
-import {API_BASE_URL} from "../config/api";
+import { API_BASE_URL } from "@config/api";
 
 
 const statsDesign = [
@@ -56,7 +56,7 @@ const recentQuestions = [
     },
 ];
 
-export default function Dashboard() {
+export default function AdminDashboard() {
 
     const [stats, setStats] = useState([]);
     const [error, setError] = useState(null);
@@ -103,21 +103,21 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {
                     loading ? Array(4).fill(0).map((_, i) => (
-                            <div key={i} className="flex items-center p-5 rounded-xl bg-gray-100 animate-pulse">
-                                <div className="p-3 rounded-full bg-gray-300 rounded-full mr-4 h-11 w-11"></div>
-                                <div>
-                                    <div className="h-4 bg-gray-300 rounded w-5 mb-2"></div>
-                                    <div className="h-6 bg-gray-300 rounded w-25"></div>
-                                </div>
+                        <div key={i} className="flex items-center p-5 rounded-xl bg-gray-100 animate-pulse">
+                            <div className="p-3 rounded-full bg-gray-300 rounded-full mr-4 h-11 w-11"></div>
+                            <div>
+                                <div className="h-4 bg-gray-300 rounded w-5 mb-2"></div>
+                                <div className="h-6 bg-gray-300 rounded w-25"></div>
                             </div>
-                        )) :
+                        </div>
+                    )) :
                         stats.map((item, index) => (
                             <div
                                 key={index}
                                 className="flex items-center p-5 bg-white rounded-xl shadow hover:shadow-lg transition"
                             >
                                 <div className={`p-3 rounded-full ${item.color} mr-4`}>
-                                    <item.icon size={28}/>
+                                    <item.icon size={28} />
                                 </div>
                                 <div>
                                     <div className="text-2xl font-bold">{item.value}</div>
@@ -132,25 +132,25 @@ export default function Dashboard() {
             <div className="mb-8">
                 <h2 className="text-lg font-semibold text-gray-700 mb-3">Quick Actions</h2>
                 <div className="flex flex-wrap gap-4">
-                    <Link to="/add-subject"
-                          className="flex items-center gap-2 px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-400 transition">
-                        <PlusCircle size={18}/> Add Subject
+                    <Link to="/admin/add-subject"
+                        className="flex items-center gap-2 px-4 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-400 transition">
+                        <PlusCircle size={18} /> Add Subject
                     </Link>
-                    <Link to="/add-system"
-                          className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-400 transition">
-                        <PlusCircle size={18}/> Add System
+                    <Link to="/admin/add-system"
+                        className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-400 transition">
+                        <PlusCircle size={18} /> Add System
                     </Link>
-                    <Link to="/add-subsystem"
-                          className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-400 transition">
-                        <PlusCircle size={18}/> Add Sub-System
+                    <Link to="/admin/add-subsystem"
+                        className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-lg shadow hover:bg-yellow-400 transition">
+                        <PlusCircle size={18} /> Add Sub-System
                     </Link>
-                    <Link to="/add-topic"
-                          className="flex items-center gap-2 px-4 py-2 bg-pink-500 text-white rounded-lg shadow hover:bg-pink-400 transition">
-                        <PlusCircle size={18}/> Add Topic
+                    <Link to="/admin/add-topic"
+                        className="flex items-center gap-2 px-4 py-2 bg-pink-500 text-white rounded-lg shadow hover:bg-pink-400 transition">
+                        <PlusCircle size={18} /> Add Topic
                     </Link>
-                    <Link to="/add-question     "
-                          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-400 transition">
-                        <PlusCircle size={18}/> Add Question
+                    <Link to="/admin/add-question     "
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-400 transition">
+                        <PlusCircle size={18} /> Add Question
                     </Link>
                 </div>
             </div>
@@ -162,9 +162,9 @@ export default function Dashboard() {
                     <ul>
                         {recentQuestions.map((question, idx) => (
                             <li key={idx} className="flex items-start py-3 border-b border-gray-200 last:border-b-0">
-                <span className="mr-3 mt-1">
-                  <Book size={16} className="text-blue-400"/>
-                </span>
+                                <span className="mr-3 mt-1">
+                                    <Book size={16} className="text-blue-400" />
+                                </span>
                                 <div className="flex-1">
                                     <div
                                         className="font-medium text-gray-800 text-sm line-clamp-2">{question.title}</div>
@@ -173,11 +173,11 @@ export default function Dashboard() {
                                         <span className="text-xs text-gray-400">{question.time}</span>
                                     </div>
                                     <div className="flex items-center gap-2 mt-1">
-                    <span
-                        className={`text-xs px-2 py-1 rounded-full ${question.difficulty === 'Easy' ? 'bg-green-100 text-green-600' :
-                            question.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-600' :
-                                'bg-red-100 text-red-600'
-                        }`}>{question.difficulty}</span>
+                                        <span
+                                            className={`text-xs px-2 py-1 rounded-full ${question.difficulty === 'Easy' ? 'bg-green-100 text-green-600' :
+                                                question.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-600' :
+                                                    'bg-red-100 text-red-600'
+                                                }`}>{question.difficulty}</span>
                                         <span
                                             className="text-xs px-2 py-1 bg-blue-100 text-blue-600 rounded-full">{question.type}</span>
                                     </div>
