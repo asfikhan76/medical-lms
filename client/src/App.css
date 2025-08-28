@@ -53,8 +53,23 @@ body {
   font-weight: 100;
   font-style: normal;
 }
+
 .montserrat-700 {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
+}
+
+/* fade  */
+
+.fade-edges {
+  /* Fade left, right, and bottom */
+  -webkit-mask-image:
+    linear-gradient(to bottom, black 80%, transparent 100%),
+    linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image:
+    linear-gradient(to bottom, black 80%, transparent 100%),
+    linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-composite: intersect;
+  mask-composite: intersect;
 }

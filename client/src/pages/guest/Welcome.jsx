@@ -10,7 +10,6 @@ const Welcome = () => {
 
             {/* Hero Section */}
             <LandingHero />
-            <LandingHeader />
         </main>
     )
 }
