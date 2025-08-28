@@ -38,14 +38,6 @@ const Header = () => {
                                 className="rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200 transition"
                             />
                         </div>
-                        <ul className="flex items-center gap-6 text-sm">
-                            <li>
-                                <a href="#" className="text-gray-500 flex items-center gap-2 transition hover:text-gray-500/75" >
-                                    <SlidersHorizontal size={18} color="#6a7282" />
-                                    Settings
-                                </a>
-                            </li>
-                        </ul>
                     </nav>
 
                     <div className="flex items-center gap-4">
