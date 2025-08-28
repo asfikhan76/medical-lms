@@ -6,12 +6,21 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        if (token) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            setIsAuth(true);
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        if (token && userData) {
+            try {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                setIsAuth(true);
+                setUserData(userData)
+            } catch (error) {
+                console.error(error);
+                setIsAuth(false);
+                setUserData(null)
+            }
         }
         setIsLoading(false)
     }, []);
@@ -19,11 +28,19 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const handleStorage = () => {
             const token = localStorage.getItem("token");
-            if (token) {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                setIsAuth(true);
+            const userData = JSON.parse(localStorage.getItem("userData"));
+            if (token && userData) {
+                try {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    setIsAuth(true);
+                    setUserData(userData)
+                } catch (error) {
+                    setIsAuth(false);
+                    setUserData(null)
+                }
             } else {
                 setIsAuth(false);
+                setUserData(null);
             }
         }
         window.addEventListener('storage', handleStorage);
@@ -36,18 +53,33 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(userData))
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        setIsAuth(true)
+        setIsAuth(true);
+        setUserData(userData)
     }
 
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userData")
         delete axios.defaults.headers.common['Authorization'];
-        setIsAuth(false)
+        setIsAuth(false);
+        setUserData(null);
     }
 
+    const isAdmin = () => userData?.role === "admin";
+    const isStudent = () => userData?.role === "student";
+    const getUserRole = () => userData?.role;
+
     return (
-        <AuthContext.Provider value={{ isAuth, login, logout, isLoading }}>
+        <AuthContext.Provider value={{
+            isAuth,
+            login,
+            logout,
+            isLoading,
+            userData,
+            isAdmin: isAdmin(),
+            isStudent: isStudent(),
+            getUserRole
+        }}>
             {children}
         </AuthContext.Provider>
     )

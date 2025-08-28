@@ -1,111 +1,69 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
-import { SidebarProvider } from './contexts/SidebarContext'
-import Sidebar from './components/Sidebar'
-import Header from './components/Header'
+import { SidebarProvider } from '@contexts/SidebarContext'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // subject imports
-import AddSubject from './pages/Subject/create'
-import EditSubject from './pages/Subject/edit'
-import AllSubjects from './pages/Subject/index'
+import AddSubject from '@pages/admin/Subject/create'
+import EditSubject from '@pages/admin/Subject/edit'
+import AllSubjects from '@pages/admin/Subject/index'
 
 // system imports
-import AddSystem from './pages/System/create'
-import EditSystem from './pages/System/edit'
-import AllSystems from './pages/System/index'
+import AddSystem from '@pages/admin/System/create'
+import EditSystem from '@pages/admin/System/edit'
+import AllSystems from '@pages/admin/System/index'
 
 // Subsystem imports
-import AddSubsystem from './pages/Subsystem/create'
-import EditSubsystem from './pages/Subsystem/edit'
-import AllSubsystems from './pages/Subsystem/index'
+import AddSubsystem from '@pages/admin/Subsystem/create'
+import EditSubsystem from '@pages/admin/Subsystem/edit'
+import AllSubsystems from '@pages/admin/Subsystem/index'
 
 // topic imports
-import AddTopic from './pages/Topic/create'
-import EditTopic from './pages/Topic/edit'
-import AllTopics from './pages/Topic/index'
+import AddTopic from '@pages/admin/Topic/create'
+import EditTopic from '@pages/admin/Topic/edit'
+import AllTopics from '@pages/admin/Topic/index'
 
 // question imports
-import AddQuestion from './pages/Question/create'
-import AllQuestions from './pages/Question/index'
-import ShowQuestion from './pages/Question/show'
-import EditQuestion from './pages/Question/edit'
+import AddQuestion from '@pages/admin/Question/create'
+import AllQuestions from '@pages/admin/Question/index'
+import ShowQuestion from '@pages/admin/Question/show'
+import EditQuestion from '@pages/admin/Question/edit'
 
-// dashboard import
-import Dashboard from './pages/Dashboard'
+// Admin import
+import AdminDashboard from '@pages/admin/AdminDashboard'
+import AdminRoutes from '@auth/AdminRoutes'
+import AdminLayout from './layouts/AdminLayout';
+import AllUsers from '@pages/admin/Users/index'
+import EditUser from '@pages/admin/Users/EditUser'
 
 // contexts
-import { useSidebar } from './contexts/SidebarContext'
-import { AuthProvider } from './contexts/AuthContext.jsx'
-
+import { AuthProvider } from '@contexts/AuthContext'
 
 // Auth imports
-import Register from "./auth/Register.jsx";
-import Login from "./auth/Login.jsx";
+import Register from "@auth/Register";
+import Login from "@auth/Login";
 
-// Layout imports
-import AuthLayout from "./layouts/AuthLayout.jsx";
-import RedirectIfAuth from './auth/RedirectIfAuth.jsx'
-import ProtectedRoute from './auth/ProtectedRoute.jsx'
-import AllUsers from './pages/Users/index.jsx'
-import EditUser from './pages/Users/EditUser.jsx'
-import UserProfile from './auth/UserProfile.jsx'
+// auth imports
+import AuthLayout from "@layouts/AuthLayout";
+import RedirectIfAuth from '@auth/RedirectIfAuth'
+import ProtectedRoute from '@auth/ProtectedRoute'
 
-
-function AppContent() {
-    const { collapsed } = useSidebar()
-    return (
-        <div className='flex'>
-            <div>
-                <Sidebar />
-            </div>
-            <div className="bg-[#eee] h-screen" style={{ width: `calc(100% - ${collapsed ? '64px' : '192px'})` }}>
-                <Header />
-                <Routes>
-                    {/* Dashboard Route */}
-                    <Route path='/' element={<Dashboard />} />
-
-                    {/*Subjects Routes  */}
-                    <Route path='/add-subject' element={<AddSubject />} />
-                    <Route path='/edit-subject/:id' element={<EditSubject />} />
-                    <Route path='/all-subjects' element={<AllSubjects />} />
-
-                    {/* Systems Routes */}
-                    <Route path='/add-system' element={<AddSystem />} />
-                    <Route path='/edit-system/:id' element={<EditSystem />} />
-                    <Route path='/all-systems' element={<AllSystems />} />
-
-                    {/* SubSytem Routes */}
-                    <Route path='/add-subsystem' element={<AddSubsystem />} />
-                    <Route path='/edit-subsystem/:id' element={<EditSubsystem />} />
-                    <Route path='/all-subsystems' element={<AllSubsystems />} />
-
-                    {/* Topics Routes */}
-                    <Route path='/add-topic' element={<AddTopic />} />
-                    <Route path='/edit-topic/:id' element={<EditTopic />} />
-                    <Route path='/all-topics' element={<AllTopics />} />
-
-                    {/* Question Routes */}
-                    <Route path='/add-question' element={<AddQuestion />} />
-                    <Route path='/all-questions' element={<AllQuestions />} />
-                    <Route path='/show-question/:id' element={<ShowQuestion />} />
-                    <Route path='/edit-question/:id' element={<EditQuestion />} />
+// student imports  
+import StudentDashboard from "@pages/student/StudentDashboard"
+import StudentRoutes from '@auth/StudentRoutes'
+import StudentLayout from './layouts/StudentLayout';
 
 
-                    {/* User Routes */}
-                    <Route path='/all-users' element={<AllUsers />} />
-                    <Route path='/edit-user' element={<EditUser />} />
+// plan imports
+import Plan from '@pages/student/Plan';
 
+// Test imports
+import Test from '@pages/student/Test';
 
-                    {/* admin Routes */}
-                    <Route path='/userProfile' element={<UserProfile />} />
+// dashboard imports
+import DashboardRedirect from "@auth/DashboardRedirect"
 
-                </Routes>
-            </div>
-        </div>
-    )
-}
 
 export default function App() {
     return (
@@ -113,7 +71,12 @@ export default function App() {
             <AuthProvider>
                 <Router>
                     <Routes>
-                        {/* Auth Routes */}
+
+                        {/* Root redirect to appropriate dashboard */}
+                        <Route path="/" element={<DashboardRedirect />} />
+
+                        {/**************************** Auth Routes ****************************/}
+
                         <Route element={<RedirectIfAuth />}>
                             <Route element={<AuthLayout />}>
                                 <Route path="/register" element={<Register />} />
@@ -121,9 +84,67 @@ export default function App() {
                             </Route>
                         </Route>
 
-                        {/*Mian Content Routes*/}
+                        {/**************************** Admin Routes ****************************/}
+
                         <Route element={<ProtectedRoute />}>
-                            <Route path='/*' element={<AppContent />} />
+                            <Route element={<AdminRoutes />}>
+                                <Route element={<AdminLayout />}>
+
+                                    {/*Admin Dashboard Route */}
+                                    <Route path='/admin/dashboard' element={<AdminDashboard />} />
+
+                                    {/*Subjects Routes  */}
+                                    <Route path='/admin/add-subject' element={<AddSubject />} />
+                                    <Route path='/admin/edit-subject/:id' element={<EditSubject />} />
+                                    <Route path='/admin/all-subjects' element={<AllSubjects />} />
+
+                                    {/* Systems Routes */}
+                                    <Route path='/admin/add-system' element={<AddSystem />} />
+                                    <Route path='/admin/edit-system/:id' element={<EditSystem />} />
+                                    <Route path='/admin/all-systems' element={<AllSystems />} />
+
+                                    {/* SubSytem Routes */}
+                                    <Route path='/admin/add-subsystem' element={<AddSubsystem />} />
+                                    <Route path='/admin/edit-subsystem/:id' element={<EditSubsystem />} />
+                                    <Route path='/admin/all-subsystems' element={<AllSubsystems />} />
+
+                                    {/* Topics Routes */}
+                                    <Route path='/admin/add-topic' element={<AddTopic />} />
+                                    <Route path='/admin/edit-topic/:id' element={<EditTopic />} />
+                                    <Route path='/admin/all-topics' element={<AllTopics />} />
+
+                                    {/* Question Routes */}
+                                    <Route path='/admin/add-question' element={<AddQuestion />} />
+                                    <Route path='/admin/all-questions' element={<AllQuestions />} />
+                                    <Route path='/admin/show-question/:id' element={<ShowQuestion />} />
+                                    <Route path='/admin/edit-question/:id' element={<EditQuestion />} />
+
+
+                                    {/* User Routes */}
+                                    <Route path='/admin/all-users' element={<AllUsers />} />
+                                    <Route path='/admin/edit-user' element={<EditUser />} />
+
+                                </Route>
+                            </Route>
+                        </Route>
+
+                        {/**************************** Student Routes ****************************/}
+
+                        <Route element={<ProtectedRoute />}>
+                            <Route element={<StudentRoutes />}>
+                                <Route element={<StudentLayout />}>
+
+                                    {/*Student Dashboard Route */}
+                                    <Route path='/student/dashboard' element={<StudentDashboard />} />
+
+                                    {/*Plan Routes  */}
+                                    <Route path='/student/plan' element={<Plan />} />
+
+                                    {/*Tests Routes  */}
+                                    <Route path='/student/tests' element={<Test />} />
+
+                                </Route>
+                            </Route>
                         </Route>
                     </Routes>
 
@@ -144,6 +165,6 @@ export default function App() {
 
                 </Router>
             </AuthProvider>
-        </SidebarProvider>
+        </SidebarProvider >
     )
 }

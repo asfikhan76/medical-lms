@@ -5,7 +5,7 @@ import { Eye, EyeOff } from "lucide-react"
 import usePasswordToggle from "../hooks/usePasswordToggle"
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { API_BASE_URL } from "../config/api";
+import { API_BASE_URL } from "@config/api";
 import { toast } from "react-toastify";
 
 const Register = () => {
@@ -31,7 +31,6 @@ const Register = () => {
         const { confirmPassword, ...payload } = data; //Exclude Confirm Password
         try {
             const response = await axios.post(`${API_BASE_URL}/auth/signup`, payload);
-            console.log("success : ", response.data);
             reset();
             navigate('/login')
             toast.success("You have successfully Registered!");

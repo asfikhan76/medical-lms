@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
+import Breadcrumb from '@components/Breadcrumb'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { API_BASE_URL } from '../../config/api'
-import Loader from "../../components/Loader"
+import { API_BASE_URL } from '@config/api'
+import Loader from "@components/Loader"
 import { SquarePen, Trash2 } from 'lucide-react'
-import ConfirmModal from '../../components/ConfirmModal'
+import ConfirmModal from '@components/ConfirmModal'
 import { toast } from 'react-toastify'
 
 
@@ -113,7 +113,7 @@ const AllSubjects = () => {
                                     <td className="px-6 py-4 text-sm text-gray-500 w-2/5">  {new Date(subject.createdAt).toLocaleDateString()}</td>
                                     <td className="px-6 py-4 text-sm text-blue-500 cursor-pointer w-1/5">
                                         <div className='flex items-center gap-5'>
-                                            <Link to={`/edit-subject/${subject._id}`} state={{ subjectData: subject }}>
+                                            <Link to={`/admin/edit-subject/${subject._id}`} state={{ subjectData: subject }}>
                                                 <SquarePen size={16} />
                                             </Link>
                                             <button

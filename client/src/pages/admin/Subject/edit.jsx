@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
+import Breadcrumb from '@components/Breadcrumb'
 import { SquarePen } from "lucide-react"
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom'
 import axios from 'axios'
-import { API_BASE_URL } from '../../config/api'
+import { API_BASE_URL } from '@config/api'
 import { toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 
@@ -35,7 +35,7 @@ const EditSubject = () => {
         try {
             await axios.put(`${API_BASE_URL}/subjects/${id}`, data);
             toast.success('Subject updated successfully');
-            navigate('/all-subjects');
+            navigate('/admin/all-subjects');
         } catch (err) {
             const errorMessage = err.response?.data?.message || 'Failed to update subject';
             toast.error(errorMessage);

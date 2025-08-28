@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import Breadcrumb from '../../components/Breadcrumb'
-import {Link, Navigate, useLocation, useNavigate, useParams} from 'react-router-dom'
-import {Plus, PlusCircle} from 'lucide-react'
-import QuillEditor from '../../components/QuillEditor'
-import {useForm, Controller, useFieldArray} from 'react-hook-form'
+import React, { useEffect, useState } from 'react'
+import Breadcrumb from '@components/Breadcrumb'
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Plus, PlusCircle } from 'lucide-react'
+import QuillEditor from '@components/QuillEditor'
+import { useForm, Controller, useFieldArray } from 'react-hook-form'
 import axios from 'axios'
-import {API_BASE_URL} from '../../config/api'
-import {toast} from 'react-toastify'
+import { API_BASE_URL } from '@config/api'
+import { toast } from 'react-toastify'
 
 // generate random id
 const EditQuestion = () => {
-    const {id} = useParams()
+    const { id } = useParams()
     const navigate = useNavigate()
     const location = useLocation()
     const questionData = location.state?.questionData
@@ -30,7 +30,7 @@ const EditQuestion = () => {
         control,
         watch,
         setValue,
-        formState: {errors}
+        formState: { errors }
     } = useForm({
         defaultValues: {
             topic: questionData?.topic?._id || '',
@@ -49,15 +49,15 @@ const EditQuestion = () => {
     })
 
     // Field array for options
-    const {fields, append, remove} = useFieldArray({
+    const { fields, append, remove } = useFieldArray({
         control,
         name: "options"
     })
 
     // breadcrumb items
     const breadcrumbItems = [
-        {label: 'Dashboard', to: '/'},
-        {label: 'Edit Question'}
+        { label: 'Dashboard', to: '/' },
+        { label: 'Edit Question' }
     ]
 
     // fetching topics
@@ -85,7 +85,7 @@ const EditQuestion = () => {
                 setSubject(selectedTopic.subSystem.system.subject.name || "Subject")
             }
         }
-    }, [questionData,topics]);
+    }, [questionData, topics]);
 
     // handleTopicChange
     const handleTopicChange = (event) => {
@@ -104,7 +104,7 @@ const EditQuestion = () => {
 
     // handleAddOption
     const handleAddOption = () => {
-        append({value: '', isCorrect: false})
+        append({ value: '', isCorrect: false })
     }
 
     // handleRemoveOption
@@ -150,7 +150,7 @@ const EditQuestion = () => {
 
             const response = await axios.put(`${API_BASE_URL}/questions/${id}`, data)
             toast.success("Question successfully Updated!")
-            navigate('/all-questions')
+            navigate('/admin/all-questions')
         } catch (error) {
             const serverMessage = error.response?.data?.error ? error.response.data.error : "Error updating Question";
             toast.error(serverMessage);
@@ -169,7 +169,7 @@ const EditQuestion = () => {
             <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="space-y-8 bg-white p-6 shadow-sm sm:rounded-lg relative">
                     {/* breadcrumb */}
-                    <Breadcrumb items={breadcrumbItems}/>
+                    <Breadcrumb items={breadcrumbItems} />
 
                     {/* content */}
                     <div className="border-b  border-gray-900/10 pb-12">
@@ -187,8 +187,8 @@ const EditQuestion = () => {
                                     name="topic"
                                     control={control}
                                     defaultValue=""
-                                    rules={{required: "Topic is required"}}
-                                    render={({field}) => (
+                                    rules={{ required: "Topic is required" }}
+                                    render={({ field }) => (
                                         <select
                                             {...field}
                                             onChange={(e) => {
@@ -270,8 +270,8 @@ const EditQuestion = () => {
                                         name="text"
                                         control={control}
                                         defaultValue=""
-                                        rules={{required: "Question is required"}}
-                                        render={({field}) => (
+                                        rules={{ required: "Question is required" }}
+                                        render={({ field }) => (
                                             <QuillEditor
                                                 initialValue={field.value}
                                                 onChange={field.onChange}
@@ -289,7 +289,7 @@ const EditQuestion = () => {
                                         name="explanation"
                                         control={control}
                                         defaultValue=""
-                                        render={({field}) => (
+                                        render={({ field }) => (
                                             <QuillEditor
                                                 initialValue={field.value}
                                                 onChange={field.onChange}
@@ -303,7 +303,7 @@ const EditQuestion = () => {
                                     <div className="grid grid-cols-4 gap-x-6 gap-y-6 mb-5">
                                         <div className="sm:col-span-1">
                                             <label htmlFor={`option-${index}`}
-                                                   className="block text-sm/6 font-medium text-gray-900">
+                                                className="block text-sm/6 font-medium text-gray-900">
                                                 Option {index + 1}
                                             </label>
                                             <div className="mt-2">
@@ -327,7 +327,7 @@ const EditQuestion = () => {
                                         </div>
                                         <div className="sm:col-span-1 ">
                                             <label htmlFor={`correct-${index}`}
-                                                   className="block text-sm/6 font-medium text-gray-900">
+                                                className="block text-sm/6 font-medium text-gray-900">
                                                 Is this the correct answer?
                                             </label>
                                             <div className="mt-2 flex items-center gap-2 py-1.5">
@@ -350,7 +350,7 @@ const EditQuestion = () => {
                                                     className='rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
                                                 >
                                                     Add Option
-                                                    <PlusCircle size={18} color="#fff"/>
+                                                    <PlusCircle size={18} color="#fff" />
                                                 </button>
                                             ) : (
                                                 // All other options show "Remove Option" button
@@ -360,7 +360,7 @@ const EditQuestion = () => {
                                                     className='rounded-md flex cursor-pointer items-center gap-2 bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500'
                                                 >
                                                     Remove Option
-                                                    <PlusCircle size={18} color="#fff"/>
+                                                    <PlusCircle size={18} color="#fff" />
                                                 </button>
                                             )}
                                         </div>
@@ -380,7 +380,7 @@ const EditQuestion = () => {
                             className="rounded-md flex cursor-pointer items-center gap-2 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         >
                             {updating ? "Updating..." : "Update Question"}
-                            <Plus size={18} color="#fff"/>
+                            <Plus size={18} color="#fff" />
                         </button>
                     </div>
                 </div>
