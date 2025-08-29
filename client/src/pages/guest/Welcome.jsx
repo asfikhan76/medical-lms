@@ -14,30 +14,35 @@ const Welcome = () => {
 
     const featureItems = [
         {
+            id: 1,
             title: "Detailed Performance Tracking",
             description:
                 "Track test scores, topic-wise strengths and weaknesses, and progress trends to focus your study where it matters most.",
             videoId: "dQw4w9WgXcQ",
         },
         {
+            id: 2,
             title: "Study from Anywhere",
             description:
                 "Responsive web app optimized for mobile and desktop so you can learn on the go without missing a beat.",
             videoId: "a_pLEynHiPY",
         },
         {
+            id: 3,
             title: "Dynamic Study Planner",
             description:
                 "An adaptive planner that prioritizes topics based on your performance and upcoming goals.",
             videoId: "9bZkp7q19f0",
         },
         {
+            id: 4,
             title: "Detailed Performance Tracking",
             description:
                 "Track test scores, topic-wise strengths and weaknesses, and progress trends to focus your study where it matters most.",
             videoId: "dQw4w9WgXcQ",
         },
         {
+            id: 5,
             title: "Study from Anywhere",
             description:
                 "Responsive web app optimized for mobile and desktop so you can learn on the go without missing a beat.",
@@ -66,7 +71,7 @@ const Welcome = () => {
                                 {featureItems.map((item, index) => {
                                     const isActive = index === activeIndex
                                     return (
-                                        <div key={item.title} className={`bg-slate-900/40`}>
+                                        <div key={item.id} className={`bg-slate-900/40`}>
                                             <button
                                                 type="button"
                                                 className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-slate-900/60 transition-colors"

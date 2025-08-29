@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React from "react"
 import heroImg from "@assets/img/hero-img.jpg"
 import researchersImg from "@assets/img/Researchers-cuate.png"
 import studentImg from "@assets/img/student-setting-next-to-laptop.jpeg"
@@ -42,32 +42,6 @@ const PlansSection = () => {
         },
     ]
 
-    const trackRef = useRef(null)
-    const [showArrows, setShowArrows] = useState(false)
-
-    useEffect(() => {
-        const el = trackRef.current
-        if (!el) return
-        const checkOverflow = () => {
-            setShowArrows(el.scrollWidth > el.clientWidth)
-        }
-        checkOverflow()
-        const observer = new ResizeObserver(checkOverflow)
-        observer.observe(el)
-        window.addEventListener("resize", checkOverflow)
-        return () => {
-            observer.disconnect()
-            window.removeEventListener("resize", checkOverflow)
-        }
-    }, [])
-
-    const scrollByAmount = (direction) => {
-        const el = trackRef.current
-        if (!el) return
-        const amount = el.clientWidth * 0.9 * (direction === "left" ? -1 : 1)
-        el.scrollBy({ left: amount, behavior: "smooth" })
-    }
-
     return (
         <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 pb-16">
             <div className="flex items-end justify-between gap-4 mb-6">
@@ -76,23 +50,9 @@ const PlansSection = () => {
                     <p className="text-white md:text-center md:w-[65%] mx-auto mb-6">Master complex topics faster with data‑driven insights, flexible access, and an adaptive study planner. Track your progress, study anywhere, and focus on what moves your score.</p>
                 </div>
             </div>
-            {showArrows && (
-                <div className="hidden md:flex items-center justify-end gap-2 mb-5">
-                    <button onClick={() => scrollByAmount("left")} className="h-9 w-9 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800">
-                        <span className="sr-only">Previous</span>
-                        ◀
-                    </button>
-                    <button onClick={() => scrollByAmount("right")} className="h-9 w-9 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800">
-                        <span className="sr-only">Next</span>
-                        ▶
-                    </button>
-                </div>
-            )}
 
             <div
-                ref={trackRef}
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-p-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
-                style={{ scrollbarWidth: "none" }}
+                className="flex flex-wrap gap-6 overflow-x-auto snap-x snap-mandatory scroll-p-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
             >
                 {plans.map((plan) => (
                     <div
