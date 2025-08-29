@@ -32,14 +32,6 @@ const PlansSection = () => {
             cta: "Buy Now",
             features: ["Full Question Bank Access", "Detailed trend reports", "Offline mode"],
         },
-        {
-            id: "team",
-            name: "Ques.Bank 360 Days Access",
-            image: researchersImg,
-            price: "$559",
-            cta: "Buy Now",
-            features: ["Full Question Bank Access", "Cohort analytics", "Bulk licensing"],
-        },
     ]
 
     return (
@@ -52,12 +44,12 @@ const PlansSection = () => {
             </div>
 
             <div
-                className="flex flex-wrap gap-6 overflow-x-auto snap-x snap-mandatory scroll-p-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
+                className="flex justify-center flex-wrap gap-6 overflow-x-auto snap-x snap-mandatory scroll-p-4 pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
             >
                 {plans.map((plan) => (
                     <div
                         key={plan.id}
-                        className="snap-start shrink-0 basis-[85%] sm:basis-[60%] md:basis-1/2 lg:basis-1/4"
+                        className="shrink-0 basis-[85%] sm:basis-[60%] md:basis-1/2 lg:basis-1/4"
                     >
                         <PlanCard plan={plan} />
                     </div>
