@@ -3,7 +3,7 @@ import LandingHeroImg from "@assets/img/Researchers-cuate.png"
 
 const LandingHero = () => {
     return (
-        <div className="w-full bg-[#020617] lg:h-[calc(100vh_-_62px)] relative">
+        <div className="w-full bg-[#020617]  relative">
             {/* Magenta Orb Grid Background */}
             <div
                 className="absolute inset-0 z-0"
