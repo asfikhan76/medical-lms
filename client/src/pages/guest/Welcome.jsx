@@ -74,7 +74,7 @@ const Welcome = () => {
                                         <div key={item.id}>
                                             <button
                                                 type="button"
-                                                className={`w-full text-left px-5 py-4 flex items-center justify-between ${index === 0 ? 'rounded-t-lg' : ""}  gap-4 ${isActive ? 'bg-teal-400/15' : ''}  hover:bg-teal-900/40 transition-colors`}
+                                                className={`w-full cursor-pointer text-left px-5 py-4 flex items-center justify-between ${index === 0 ? 'rounded-t-lg' : ""}  gap-4 ${isActive ? 'bg-teal-400/15' : ''}  hover:bg-teal-900/40 transition-colors`}
                                                 onClick={() => setActiveIndex(index)}
                                             >
                                                 <span className="text-white font-medium">
