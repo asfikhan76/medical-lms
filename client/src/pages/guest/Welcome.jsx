@@ -71,14 +71,14 @@ const Welcome = () => {
                                 {featureItems.map((item, index) => {
                                     const isActive = index === activeIndex
                                     return (
-                                        <div key={item.id} className={`bg-slate-900/40`}>
+                                        <div key={item.id}>
                                             <button
                                                 type="button"
-                                                className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-slate-900/60 transition-colors"
+                                                className={`w-full text-left px-5 py-4 flex items-center justify-between ${index === 0 ? 'rounded-t-lg' : ""}  gap-4 ${isActive ? 'bg-teal-400/15' : ''}  hover:bg-teal-900/40 transition-colors`}
                                                 onClick={() => setActiveIndex(index)}
                                             >
                                                 <span className="text-white font-medium">
-                                                    {item.title}
+                                                    {item.title} {index}
                                                 </span>
                                                 <span className={`ml-auto h-5 w-5 shrink-0 rounded-full border border-slate-700 grid place-items-center text-slate-300 transition-transform ${isActive ? "rotate-180" : "rotate-0"}`}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -87,7 +87,7 @@ const Welcome = () => {
                                                 </span>
                                             </button>
                                             {isActive && (
-                                                <div className="px-5 pb-5 text-slate-300">
+                                                <div className="px-5 pb-5 pt-5 text-slate-300">
                                                     <p className="leading-relaxed">{item.description}</p>
                                                 </div>
                                             )}
