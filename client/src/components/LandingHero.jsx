@@ -19,9 +19,8 @@ const LandingHero = () => {
             />
             {/* Your Content/Components */}
             <section className="lg:grid relative w-full z-2">
-                <div
-                    className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 py-8"
-                >
+                <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 py-8"
+        >
                     <div className="max-w-prose text-left">
                         <h1 className="text-4xl font-bold text-white sm:text-5xl leading-15 montserrat-700 italic">
                             Master Your <br /> Medical
