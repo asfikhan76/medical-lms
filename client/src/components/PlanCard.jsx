@@ -11,7 +11,7 @@ const PlanCard = ({ plan }) => {
                     <h4 className="text-white text-lg font-semibold">{plan.name}</h4>
                     <span className="text-teal-600 font-bold text-xl">{plan.price}</span>
                 </div>
-                <ul className="space-y-2">
+                <ul className="space-y-2 h-[90px]">
                     {plan.features.map((f) => (
                         <li key={f} className="flex items-start gap-2 text-slate-300">
                             <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-teal-600 text-teal-600 text-[10px]">✓</span>
@@ -20,7 +20,7 @@ const PlanCard = ({ plan }) => {
                     ))}
                 </ul>
                 <button className="mt-2 inline-flex items-center justify-center rounded-lg border border-teal-600 px-4 py-2 text-teal-600 hover:bg-teal-600 hover:text-white transition-colors">
-                    {plan.cta}
+                    Buy Now
                 </button>
             </div>
         </div>
