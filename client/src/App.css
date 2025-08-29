@@ -74,6 +74,7 @@ body {
   mask-composite: intersect;
 }
 
+
 /* Instagram Loader */
 .spinner {
   font-size: 28px;
@@ -211,3 +212,4 @@ body {
     background-color: transparent;
   }
 }
+
