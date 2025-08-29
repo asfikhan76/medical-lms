@@ -24,6 +24,18 @@ const Welcome = () => {
                 "An adaptive planner that prioritizes topics based on your performance and upcoming goals.",
             videoId: "9bZkp7q19f0",
         },
+        {
+            title: "Detailed Performance Tracking",
+            description:
+                "Track test scores, topic-wise strengths and weaknesses, and progress trends to focus your study where it matters most.",
+            videoId: "dQw4w9WgXcQ",
+        },
+        {
+            title: "Study from Anywhere",
+            description:
+                "Responsive web app optimized for mobile and desktop so you can learn on the go without missing a beat.",
+            videoId: "a_pLEynHiPY",
+        },
     ]
 
 
