@@ -3,8 +3,8 @@ import React from "react";
 const PlanCard = ({ plan }) => {
     return (
         <div className="h-full rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-900/70 transition-colors">
-            <div className="aspect-[16/10] w-full overflow-hidden rounded-t-xl">
-                <img src={plan.image} alt={plan.name} className="h-full w-full object-cover" />
+            <div className="aspect-[16/10] w-full overflow-hidden rounded-t-xl p-3">
+                <img src={plan.image} alt={plan.name} className="h-full w-full object-cover rounded-lg bg-white" />
             </div>
             <div className="p-5 flex flex-col gap-4">
                 <div className="flex items-baseline justify-between">
