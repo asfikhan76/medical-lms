@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import LandingHeader from "@components/LandingHeader"
 import LandingHero from "@components/LandingHero"
 import InstagramLoader from "@components/InstagramLoader"
+import PlansSection from "@components/PlansSection"
 
 const Welcome = () => {
     const [activeIndex, setActiveIndex] = useState(0)
@@ -56,8 +57,8 @@ const Welcome = () => {
             {/* Features */}
             <section className="bg-[#020617]">
                 <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 pt-12">
-                    <h2 className="text-3xl font-bold text-white mb-4 md:text-center">Learn smarter with tools built for <span className="text-teal-600">Medical Mastery</span></h2>
-                    <p className="text-white md:text-center md:w-[75%] mx-auto mb-6">Master complex topics faster with data‑driven insights, flexible access, and an adaptive study planner. Track your progress, study anywhere, and focus on what moves your score.</p>
+                    <h2 className="text-3xl font-bold text-white mb-4 md:text-center">Smarter tools for <span className="text-teal-600">Medical Mastery</span></h2>
+                    <p className="text-white md:text-center md:w-[65%] mx-auto mb-6">Master tough topics faster with smart insights, flexible access, and an adaptive planner—study anywhere and track your progress.</p>
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 mt-16">
                         {/* Left: 60% */}
                         <div className="lg:col-span-3">
@@ -65,7 +66,7 @@ const Welcome = () => {
                                 {featureItems.map((item, index) => {
                                     const isActive = index === activeIndex
                                     return (
-                                        <div key={item.title} className="bg-slate-900/40">
+                                        <div key={item.title} className={`bg-slate-900/40`}>
                                             <button
                                                 type="button"
                                                 className="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-slate-900/60 transition-colors"
@@ -93,7 +94,7 @@ const Welcome = () => {
 
                         {/* Right: 40% */}
                         <div className="lg:col-span-2">
-                            <div className="sticky top-6">
+                            <div className="">
                                 <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black">
                                     {videoLoading && (
                                         <div className="absolute inset-0 grid place-items-center bg-black/60">
@@ -115,8 +116,10 @@ const Welcome = () => {
                 </div>
             </section>
 
-
-            <section className="pt-10 bg-[#020617]"></section>
+            {/* Plans */}
+            <section className="pt-20 bg-[#020617]">
+                <PlansSection />
+            </section>
 
 
         </main>
@@ -124,3 +127,6 @@ const Welcome = () => {
 }
 
 export default Welcome
+
+
+
