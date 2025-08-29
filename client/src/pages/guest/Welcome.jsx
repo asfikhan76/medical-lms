@@ -1,9 +1,15 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import LandingHeader from "@components/LandingHeader"
 import LandingHero from "@components/LandingHero"
+import InstagramLoader from "@components/InstagramLoader"
 
 const Welcome = () => {
     const [activeIndex, setActiveIndex] = useState(0)
+    const [videoLoading, setVideoLoading] = useState(true)
+
+    useEffect(() => {
+        setVideoLoading(true)
+    }, [activeIndex])
 
     const featureItems = [
         {
@@ -88,12 +94,18 @@ const Welcome = () => {
                         {/* Right: 40% */}
                         <div className="lg:col-span-2">
                             <div className="sticky top-6">
-                                <div className="aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black">
+                                <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black">
+                                    {videoLoading && (
+                                        <div className="absolute inset-0 grid place-items-center bg-black/60">
+                                            <InstagramLoader />
+                                        </div>
+                                    )}
                                     <iframe
                                         title={featureItems[activeIndex].title}
                                         className="h-full w-full"
                                         src={`https://www.youtube.com/embed/${featureItems[activeIndex].videoId}?rel=0&modestbranding=1`}
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        onLoad={() => setVideoLoading(false)}
                                         allowFullScreen
                                     />
                                 </div>
