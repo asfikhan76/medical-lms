@@ -19,7 +19,7 @@ const PlanCard = ({ plan }) => {
                         </li>
                     ))}
                 </ul>
-                <button className="mt-2 inline-flex items-center justify-center rounded-lg border border-teal-600 px-4 py-2 text-teal-600 hover:bg-teal-600 hover:text-white transition-colors">
+                <button className="mt-2 inline-flex items-center cursor-pointer justify-center rounded-lg border border-teal-600 px-4 py-2 text-teal-600 hover:bg-teal-600 hover:text-white transition-colors">
                     Buy Now
                 </button>
             </div>
