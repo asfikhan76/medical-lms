@@ -1,130 +1,50 @@
 import React, { useEffect, useState } from "react"
 import LandingHeader from "@components/LandingHeader"
 import LandingHero from "@components/LandingHero"
-import InstagramLoader from "@components/InstagramLoader"
 import PlansSection from "@components/PlansSection"
+import Features from "@components/Features"
 
 const Welcome = () => {
-    const [activeIndex, setActiveIndex] = useState(0)
-    const [videoLoading, setVideoLoading] = useState(true)
-
-    useEffect(() => {
-        setVideoLoading(true)
-    }, [activeIndex])
-
-    const featureItems = [
-        {
-            id: 1,
-            title: "Detailed Performance Tracking",
-            description:
-                "Track test scores, topic-wise strengths and weaknesses, and progress trends to focus your study where it matters most.",
-            videoId: "dQw4w9WgXcQ",
-        },
-        {
-            id: 2,
-            title: "Study from Anywhere",
-            description:
-                "Responsive web app optimized for mobile and desktop so you can learn on the go without missing a beat.",
-            videoId: "a_pLEynHiPY",
-        },
-        {
-            id: 3,
-            title: "Dynamic Study Planner",
-            description:
-                "An adaptive planner that prioritizes topics based on your performance and upcoming goals.",
-            videoId: "9bZkp7q19f0",
-        },
-        {
-            id: 4,
-            title: "Detailed Performance Tracking",
-            description:
-                "Track test scores, topic-wise strengths and weaknesses, and progress trends to focus your study where it matters most.",
-            videoId: "dQw4w9WgXcQ",
-        },
-        {
-            id: 5,
-            title: "Study from Anywhere",
-            description:
-                "Responsive web app optimized for mobile and desktop so you can learn on the go without missing a beat.",
-            videoId: "a_pLEynHiPY",
-        },
-    ]
 
 
     return (
-        <main>
+        <main className="bg-[#020617]">
             {/* Header  */}
-            <LandingHeader />
+            <header className="bg-white dark:bg-gray-900 sticky top-0 z-3">
+                <LandingHeader />
+            </header>
 
             {/* Hero Section */}
-            <LandingHero />
+            <div className="w-full bg-[#020617]  relative fade-bottom">
+                {/* Magenta Orb Grid Background */}
+                <div
+                    className="absolute inset-0 z-0"
+                    style={{
+                        background: "#020617",
+                        backgroundImage: `
+                        linear-gradient(to right, rgba(71,85,105,0.15) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(71,85,105,0.15) 1px, transparent 1px),
+                        radial-gradient(circle at 50% 60%, rgba(13,148,136,0.15) 0%, rgba(13,148,136,0.05) 40%, transparent 70%)
+                    `,
+                        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+                    }}
+                />
+                {/* Your Content/Components */}
+                <section className="lg:grid relative w-full z-2">
+                    <LandingHero />
+                </section>
+            </div>
 
             {/* Features */}
-            <section className="bg-[#020617]">
-                <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 pt-12">
-                    <h2 className="text-3xl font-bold text-white mb-4 md:text-center">Smarter tools for <span className="text-teal-600">Medical Mastery</span></h2>
-                    <p className="text-white md:text-center md:w-[65%] mx-auto mb-6">Master tough topics faster with smart insights, flexible access, and an adaptive planner—study anywhere and track your progress.</p>
-                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-5 mt-16">
-                        {/* Left: 60% */}
-                        <div className="lg:col-span-3">
-                            <div className="divide-y divide-slate-800 rounded-xl border border-slate-800">
-                                {featureItems.map((item, index) => {
-                                    const isActive = index === activeIndex
-                                    return (
-                                        <div key={item.id}>
-                                            <button
-                                                type="button"
-                                                className={`w-full cursor-pointer text-left px-5 py-4 flex items-center justify-between ${index === 0 ? 'rounded-t-lg' : ""}  gap-4 ${isActive ? 'bg-teal-400/15' : ''}  hover:bg-teal-900/40 transition-colors`}
-                                                onClick={() => setActiveIndex(index)}
-                                            >
-                                                <span className="text-white font-medium">
-                                                    {item.title} {index}
-                                                </span>
-                                                <span className={`ml-auto h-5 w-5 shrink-0 rounded-full border border-slate-700 grid place-items-center text-slate-300 transition-transform ${isActive ? "rotate-180" : "rotate-0"}`}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-                                                        <path fillRule="evenodd" d="M12 14.121l-5.303-5.304a1 1 0 10-1.414 1.415l6.01 6.01a1 1 0 001.414 0l6.01-6.01a1 1 0 10-1.414-1.415L12 14.12z" clipRule="evenodd" />
-                                                    </svg>
-                                                </span>
-                                            </button>
-                                            {isActive && (
-                                                <div className="px-5 pb-5 pt-5 text-slate-300">
-                                                    <p className="leading-relaxed">{item.description}</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-
-                        {/* Right: 40% */}
-                        <div className="lg:col-span-2">
-                            <div className="">
-                                <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-slate-800 bg-black">
-                                    {videoLoading && (
-                                        <div className="absolute inset-0 grid place-items-center bg-black/60">
-                                            <InstagramLoader />
-                                        </div>
-                                    )}
-                                    <iframe
-                                        title={featureItems[activeIndex].title}
-                                        className="h-full w-full"
-                                        src={`https://www.youtube.com/embed/${featureItems[activeIndex].videoId}?rel=0&modestbranding=1`}
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        onLoad={() => setVideoLoading(false)}
-                                        allowFullScreen
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <section className="">
+                <Features />
             </section>
 
             {/* Plans */}
-            <section className="pt-20 bg-[#020617]">
+            <section className="pt-20">
                 <PlansSection />
             </section>
+
 
 
         </main>
