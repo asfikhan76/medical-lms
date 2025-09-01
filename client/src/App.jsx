@@ -64,6 +64,9 @@ import Test from '@pages/student/Test';
 // dashboard imports
 import DashboardRedirect from "@auth/DashboardRedirect"
 
+// Plan routes
+import AddPlan from '@pages/admin/Plans/create';
+
 
 export default function App() {
     return (
@@ -123,6 +126,9 @@ export default function App() {
                                     {/* User Routes */}
                                     <Route path='/admin/all-users' element={<AllUsers />} />
                                     <Route path='/admin/edit-user' element={<EditUser />} />
+
+                                    {/* Plan Routes */}
+                                    <Route path='/admin/add-plan' element={<AddPlan />} />
 
                                 </Route>
                             </Route>

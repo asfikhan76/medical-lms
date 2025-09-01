@@ -13,7 +13,8 @@ import {
     ClipboardList,
     Users,
     FileText,
-    Settings
+    Settings,
+    Crown
 } from 'lucide-react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
@@ -30,6 +31,8 @@ const Sidebar = ({ userRole }) => {
     const [isSubsystemOpen, setIsSubsystemOpen] = useState(false);
     const [isTopicOpen, setIsTopicOpen] = useState(false);
     const [isQuestionOpen, setIsQuestionOpen] = useState(false);
+    const [isPlanOpen, setIsPlanOpen] = useState(false);
+
 
     useEffect(() => {
         const p = pathname.toLowerCase();
@@ -39,6 +42,7 @@ const Sidebar = ({ userRole }) => {
         setIsSubsystemOpen(p.includes('subsystem'));
         setIsTopicOpen(p.includes('topic'));
         setIsQuestionOpen(p.includes('question'));
+        setIsPlanOpen(p.includes('plan'));
     }, [pathname])
 
     const handleLogout = () => {
@@ -80,6 +84,39 @@ const Sidebar = ({ userRole }) => {
                     </ul>
                 </details>
             </li>
+
+            {/* Plans Dropdown */}
+            <li>
+                <details open={isPlanOpen} onToggle={(e) => setIsPlanOpen(e.currentTarget.open)} className="group [&_summary::-webkit-details-marker]:hidden">
+                    <summary className={`flex cursor-pointer relative items-center ${collapsed ? 'justify-center' : "justify-between"} rounded-lg rounded-sm  px-3 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700`}>
+                        <div className='flex items-center gap-3'>
+                            <Crown size={18} color='#6a7282' />
+                            {!collapsed && <span className="text-sm font-normal text-[#6a7282]"> Plans </span>}
+                        </div>
+                        {!collapsed && (
+                            <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                                <ChevronDown size={18} color='#6a7282' />
+                            </span>
+                        )}
+                        <span className='invisible absolute z-3 start-full top-1/2 ms-4 -translate-y-1/2 rounded-sm bg-gray-900 whitespace-nowrap w-fit px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                            Plans
+                        </span>
+                    </summary>
+                    <ul className="mt-2 space-y-1 px-4">
+                        <li>
+                            <NavLink to="/admin/add-plan" className={({ isActive }) =>
+                                `group relative flex ${collapsed ? 'justify-center' : 'justify-start items-center gap-3 px-3'}  rounded-sm  px-2 py-1.5
+                                ${isActive ? 'bg-indigo-600 text-white  font-semibold' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'}`}>
+                                {({ isActive }) => !collapsed && <span className={`text-sm font-normal flex items-center gap-1 ${isActive ? 'text-white' : 'text-[#6a7282]'}`}>
+                                    <PlusCircle size={16} />
+                                    Add Plan
+                                </span>}
+                            </NavLink>
+                        </li>
+                    </ul>
+                </details>
+            </li>
+
 
             {/* Subjects Dropdown */}
             <li>
