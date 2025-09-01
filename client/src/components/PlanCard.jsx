@@ -9,7 +9,7 @@ const PlanCard = ({ plan }) => {
             <div className="p-5 flex flex-col gap-4">
                 <div className="flex items-baseline justify-between">
                     <h4 className="text-white text-lg font-semibold">{plan.name}</h4>
-                    <span className="text-teal-600 font-bold text-xl">{plan.price}</span>
+                    <span className="text-teal-600 font-bold text-2xl">{plan.price}</span>
                 </div>
                 <ul className="space-y-2 h-[90px]">
                     {plan.features.map((f) => (
