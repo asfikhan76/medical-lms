@@ -3,6 +3,7 @@ import LandingHeader from "@components/LandingHeader"
 import LandingHero from "@components/LandingHero"
 import PlansSection from "@components/PlansSection"
 import Features from "@components/Features"
+import Footer from "@components/Footer"
 
 const Welcome = () => {
 
@@ -45,7 +46,9 @@ const Welcome = () => {
                 <PlansSection />
             </section>
 
-
+            <footer className="bg-slate-950 border-t border-slate-800">
+                <Footer />
+            </footer>
 
         </main>
     )
