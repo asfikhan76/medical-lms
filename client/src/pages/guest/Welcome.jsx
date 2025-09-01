@@ -11,7 +11,7 @@ const Welcome = () => {
     return (
         <main className="bg-[#020617]">
             {/* Header  */}
-            <header className="bg-white dark:bg-gray-900 sticky top-0 z-3">
+            <header className="bg-gray-900 sticky top-0 z-3">
                 <LandingHeader />
             </header>
 
