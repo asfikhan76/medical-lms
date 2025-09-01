@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
+require('dotenv').config();
+
 app.use(cors(
     {
     origin: process.env.CLIENT_URL,
@@ -20,12 +22,13 @@ const systemRoutes = require("./routes/systemRoutes");
 const subSystemRoutes = require("./routes/subSystemRoutes");
 const topicRoutes = require("./routes/topicRoutes");
 const questionRoutes = require('./routes/questionRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+const planRoutes = require("./routes/planRoutes");
 
 
 // temprary routes
 const questionUploadRoutes = require("./routes/questionUploadRoute");
 const subjectUploadRoutes = require("./routes/subjectUploadRoute");
-const dashboardRoutes = require('./routes/dashboardRoutes');
 
 
 // Routes Midleware
@@ -41,6 +44,7 @@ app.use("/api/topics", topicRoutes);
 
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/questions', questionRoutes);
+app.use("/api/plans", planRoutes);
 
 // temprary routes
 app.use("/api/subjectUpload", subjectUploadRoutes);
